@@ -2,7 +2,6 @@ package sample;
 
 import Menus.MainMenu;
 import javafx.application.Application;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -13,7 +12,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            HBox hbox = new HBox();
             MainMenu mainMenu = new MainMenu();
             primaryStage = mainMenu.getMainStage();
             primaryStage.show();

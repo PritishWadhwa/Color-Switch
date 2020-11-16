@@ -7,27 +7,44 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.text.AttributedCharacterIterator;
 
-public class MainMenu {
+public class MainMenu extends JPanel {
 
-    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static final double HEIGHT = screenSize.getHeight();
     private static final double WIDTH = screenSize.getWidth() * .4;
-    private AnchorPane mainPane;
-    private Scene mainScene;
-    private Stage mainStage;
+    private final AnchorPane mainPane;
+    private final Scene mainScene;
+    private final Stage mainStage;
 
     public MainMenu() throws FileNotFoundException {
         mainPane = new AnchorPane();
 //        mainScene = new Scene(mainPane, WIDTH, HEIGHT, Color.rgb(44, 44, 44));
         mainStage = new Stage();
+
+        Arc a1 = new Arc();
+        a1.setCenterX(100.0);
+        a1.setCenterY(100.0);
+        a1.setStartAngle(0);
+        a1.setRadiusX(30.0);
+        a1.setRadiusY(30.0);
+        a1.setFill(Color.RED);
+//        a1.setStrokeWidth(500.0);
+        a1.setLength(100f);
+
+//        Arc a1 = new Arc(100.0f, 100.0f, 100.0f, 100.0f, 0.0f, 100.0f);
+
 
         Circle c = new Circle();
         c.setCenterX(250);
@@ -52,7 +69,9 @@ public class MainMenu {
         resizePic.setAutoReverse(true);
         resizePic.play();
 
-        Group root = new Group(viewloadGameImage, c);
+
+//        Group root = new Group(viewloadGameImage, c);
+        Group root = new Group(a1);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(44, 44, 44));
 
         mainStage.setScene(mainScene);
