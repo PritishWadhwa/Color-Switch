@@ -1,6 +1,6 @@
 package Menus;
 
-import javafx.animation.ScaleTransition;
+import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -8,16 +8,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.AttributedCharacterIterator;
 
 public class MainMenu extends JPanel {
 
@@ -39,10 +39,53 @@ public class MainMenu extends JPanel {
         a1.setStartAngle(0);
         a1.setRadiusX(30.0);
         a1.setRadiusY(30.0);
-        a1.setFill(Color.RED);
 //        a1.setStrokeWidth(500.0);
-        a1.setLength(100f);
+        a1.setLength(90.0f);
+        a1.setType(ArcType.OPEN);
+        a1.setStroke(Color.YELLOW);
+        a1.setStrokeWidth(5);
+        a1.setFill(Color.TRANSPARENT);
 
+        Arc a2 = new Arc();
+        a2.setCenterX(100.0);
+        a2.setCenterY(100.0);
+        a2.setStartAngle(90.0);
+        a2.setRadiusX(30.0);
+        a2.setRadiusY(30.0);
+//        a1.setStrokeWidth(500.0);
+        a2.setLength(90.0f);
+        a2.setType(ArcType.OPEN);
+        a2.setStroke(Color.AQUA);
+        a2.setStrokeWidth(5);
+        a2.setFill(Color.TRANSPARENT);
+
+
+        Arc a3 = new Arc();
+        a3.setCenterX(100.0);
+        a3.setCenterY(100.0);
+        a3.setStartAngle(180.0);
+        a3.setRadiusX(30.0);
+        a3.setRadiusY(30.0);
+//        a1.setStrokeWidth(500.0);
+        a3.setLength(90.0f);
+        a3.setType(ArcType.OPEN);
+        a3.setStroke(Color.MAGENTA);
+        a3.setStrokeWidth(5);
+        a3.setFill(Color.TRANSPARENT);
+
+
+        Arc a4 = new Arc();
+        a4.setCenterX(100.0);
+        a4.setCenterY(100.0);
+        a4.setStartAngle(270.0);
+        a4.setRadiusX(30.0);
+        a4.setRadiusY(30.0);
+//        a1.setStrokeWidth(500.0);
+        a4.setLength(90);
+        a4.setType(ArcType.OPEN);
+        a4.setStroke(Color.PURPLE);
+        a4.setStrokeWidth(5);
+        a4.setFill(Color.TRANSPARENT);
 //        Arc a1 = new Arc(100.0f, 100.0f, 100.0f, 100.0f, 0.0f, 100.0f);
 
 
@@ -69,9 +112,18 @@ public class MainMenu extends JPanel {
         resizePic.setAutoReverse(true);
         resizePic.play();
 
+        final Rotate rotate1 = new Rotate(0, 100, 100);
+        a1.getTransforms().add(rotate1);
+        a2.getTransforms().add(rotate1);
+        a3.getTransforms().add(rotate1);
+        a4.getTransforms().add(rotate1);
+        final Timeline rotationAnimation = new Timeline();
+        rotationAnimation.getKeyFrames().add(new KeyFrame(Duration.seconds(3), new KeyValue(rotate1.angleProperty(), 360)));
+        rotationAnimation.setCycleCount(Animation.INDEFINITE);
+        rotationAnimation.play();
 
 //        Group root = new Group(viewloadGameImage, c);
-        Group root = new Group(a1);
+        Group root = new Group(a1, a2, a3, a4);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(44, 44, 44));
 
         mainStage.setScene(mainScene);
