@@ -64,20 +64,6 @@ public class MainMenu extends JPanel {
 
         Circle centerCircle = makeCircle(280, 380, 95, Color.rgb(88,88,88));
 
-//        Circle c = new Circle();
-//        c.setCenterX(250);
-//        c.setCenterY(205);
-//        c.setFill(Color.RED);
-//        c.setRadius(20f);
-
-//        Image loadGameImage = new Image(new FileInputStream("images/img1.jpg"));
-//        ImageView viewloadGameImage = new ImageView(loadGameImage);
-//        viewloadGameImage.setX(50);
-//        viewloadGameImage.setY(25);
-//        viewloadGameImage.setFitHeight(455);
-//        viewloadGameImage.setFitWidth(500);
-//        viewloadGameImage.setPreserveRatio(true);
-
         ScaleTransition resizePic = new ScaleTransition();
         resizePic.setDuration(Duration.millis(750));
         resizePic.setNode(loadGame);
