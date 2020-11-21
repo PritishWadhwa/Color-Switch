@@ -5,7 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -26,13 +25,11 @@ public class MainMenu extends JPanel {
 
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
-    private final AnchorPane mainPane;
     private final Scene mainScene;
     private final Stage mainStage;
 
     public MainMenu() throws FileNotFoundException {
-        mainPane = new AnchorPane();
-        mainStage = new Stage();
+
         Text headingC = makeText(100, "C", 100.0, 100.0, 5.0);
         Text headingL = makeText(100, "L", 250, 100, 5);
         Text headingR = makeText(100, "R", 385, 100, 5);
@@ -141,17 +138,13 @@ public class MainMenu extends JPanel {
         arrow2right.setCycleCount(Integer.MAX_VALUE);
         arrow2right.setAutoReverse(true);
         arrow2right.play();
-
-//        Group root = new Group(viewloadGameImage, c);
+        mainStage = new Stage();
         Group root = new Group(headingC1A1, headingC1A2, headingC1A3, headingC1A4, headingC, headingL, headingC2A1,
                 headingC2A2, headingC2A3, headingC2A4, headingR, headingSwitch, exitImage, loadGame, centerC1A1,
                 centerC1A2, centerC1A3, centerC1A4, centerC2A1, centerC2A2, centerC2A3, centerC2A4, centerC3A1,
                 centerC3A2, centerC3A3, centerC3A4, centerCircle, leftArrow, rightArrow, centerPlayButton);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
-
         mainStage.setScene(mainScene);
-//		mainStage.setFullScreen(true);
-
     }
 
     Text makeText(int size, String str, double xPos, double yPos, double width) {
