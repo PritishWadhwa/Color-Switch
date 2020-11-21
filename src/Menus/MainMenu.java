@@ -61,8 +61,11 @@ public class MainMenu extends JPanel {
 
         ImageView exitImage = makeImage("images/ExitButton.png", 222, 660, 125, 400, true);
         ImageView loadGame = makeImage("images/loadSavedGamesButton.png", 130, 510, 250, 400, true);
+        ImageView leftArrow = makeImage("images/arrowleft.png", 30, 590.5, 90, 90, true);
+        ImageView rightArrow = makeImage("images/arrowright.png", 438, 590.5, 90, 90, true);
+        ImageView centerPlayButton = makeImage("images/playButton.png", 210, 310, 150, 150, true);
 
-        Circle centerCircle = makeCircle(280, 380, 95, Color.rgb(88,88,88));
+        Circle centerCircle = makeCircle(280, 380, 95, Color.rgb(88, 88, 88));
 
         ScaleTransition resizePic = new ScaleTransition();
         resizePic.setDuration(Duration.millis(750));
@@ -123,11 +126,27 @@ public class MainMenu extends JPanel {
         rotationAnimationCCWCC3.setCycleCount(Animation.INDEFINITE);
         rotationAnimationCCWCC3.play();
 
+        TranslateTransition arrow1left = new TranslateTransition();
+        arrow1left.setDuration(Duration.millis(750));
+        arrow1left.setNode(leftArrow);
+        arrow1left.setByX(10);
+        arrow1left.setCycleCount(Integer.MAX_VALUE);
+        arrow1left.setAutoReverse(true);
+        arrow1left.play();
+
+        TranslateTransition arrow2right = new TranslateTransition();
+        arrow2right.setDuration(Duration.millis(750));
+        arrow2right.setNode(rightArrow);
+        arrow2right.setByX(-10);
+        arrow2right.setCycleCount(Integer.MAX_VALUE);
+        arrow2right.setAutoReverse(true);
+        arrow2right.play();
+
 //        Group root = new Group(viewloadGameImage, c);
         Group root = new Group(headingC1A1, headingC1A2, headingC1A3, headingC1A4, headingC, headingL, headingC2A1,
                 headingC2A2, headingC2A3, headingC2A4, headingR, headingSwitch, exitImage, loadGame, centerC1A1,
                 centerC1A2, centerC1A3, centerC1A4, centerC2A1, centerC2A2, centerC2A3, centerC2A4, centerC3A1,
-                centerC3A2, centerC3A3, centerC3A4, centerCircle);
+                centerC3A2, centerC3A3, centerC3A4, centerCircle, leftArrow, rightArrow, centerPlayButton);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
 
         mainStage.setScene(mainScene);
@@ -172,7 +191,7 @@ public class MainMenu extends JPanel {
         return viewImg;
     }
 
-    Circle makeCircle(double xCen, double yCen, double radius, Color color){
+    Circle makeCircle(double xCen, double yCen, double radius, Color color) {
         Circle c = new Circle();
         c.setCenterX(xCen);
         c.setCenterY(yCen);
