@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Tokens.Ball;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -25,13 +26,13 @@ import javax.swing.*;
 public class Gameplay extends JPanel {
     public static double SCENE_WIDTH = 800;
     public static double SCENE_HEIGHT = 700;
-    public static int SPRITE_COUNT = 1;
+    public static int Ball_COUNT = 1;
     public static Point2D FORCE_GRAVITY = new Point2D(0, 9.8);
-    public static double SPRITE_MAX_SPEED = 15;
+    public static double Ball_MAX_SPEED = 15;
     private final Stage mainStage;
     Group ro;
     Pane playfield;
-    List<Sprite> allSprites = new ArrayList<>();
+    List<Ball> allBalls = new ArrayList<>();
     AnimationTimer gameLoop;
     Scene scene;
     public Gameplay() {
@@ -40,8 +41,8 @@ public class Gameplay extends JPanel {
             @Override
             public void handle(MouseEvent e) {
                 System.out.println("Hello World");
-                allSprites.forEach(Sprite::bounce);
-                allSprites.forEach(Sprite::display);
+                allBalls.forEach(Ball::bounce);
+                allBalls.forEach(Ball::display);
             }
         };
         ro =new Group();
@@ -89,107 +90,31 @@ public class Gameplay extends JPanel {
         return rect;
     }
     private void prepareGame() {
-        for (int i = 0; i < SPRITE_COUNT; i++) {
-            addSprite();
+        for (int i = 0; i < Ball_COUNT; i++) {
+            addBall();
         }
     }
     private void startGame() {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                allSprites.forEach(s -> s.applyForce(FORCE_GRAVITY));
-                allSprites.forEach(Sprite::move);
-                allSprites.forEach(Sprite::checkBounds);
-                allSprites.forEach(Sprite::display);
+                allBalls.forEach(s -> s.applyForce(FORCE_GRAVITY));
+                allBalls.forEach(Ball::move);
+                allBalls.forEach(Ball::checkBounds);
+                allBalls.forEach(Ball::display);
             }
         };
         gameLoop.start();
     }
-    private void addSprite() {
+    private void addBall() {
         double x = 300;
         double y = 50;
         Point2D location = new Point2D(x, y);
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
-        Sprite sprite = new Sprite(playfield, location, velocity, acceleration, mass);
-        allSprites.add(sprite);
-    }
-    public class Sprite extends Region {
-        Point2D location;
-        Point2D velocity;
-        Point2D acceleration;
-        double mass;
-        double maxSpeed = SPRITE_MAX_SPEED;
-        Node view;
-        double width;
-        double height ;
-        double centerX ;
-        double centerY;
-        double radius;
-        Pane layer;
-        public Sprite( Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass) {
-            this.layer = layer;
-            this.location = location;
-            this.velocity = velocity;
-            this.acceleration = acceleration;
-            this.mass = mass;
-            width = mass;
-            height = width;
-            centerX = width / 2.0;
-            centerY = height / 2.0;
-            radius = width / 2.0;
-            Circle circle = new Circle( radius);
-            circle.setCenterX(radius);
-            circle.setCenterY(radius);
-            circle.setStroke(Color.BLUE);
-            circle.setFill(Color.BLUE.deriveColor(1, 1, 1, 0.3));
-            ro.getChildren().add(circle);
-            ro.getChildren().add(this);
-            this.view = circle;
-            getChildren().add( view);
-
-            layer.getChildren().add( this);
-        }
-
-        public void applyForce(Point2D force) {
-            Point2D f = force.multiply( 0.09);
-            acceleration = acceleration.add(f);
-        }
-        public void move() {
-            velocity = velocity.add(acceleration);
-            if( velocity.magnitude() > maxSpeed) {
-                velocity = velocity.normalize().multiply(maxSpeed);
-            }
-            location = location.add(velocity);
-            acceleration = new Point2D( 0, 0);
-        }
-        public void bounce() {
-            double locationX = location.getX();
-            double locationY = location.getY();
-            double velocityX = velocity.getX();
-            double velocityY = velocity.getY();
-            System.out.println(velocityY);
-            velocityY = -15;
-            location = new Point2D( locationX, locationY);
-            velocity = new Point2D( velocityX, velocityY);
-        }
-        public void checkBounds() {
-            double locationX = location.getX();
-            double locationY = location.getY();
-            double velocityX = velocity.getX();
-            double velocityY = velocity.getY();
-            if (locationY > layer.getHeight() - radius) {
-                locationY = layer.getHeight() - radius;
-                velocityY=0;
-            }
-            location = new Point2D( locationX, locationY);
-            velocity = new Point2D( velocityX, velocityY);
-        }
-
-        public void display() {
-            relocate(location.getX() - centerX, location.getY() - centerY);
-        }
+        Ball Ball = new Ball(playfield, location, velocity, acceleration, mass,ro);
+        allBalls.add(Ball);
     }
     public Stage getMainStage() {
         return mainStage;
