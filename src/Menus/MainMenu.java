@@ -55,7 +55,6 @@ public class MainMenu extends JPanel {
         Arc centerC3A3 = makeArc(280, 380, 180, 110, 79.5, Color.rgb(245, 223, 15), 22);
         Arc centerC3A4 = makeArc(280, 380, 270, 110, 79.5, Color.rgb(141, 18, 255), 22);
 
-
         ImageView exitImage = makeImage("images/ExitButton.png", 222, 660, 125, 400, true);
         ImageView loadGame = makeImage("images/loadSavedGamesButton.png", 130, 510, 250, 400, true);
         ImageView leftArrow = makeImage("images/arrowleft.png", 30, 590.5, 90, 90, true);

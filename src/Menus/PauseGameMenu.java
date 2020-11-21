@@ -43,7 +43,7 @@ public class PauseGameMenu {
         mainStage.setScene(mainScene);
     }
 
-    void resizeAnimation(Node node){
+    void resizeAnimation(Node node) {
         ScaleTransition resizePic = new ScaleTransition();
         resizePic.setDuration(Duration.millis(750));
         resizePic.setNode(node);

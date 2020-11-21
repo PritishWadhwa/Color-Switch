@@ -16,12 +16,13 @@ public class Ball extends Region {
     double maxSpeed = 15;
     Node view;
     double width;
-    double height ;
-    double centerX ;
+    double height;
+    double centerX;
     double centerY;
     double radius;
     Pane layer;
-    public Ball( Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass, Group ro) {
+
+    public Ball(Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass, Group ro) {
         this.layer = layer;
         this.location = location;
         this.velocity = velocity;
@@ -32,7 +33,7 @@ public class Ball extends Region {
         centerX = width / 2.0;
         centerY = height / 2.0;
         radius = width / 2.0;
-        Circle circle = new Circle( radius);
+        Circle circle = new Circle(radius);
         circle.setCenterX(radius);
         circle.setCenterY(radius);
         circle.setStroke(Color.BLUE);
@@ -40,23 +41,25 @@ public class Ball extends Region {
         ro.getChildren().add(circle);
         ro.getChildren().add(this);
         this.view = circle;
-        getChildren().add( view);
+        getChildren().add(view);
 
-        layer.getChildren().add( this);
+        layer.getChildren().add(this);
     }
 
     public void applyForce(Point2D force) {
-        Point2D f = force.multiply( 0.09);
+        Point2D f = force.multiply(0.09);
         acceleration = acceleration.add(f);
     }
+
     public void move() {
         velocity = velocity.add(acceleration);
-        if( velocity.magnitude() > maxSpeed) {
+        if (velocity.magnitude() > maxSpeed) {
             velocity = velocity.normalize().multiply(maxSpeed);
         }
         location = location.add(velocity);
-        acceleration = new Point2D( 0, 0);
+        acceleration = new Point2D(0, 0);
     }
+
     public void bounce() {
         double locationX = location.getX();
         double locationY = location.getY();
@@ -64,9 +67,10 @@ public class Ball extends Region {
         double velocityY = velocity.getY();
         System.out.println(velocityY);
         velocityY = -15;
-        location = new Point2D( locationX, locationY);
-        velocity = new Point2D( velocityX, velocityY);
+        location = new Point2D(locationX, locationY);
+        velocity = new Point2D(velocityX, velocityY);
     }
+
     public void checkBounds() {
         double locationX = location.getX();
         double locationY = location.getY();
@@ -74,10 +78,10 @@ public class Ball extends Region {
         double velocityY = velocity.getY();
         if (locationY > layer.getHeight() - radius) {
             locationY = layer.getHeight() - radius;
-            velocityY=0;
+            velocityY = 0;
         }
-        location = new Point2D( locationX, locationY);
-        velocity = new Point2D( velocityX, velocityY);
+        location = new Point2D(locationX, locationY);
+        velocity = new Point2D(velocityX, velocityY);
     }
 
     public void display() {

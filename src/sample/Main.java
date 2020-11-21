@@ -17,12 +17,12 @@ public class Main extends Application {
 //            MainMenu mainMenu = new MainMenu();
 //            primaryStage = mainMenu.getMainStage();
 //            primaryStage.show();
-//            LoadGameMenu loadGameMenu = new LoadGameMenu();
-//            primaryStage = loadGameMenu.getMainStage();
-//            primaryStage.show();
-            PauseGameMenu pauseGameMenu = new PauseGameMenu();
-            primaryStage = pauseGameMenu.getMainStage();
+            LoadGameMenu loadGameMenu = new LoadGameMenu();
+            primaryStage = loadGameMenu.getMainStage();
             primaryStage.show();
+//            PauseGameMenu pauseGameMenu = new PauseGameMenu();
+//            primaryStage = pauseGameMenu.getMainStage();
+//            primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
