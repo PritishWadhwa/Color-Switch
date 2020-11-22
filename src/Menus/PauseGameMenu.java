@@ -1,11 +1,14 @@
 package Menus;
 
+import PlayArena.Gameplay;
 import javafx.animation.ScaleTransition;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -18,10 +21,16 @@ public class PauseGameMenu {
 
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
-    private final Scene mainScene;
-    private final Stage mainStage;
+//    private final Scene mainScene;
+//    private final Stage mainStage;
 
-    public PauseGameMenu() throws FileNotFoundException {
+    public void start(Stage stage) throws FileNotFoundException {
+        Scene mainScene;
+//        Stage mainStage;
+        Gameplay gameplay = new Gameplay();
+        MainMenu mainMenu = new MainMenu();
+        LoadGameMenu loadGameMenu = new LoadGameMenu();
+
         Circle homeCircle = makeCircle(100, 100, 40, Color.rgb(128, 128, 128));
         Circle centerCircle1 = makeCircle(280, 212.5, 70, Color.rgb(88, 88, 88));
         Circle centerCircle2 = makeCircle(280, 425, 70, Color.rgb(88, 88, 88));
@@ -37,10 +46,213 @@ public class PauseGameMenu {
         resizeAnimation(playImg);
         resizeAnimation(saveImg);
 
-        mainStage = new Stage();
+        homeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                homeCircle.setFill(Color.rgb(140,140,140));
+            }
+        });
+
+        homeCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                homeCircle.setFill(Color.rgb(140,140,140));
+            }
+        });
+
+        homeImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                homeCircle.setFill(Color.rgb(128,128,128));
+            }
+        });
+
+        homeCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                homeCircle.setFill(Color.rgb(128,128,128));
+            }
+        });
+
+        homeImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        homeCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        playImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle2.setFill(Color.rgb(100,100,100));
+            }
+        });
+
+        centerCircle2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle2.setFill(Color.rgb(100,100,100));
+            }
+        });
+
+        playImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle2.setFill(Color.rgb(88,88,88));
+            }
+        });
+
+        centerCircle2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle2.setFill(Color.rgb(88,88,88));
+            }
+        });
+
+        playImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        centerCircle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        restartImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle1.setFill(Color.rgb(100,100,100));
+            }
+        });
+
+        centerCircle1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle1.setFill(Color.rgb(100,100,100));
+            }
+        });
+
+        restartImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle1.setFill(Color.rgb(88,88,88));
+            }
+        });
+
+        centerCircle1.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle1.setFill(Color.rgb(88,88,88));
+            }
+        });
+
+        restartImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        centerCircle1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        saveImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle3.setFill(Color.rgb(100,100,100));
+            }
+        });
+
+        centerCircle3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle3.setFill(Color.rgb(100,100,100));
+            }
+        });
+
+        saveImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle3.setFill(Color.rgb(88,88,88));
+            }
+        });
+
+        centerCircle3.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle3.setFill(Color.rgb(88,88,88));
+            }
+        });
+
+        saveImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    loadGameMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        centerCircle3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    loadGameMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         Group root = new Group(homeCircle, homeImg, centerCircle1, restartImg, centerCircle2, playImg, centerCircle3, saveImg);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
-        mainStage.setScene(mainScene);
+        stage.setScene(mainScene);
+        stage.show();
+        System.out.println("yo");
     }
 
     void resizeAnimation(Node node) {
@@ -74,7 +286,7 @@ public class PauseGameMenu {
         return c;
     }
 
-    public Stage getMainStage() {
-        return mainStage;
-    }
+//    public Stage getMainStage() {
+//        return mainStage;
+//    }
 }

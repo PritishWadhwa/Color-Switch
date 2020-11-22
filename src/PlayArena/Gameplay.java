@@ -1,7 +1,9 @@
 package PlayArena;
 
+import Menus.PauseGameMenu;
 import Tokens.*;
 import javafx.application.Application;
+import javafx.scene.shape.Circle;
 import sample.COLOR;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
@@ -41,13 +43,64 @@ public class Gameplay extends Application {
     private ColorSwapper swapper;
     public int f=1;
     public void start(Stage stage) throws FileNotFoundException {
-        Stage mainStage;
         playfield = new Pane();
+        PauseGameMenu pauseMenu=new PauseGameMenu();
         setCurScore(0);
+        ImageView pauseButton = makeImage("images/pause.png", 480, 6, 180, 80, true);
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
+        Circle pcircle = makeCircle(519, 47, 40, Color.rgb(88, 88, 88));
         scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
-        ro = new Group(playfield, hand, scoreDisplay);
+        ro = new Group(playfield,pcircle, hand, scoreDisplay,pauseButton);
         prepareStars();
+        pcircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pcircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        pcircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pcircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        pauseButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pcircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        pauseButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                pcircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        pcircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    pauseMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        pauseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    pauseMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
         ro.getChildren().add(star1.view);
         ro.getChildren().add(star2.view);
         prepareColorSwapper();
@@ -90,13 +143,27 @@ public class Gameplay extends Application {
             @Override
             public void handle(long now) {
 
-                if (ball.location.getY() < 120 &&f==2) {
+                if (ball.location.getY() < 120 &&f==3) {
                     f++;
                     star1.view.setVisible(false);
                     setCurScore(getCurScore() + 1);
                     PauseTransition pause = new PauseTransition(Duration.millis(0));
                     pause.setOnFinished(et -> {
                         scoreDisplay.setText(Integer.toString(getCurScore()));
+                    });
+                    pause.play();
+                }
+                if (ball.location.getY() < 320 &&f==2) {
+                    f++;
+                    swapper.view.setVisible(false);
+                    PauseTransition pause = new PauseTransition(Duration.millis(0));
+                    pause.setOnFinished(et -> {
+                        COLOR newColor=COLOR.getRandomColor();
+                        while(ball.getCl()==newColor){
+                            newColor = COLOR.getRandomColor();
+                        }
+                        ball.setCl(newColor);
+
                     });
                     pause.play();
                 }
@@ -158,12 +225,16 @@ public class Gameplay extends Application {
         newText.setStrokeWidth(width);
         return newText;
     }
+    Circle makeCircle(double xCen, double yCen, double radius, Color color) {
+        Circle c = new Circle();
+        c.setCenterX(xCen);
+        c.setCenterY(yCen);
+        c.setFill(color);
+        c.setRadius(radius);
+        return c;
+    }
 
     public Scene getMainScene() {
         return scene;
     }
-
-//    public Stage getMainStage() {
-//        return mainStage;
-//    }
 }

@@ -28,8 +28,7 @@ public class MainMenu extends Application {
 
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
-
-
+    private int flag = 0;
     public void start(Stage stage) throws FileNotFoundException {
         Scene mainScene;
         Stage mainStage;
@@ -146,13 +145,25 @@ public class MainMenu extends Application {
         exitImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                TranslateTransition moveExit = new TranslateTransition();
-                moveExit.setDuration(Duration.millis(250));
-                moveExit.setNode(exitImage);
-                moveExit.setByX(-10);
-                moveExit.setCycleCount(6);
-                moveExit.setAutoReverse(true);
-                moveExit.play();
+                if (flag == 0) {
+                    TranslateTransition moveExit = new TranslateTransition();
+                    moveExit.setDuration(Duration.millis(250));
+                    moveExit.setNode(exitImage);
+                    moveExit.setByX(-10);
+                    moveExit.setCycleCount(6);
+                    moveExit.setAutoReverse(true);
+                    moveExit.play();
+                    flag++;
+                } else {
+                    TranslateTransition moveExit = new TranslateTransition();
+                    moveExit.setDuration(Duration.millis(250));
+                    moveExit.setNode(exitImage);
+                    moveExit.setByX(10);
+                    moveExit.setCycleCount(6);
+                    moveExit.setAutoReverse(true);
+                    moveExit.play();
+                    flag--;
+                }
             }
         });
 
@@ -223,11 +234,13 @@ public class MainMenu extends Application {
         centerCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                // primaryStage.setScene(gameplay.getMainScene());
-                //  mainStage.setScene(gameplay.getMainScene());
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
 
         loadGame.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -246,7 +259,6 @@ public class MainMenu extends Application {
                 arrow2right.play();
             }
         });
-
 
         Group root = new Group(headingC1A1, headingC1A2, headingC1A3, headingC1A4, headingC, headingL, headingC2A1,
                 headingC2A2, headingC2A3, headingC2A4, headingR, headingSwitch, exitImage, loadGame, centerC1A1,

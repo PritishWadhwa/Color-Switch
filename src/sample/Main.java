@@ -2,12 +2,14 @@ package sample;
 
 import Menus.LoadGameMenu;
 import Menus.MainMenu;
+import Menus.PauseGameMenu;
 import PlayArena.Gameplay;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    public static MainMenu menu;
+    public MainMenu menu;
+    public PauseGameMenu pauseGameMenu;
 
     public static void main(String[] args) {
         launch(args);
@@ -21,8 +23,10 @@ public class Main extends Application {
 //            primaryStage = play.getMainStage();
 //            primaryStage.show();
 //            Gameplay play = new Gameplay();
+            //good part start
             menu = new MainMenu();
             menu.start(primaryStage);
+            //good part end
             //LoadGameMenu loadGameMenu = new LoadGameMenu();
             //primaryStage = menu.getMainStage();
             //primaryStage.show();
@@ -32,6 +36,8 @@ public class Main extends Application {
 //            PauseGameMenu pauseGameMenu = new PauseGameMenu();
 //            primaryStage = pauseGameMenu.getMainStage();
 //            primaryStage.show();
+//            pauseGameMenu = new PauseGameMenu();
+//            pauseGameMenu.start(primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
