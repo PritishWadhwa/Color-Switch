@@ -42,7 +42,7 @@ public class Gameplay extends JPanel {
     public Gameplay() throws FileNotFoundException {
         playfield = new Pane();
         setCurScore(0);
-        ImageView hand = makeImage("images/hand.png", 267, 600, 100, 100, true);
+        ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
         Text scoreDisplay = makeText(50, Integer.toString(getCurScore()), 10.0, 50.0, 5.0);
         ro = new Group(playfield, hand, scoreDisplay);
         setBall();

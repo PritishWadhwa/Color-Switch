@@ -31,7 +31,9 @@ public class MainMenu extends JPanel {
     private final Scene mainScene;
     private final Stage mainStage;
 
-    public MainMenu(Gameplay play) throws FileNotFoundException {
+    public MainMenu() throws FileNotFoundException {
+        Gameplay gameplay = new Gameplay();
+        LoadGameMenu loadGameMenu = new LoadGameMenu();
 
         Text headingC = makeText(100, "C", 100.0, 100.0, 5.0);
         Text headingL = makeText(100, "L", 250, 100, 5);
@@ -151,6 +153,12 @@ public class MainMenu extends JPanel {
                 moveExit.setCycleCount(6);
                 moveExit.setAutoReverse(true);
                 moveExit.play();
+            }
+        });
+
+        exitImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
                 exitImage.setX(222);
             }
         });
@@ -179,7 +187,7 @@ public class MainMenu extends JPanel {
         centerPlayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mainStage.setScene(play.getMainScene());
+                mainStage.setScene(gameplay.getMainScene());
             }
         });
 
@@ -200,7 +208,32 @@ public class MainMenu extends JPanel {
         centerCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                mainStage.setScene(gameplay.getMainScene());
+            }
+        });
 
+        loadGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mainStage.setScene(loadGameMenu.getMainScene());
+            }
+        });
+
+        loadGame.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                resizePic.pause();
+                arrow1left.pause();
+                arrow2right.pause();
+            }
+        });
+
+        loadGame.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                resizePic.play();
+                arrow1left.play();
+                arrow2right.play();
             }
         });
 
@@ -257,6 +290,10 @@ public class MainMenu extends JPanel {
         c.setFill(color);
         c.setRadius(radius);
         return c;
+    }
+
+    public Scene getMainScene() {
+        return mainScene;
     }
 
     public Stage getMainStage() {
