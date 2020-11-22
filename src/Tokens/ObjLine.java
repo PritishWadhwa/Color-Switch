@@ -15,15 +15,15 @@ import javax.swing.*;
 public class ObjLine extends JPanel {
     public ObjLine(Group ro) {
 
-        Rectangle rect1 = returnRect(220, 482, 18, 120, 0, 20, 20);
-        Rectangle rect2 = returnRect(220, 482, 120, 18, 0, 20, 20);
-        Rectangle rect3 = returnRect(118, 482, 18, 120, 0, 20, 20);
-        Rectangle rect = returnRect(220, 380, 120, 18, 0, 20, 20);
+        Rectangle rect1 = returnRect(220, 432, 18, 120, 0, 20, 20);
+        Rectangle rect2 = returnRect(220, 432, 120, 18, 0, 20, 20);
+        Rectangle rect3 = returnRect(118, 432, 18, 120, 0, 20, 20);
+        Rectangle rect = returnRect(220, 330, 120, 18, 0, 20, 20);
         rect.setFill(Color.rgb(245, 223, 15));
         rect1.setFill(Color.rgb(255, 0, 132));
         rect2.setFill(Color.rgb(141, 18, 255));
         rect3.setFill(Color.rgb(53, 226, 242));
-        final Rotate rotateCWCC2 = new Rotate(360, 229, 491);
+        final Rotate rotateCWCC2 = new Rotate(360, 229, 441);
         rect.getTransforms().add(rotateCWCC2);
         rect1.getTransforms().add(rotateCWCC2);
         rect2.getTransforms().add(rotateCWCC2);
