@@ -1,9 +1,7 @@
 package PlayArena;
 
+import Tokens.*;
 import sample.COLOR;
-import Tokens.Ball;
-import Tokens.ObjDisc;
-import Tokens.ObjLine;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
@@ -36,29 +34,30 @@ public class Gameplay extends JPanel {
     Pane playfield;
     AnimationTimer gameLoop;
     Scene scene;
+    public Text scoreDisplay;
     private int curScore;
     private Ball ball;
-
+    private Star star1,star2;
+    private ColorSwapper swapper;
+    public int f=1;
     public Gameplay() throws FileNotFoundException {
         playfield = new Pane();
         setCurScore(0);
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
-        Text scoreDisplay = makeText(50, Integer.toString(getCurScore()), 10.0, 50.0, 5.0);
+        scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
         ro = new Group(playfield, hand, scoreDisplay);
+        prepareStars();
+        ro.getChildren().add(star1.view);
+        ro.getChildren().add(star2.view);
+        prepareColorSwapper();
+        ro.getChildren().add(swapper.view);
         setBall();
 
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                setCurScore(getCurScore() + 1);
                 ball.bounce();
                 ball.display();
-                PauseTransition pause = new PauseTransition(Duration.millis(0));
-                pause.setOnFinished(et -> {
-                    scoreDisplay.setText(Integer.toString(getCurScore()));
-                });
-                pause.play();
-
             }
         };
 
@@ -72,26 +71,43 @@ public class Gameplay extends JPanel {
         mainStage = new Stage();
         mainStage.setScene(scene);
     }
-
-    public Rectangle returnRect(double x, double y, double h, double w, double strokeW, double arch, double arcw) {
-        Rectangle rect = new Rectangle();
-        rect.setX(x);
-        rect.setY(y);
-        rect.setHeight(h);
-        rect.setWidth(w);
-        rect.setFill(Color.LIMEGREEN);
-        rect.setStrokeWidth(strokeW);
-        rect.setArcHeight(arch);
-        rect.setArcWidth(arcw);
-        return rect;
+    public void prepareStars() throws FileNotFoundException {
+        Point2D l1 = new Point2D(260,100);
+        star1=new Star(l1);
+        Point2D l2 = new Point2D(260,370);
+        star2=new Star(l2);
     }
+    public void prepareColorSwapper() throws FileNotFoundException {
+        Point2D l1 = new Point2D(260,300);
+        swapper=new ColorSwapper(l1);
+    }
+
 
     private void startGame() {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-//                if (ball.location.getY() < 400)
-//                    ball.setVisible(false);
+
+                if (ball.location.getY() < 120 &&f==2) {
+                    f++;
+                    star1.view.setVisible(false);
+                    setCurScore(getCurScore() + 1);
+                    PauseTransition pause = new PauseTransition(Duration.millis(0));
+                    pause.setOnFinished(et -> {
+                        scoreDisplay.setText(Integer.toString(getCurScore()));
+                    });
+                    pause.play();
+                }
+                if (ball.location.getY() < 390 &&f==1) {
+                    f++;
+                    star2.view.setVisible(false);
+                    setCurScore(getCurScore() + 1);
+                    PauseTransition pause = new PauseTransition(Duration.millis(0));
+                    pause.setOnFinished(et -> {
+                        scoreDisplay.setText(Integer.toString(getCurScore()));
+                    });
+                    pause.play();
+                }
                 ball.applyForce(FORCE_GRAVITY);
                 ball.move();
                 ball.checkBounds();
@@ -103,7 +119,7 @@ public class Gameplay extends JPanel {
 
     private void setBall() {
         double x = 280;
-        double y = 750;
+        double y = 675;
         Point2D location = new Point2D(x, y);
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
