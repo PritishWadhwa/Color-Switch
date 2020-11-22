@@ -21,8 +21,9 @@ public class Main extends Application {
 //            Gameplay play = new Gameplay();
 //            primaryStage = play.getMainStage();
 //            primaryStage.show();
-            MainMenu mainMenu = new MainMenu();
-            primaryStage = mainMenu.getMainStage();
+            Gameplay play = new Gameplay();
+            MainMenu menu = new MainMenu(play);
+            primaryStage = menu.getMainStage();
             primaryStage.show();
 //            LoadGameMenu loadGameMenu = new LoadGameMenu();
 //            primaryStage = loadGameMenu.getMainStage();

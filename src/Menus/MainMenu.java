@@ -1,14 +1,13 @@
 package Menus;
 
+import PlayArena.Gameplay;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -32,7 +31,7 @@ public class MainMenu extends JPanel {
     private final Scene mainScene;
     private final Stage mainStage;
 
-    public MainMenu() throws FileNotFoundException {
+    public MainMenu(Gameplay play) throws FileNotFoundException {
 
         Text headingC = makeText(100, "C", 100.0, 100.0, 5.0);
         Text headingL = makeText(100, "L", 250, 100, 5);
@@ -142,21 +141,68 @@ public class MainMenu extends JPanel {
         arrow2right.setAutoReverse(true);
         arrow2right.play();
 
-        VBox vbox = new VBox();
-        vbox.setLayoutX(20);
-        vbox.setLayoutY(20);
-
-
-        Button button1 = new Button("Play");
-        button1.setGraphic(exitImage);
-        button1.setOnAction(new EventHandler<ActionEvent>() {
+        exitImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                System.out.println("hi");
+            public void handle(MouseEvent event) {
+                TranslateTransition moveExit = new TranslateTransition();
+                moveExit.setDuration(Duration.millis(250));
+                moveExit.setNode(exitImage);
+                moveExit.setByX(-10);
+                moveExit.setCycleCount(6);
+                moveExit.setAutoReverse(true);
+                moveExit.play();
+                exitImage.setX(222);
             }
         });
 
+        exitImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.exit(0);
+            }
+        });
 
+        centerPlayButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        centerPlayButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        centerPlayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mainStage.setScene(play.getMainScene());
+            }
+        });
+
+        centerCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        centerCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        centerCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
 
         mainStage = new Stage();
         Group root = new Group(headingC1A1, headingC1A2, headingC1A3, headingC1A4, headingC, headingL, headingC2A1,
@@ -164,9 +210,6 @@ public class MainMenu extends JPanel {
                 centerC1A2, centerC1A3, centerC1A4, centerC2A1, centerC2A2, centerC2A3, centerC2A4, centerC3A1,
                 centerC3A2, centerC3A3, centerC3A4, centerCircle, leftArrow, rightArrow, centerPlayButton);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
-        vbox.getChildren().add(button1);
-        vbox.setSpacing(10);
-        ((Group)mainScene.getRoot()).getChildren().add(vbox);
         mainStage.setScene(mainScene);
     }
 

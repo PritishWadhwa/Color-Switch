@@ -141,6 +141,9 @@ public class Gameplay extends JPanel {
         return newText;
     }
 
+    public Scene getMainScene() {
+        return scene;
+    }
 
     public Stage getMainStage() {
         return mainStage;
