@@ -1,25 +1,27 @@
-
-
 package Menus;
 
-        import PlayArena.Gameplay;
-        import javafx.animation.ScaleTransition;
-        import javafx.event.EventHandler;
-        import javafx.scene.Group;
-        import javafx.scene.Node;
-        import javafx.scene.Scene;
-        import javafx.scene.image.Image;
-        import javafx.scene.image.ImageView;
-        import javafx.scene.input.MouseEvent;
-        import javafx.scene.paint.Color;
-        import javafx.scene.shape.Circle;
-        import javafx.stage.Stage;
-        import javafx.util.Duration;
+import PlayArena.Gameplay;
+import javafx.animation.ScaleTransition;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
-        import java.io.FileInputStream;
-        import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
-public class PauseGameMenu {
+public class RespawnMenu {
 
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
@@ -32,21 +34,22 @@ public class PauseGameMenu {
         Gameplay gameplay = new Gameplay();
         MainMenu mainMenu = new MainMenu();
         LoadGameMenu loadGameMenu = new LoadGameMenu();
-
+        Text currStars = makeText(30, "YOU HAVE 50 STARS", 50, 212.5, 5);
+        Text currStars1 = makeText(30, "YOU CAN USE 10 TO REVIVE", 50, 242.5, 5);
         Circle homeCircle = makeCircle(100, 100, 40, Color.rgb(128, 128, 128));
-        Circle centerCircle1 = makeCircle(280, 212.5, 70, Color.rgb(88, 88, 88));
+//        Circle centerCircle1 = makeCircle(280, 212.5, 70, Color.rgb(88, 88, 88));
         Circle centerCircle2 = makeCircle(280, 425, 70, Color.rgb(88, 88, 88));
         Circle centerCircle3 = makeCircle(280, 637.5, 70, Color.rgb(88, 88, 88));
         ImageView homeImg = makeImage("images/homeButton.png", 70, 70, 60, 60, true);
-        ImageView restartImg = makeImage("images/restartButton.png", 169, 122, 250, 250, true);
+        ImageView restartImg = makeImage("images/restartButton.png", 169, 548, 250, 250, true);
         ImageView playImg = makeImage("images/playButton.png", 222, 367, 125, 125, true);
-        ImageView saveImg = makeImage("images/saveButton.png", 236, 593, 90, 90, true);
-        resizeAnimation(centerCircle1);
+//        ImageView saveImg = makeImage("images/saveButton.png", 236, 593, 90, 90, true);
+//        resizeAnimation(centerCircle1);
         resizeAnimation(centerCircle2);
         resizeAnimation(centerCircle3);
         resizeAnimation(restartImg);
         resizeAnimation(playImg);
-        resizeAnimation(saveImg);
+//        resizeAnimation(saveImg);
 
         homeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -151,30 +154,30 @@ public class PauseGameMenu {
         restartImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(100,100,100));
+                centerCircle3.setFill(Color.rgb(100,100,100));
             }
         });
 
-        centerCircle1.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(100,100,100));
-            }
-        });
+//        centerCircle1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                centerCircle1.setFill(Color.rgb(100,100,100));
+//            }
+//        });
 
         restartImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(88,88,88));
+                centerCircle3.setFill(Color.rgb(88,88,88));
             }
         });
 
-        centerCircle1.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(88,88,88));
-            }
-        });
+//        centerCircle1.setOnMouseExited(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                centerCircle1.setFill(Color.rgb(88,88,88));
+//            }
+//        });
 
         restartImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -187,7 +190,58 @@ public class PauseGameMenu {
             }
         });
 
-        centerCircle1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//        centerCircle1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                try {
+//                    gameplay.start(stage);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+
+//        saveImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                centerCircle3.setFill(Color.rgb(100,100,100));
+//            }
+//        });
+
+        centerCircle3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle3.setFill(Color.rgb(100,100,100));
+            }
+        });
+
+//        saveImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                centerCircle3.setFill(Color.rgb(88,88,88));
+//            }
+//        });
+
+        centerCircle3.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                centerCircle3.setFill(Color.rgb(88,88,88));
+            }
+        });
+
+//        saveImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                try {
+//                    loadGameMenu.start(stage);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+        centerCircle3.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 try {
@@ -199,58 +253,7 @@ public class PauseGameMenu {
         });
 
 
-        saveImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(100,100,100));
-            }
-        });
-
-        centerCircle3.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(100,100,100));
-            }
-        });
-
-        saveImg.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(88,88,88));
-            }
-        });
-
-        centerCircle3.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(88,88,88));
-            }
-        });
-
-        saveImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    loadGameMenu.start(stage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        centerCircle3.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    loadGameMenu.start(stage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
-        Group root = new Group(homeCircle, homeImg, centerCircle1, restartImg, centerCircle2, playImg, centerCircle3, saveImg);
+        Group root = new Group(homeCircle, homeImg, centerCircle2, playImg, centerCircle3,restartImg, currStars, currStars1);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         stage.setScene(mainScene);
         stage.show();
@@ -288,6 +291,16 @@ public class PauseGameMenu {
         return c;
     }
 
+    Text makeText(int size, String str, double xPos, double yPos, double width) {
+        Text newText = new Text();
+        newText.setFont(Font.font("gothic", FontWeight.BOLD, FontPosture.REGULAR, size));
+        newText.setText(str);
+        newText.setX(xPos);
+        newText.setY(yPos);
+        newText.setFill(Color.WHITE);
+        newText.setStrokeWidth(width);
+        return newText;
+    }
 //    public Stage getMainStage() {
 //        return mainStage;
 //    }

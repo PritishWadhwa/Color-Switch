@@ -3,13 +3,14 @@ package sample;
 import Menus.LoadGameMenu;
 import Menus.MainMenu;
 import Menus.PauseGameMenu;
+import Menus.RespawnMenu;
 import PlayArena.Gameplay;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
     public MainMenu menu;
-    public PauseGameMenu pauseGameMenu;
+//    public RespawnMenu respawnMenu;
 
     public static void main(String[] args) {
         launch(args);
@@ -36,8 +37,8 @@ public class Main extends Application {
 //            PauseGameMenu pauseGameMenu = new PauseGameMenu();
 //            primaryStage = pauseGameMenu.getMainStage();
 //            primaryStage.show();
-//            pauseGameMenu = new PauseGameMenu();
-//            pauseGameMenu.start(primaryStage);
+//            respawnMenu = new RespawnMenu();
+//            respawnMenu.start(primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
