@@ -89,8 +89,8 @@ public class Ball extends Region {
         double locationY = location.getY();
         double velocityX = velocity.getX();
         double velocityY = velocity.getY();
-        if (locationY > 750) {
-            locationY = 750;
+        if (locationY > 675) {
+            locationY = 675;
             velocityY = 0;
         }
         location = new Point2D(locationX, locationY);
