@@ -1,27 +1,22 @@
 package PlayArena;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import Tokens.Ball;
 import javafx.animation.*;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Gameplay extends JPanel {
     public static double SCENE_WIDTH = 800;
@@ -35,6 +30,7 @@ public class Gameplay extends JPanel {
     List<Ball> allBalls = new ArrayList<>();
     AnimationTimer gameLoop;
     Scene scene;
+
     public Gameplay() {
         playfield = new Pane();
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
@@ -45,13 +41,13 @@ public class Gameplay extends JPanel {
                 allBalls.forEach(Ball::display);
             }
         };
-        ro =new Group();
+        ro = new Group();
 
-        Rectangle rect = returnRect(200,200,150,18,0,20,20);
+        Rectangle rect = returnRect(200, 200, 150, 18, 0, 20, 20);
         rect.setFill(Color.LIMEGREEN);
-        Rectangle rect1 = returnRect(218,332,18,150,0,20,20);
-        Rectangle rect2 = returnRect(200,200,18,150,0,20,20);
-        Rectangle rect3 = returnRect(350,200,150,18,0,20,20);
+        Rectangle rect1 = returnRect(218, 332, 18, 150, 0, 20, 20);
+        Rectangle rect2 = returnRect(200, 200, 18, 150, 0, 20, 20);
+        Rectangle rect3 = returnRect(350, 200, 150, 18, 0, 20, 20);
         rect1.setFill(Color.RED);
         rect2.setFill(Color.BLUE);
         rect3.setFill(Color.YELLOW);
@@ -77,8 +73,9 @@ public class Gameplay extends JPanel {
         mainStage = new Stage();
         mainStage.setScene(scene);
     }
-    public Rectangle returnRect(double x,double y,double h,double w ,double strokeW,double arch,double arcw) {
-        Rectangle rect =new Rectangle();
+
+    public Rectangle returnRect(double x, double y, double h, double w, double strokeW, double arch, double arcw) {
+        Rectangle rect = new Rectangle();
         rect.setX(x);
         rect.setY(y);
         rect.setHeight(h);
@@ -89,11 +86,13 @@ public class Gameplay extends JPanel {
         rect.setArcWidth(arcw);
         return rect;
     }
+
     private void prepareGame() {
         for (int i = 0; i < Ball_COUNT; i++) {
             addBall();
         }
     }
+
     private void startGame() {
         gameLoop = new AnimationTimer() {
             @Override
@@ -106,6 +105,7 @@ public class Gameplay extends JPanel {
         };
         gameLoop.start();
     }
+
     private void addBall() {
         double x = 300;
         double y = 50;
@@ -113,9 +113,10 @@ public class Gameplay extends JPanel {
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
-        Ball Ball = new Ball(playfield, location, velocity, acceleration, mass,ro);
+        Ball Ball = new Ball(playfield, location, velocity, acceleration, mass, ro);
         allBalls.add(Ball);
     }
+
     public Stage getMainStage() {
         return mainStage;
     }

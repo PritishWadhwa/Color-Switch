@@ -3,8 +3,11 @@ package sample;
 import Menus.LoadGameMenu;
 import Menus.MainMenu;
 import Menus.PauseGameMenu;
+import Tokens.Star;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.awt.geom.Point2D;
 
 public class Main extends Application {
     public static void main(String[] args) {
