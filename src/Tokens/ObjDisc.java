@@ -14,15 +14,15 @@ import javax.swing.*;
 public class ObjDisc extends JPanel {
     public ObjDisc(Group ro) {
 
-        Rectangle rect = returnRect(210,98,132,18,0,0,10);
+        Rectangle rect = returnRect(180,38,172,18,0,0,10);
         rect.setFill(Color.rgb(53, 226, 242));
-        Rectangle rect1 = returnRect(228,212,18,132,0,0,10);
-        Rectangle rect2 = returnRect(210,80,18,132,0,0,10);
-        Rectangle rect3 = returnRect(342,80,132,18,0,0,10);
+        Rectangle rect1 = returnRect(198,192,18,172,0,0,10);
+        Rectangle rect2 = returnRect(180,20,18,172,0,0,10);
+        Rectangle rect3 = returnRect(352,20,172,18,0,0,10);
         rect1.setFill(Color.rgb(245, 223, 15));
         rect2.setFill(Color.rgb(141, 18, 255));
         rect3.setFill(Color.rgb(255, 0, 132));
-        final Rotate rotateCWCC2 = new Rotate(0, 285, 150);
+        final Rotate rotateCWCC2 = new Rotate(0, 275, 120);
         rect.getTransforms().add(rotateCWCC2);
         rect1.getTransforms().add(rotateCWCC2);
         rect2.getTransforms().add(rotateCWCC2);
