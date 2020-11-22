@@ -1,74 +1,73 @@
 package PlayArena;
 
+import sample.COLOR;
 import Tokens.Ball;
-import javafx.animation.*;
+import Tokens.ObjDisc;
+import Tokens.ObjLine;
+import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Gameplay extends JPanel {
-    public static double SCENE_WIDTH = 800;
-    public static double SCENE_HEIGHT = 700;
-    public static int Ball_COUNT = 1;
-    public static Point2D FORCE_GRAVITY = new Point2D(0, 9.8);
-    public static double Ball_MAX_SPEED = 15;
+    private static final double HEIGHT = 850.0;
+    private static final double WIDTH = 560.0;
+    public static Point2D FORCE_GRAVITY = new Point2D(0, 8);
     private final Stage mainStage;
     Group ro;
     Pane playfield;
-    List<Ball> allBalls = new ArrayList<>();
     AnimationTimer gameLoop;
     Scene scene;
+    private int curScore;
+    private Ball ball;
 
-    public Gameplay() {
+    public Gameplay() throws FileNotFoundException {
         playfield = new Pane();
+        setCurScore(0);
+        ImageView hand = makeImage("images/hand.png", 267, 600, 100, 100, true);
+        Text scoreDisplay = makeText(50, Integer.toString(getCurScore()), 10.0, 50.0, 5.0);
+        ro = new Group(playfield, hand, scoreDisplay);
+        setBall();
+
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                System.out.println("Hello World");
-                allBalls.forEach(Ball::bounce);
-                allBalls.forEach(Ball::display);
+                setCurScore(getCurScore() + 1);
+                ball.bounce();
+                ball.display();
+                PauseTransition pause = new PauseTransition(Duration.millis(0));
+                pause.setOnFinished(et -> {
+                    scoreDisplay.setText(Integer.toString(getCurScore()));
+                });
+                pause.play();
+
             }
         };
-        ro = new Group();
 
-        Rectangle rect = returnRect(200, 200, 150, 18, 0, 20, 20);
-        rect.setFill(Color.LIMEGREEN);
-        Rectangle rect1 = returnRect(218, 332, 18, 150, 0, 20, 20);
-        Rectangle rect2 = returnRect(200, 200, 18, 150, 0, 20, 20);
-        Rectangle rect3 = returnRect(350, 200, 150, 18, 0, 20, 20);
-        rect1.setFill(Color.RED);
-        rect2.setFill(Color.BLUE);
-        rect3.setFill(Color.YELLOW);
-        final Rotate rotateCWCC2 = new Rotate(0, 275, 275);
-        rect.getTransforms().add(rotateCWCC2);
-        rect1.getTransforms().add(rotateCWCC2);
-        rect2.getTransforms().add(rotateCWCC2);
-        rect3.getTransforms().add(rotateCWCC2);
-        final Timeline ra = new Timeline();
-        ra.getKeyFrames().add(new KeyFrame(Duration.seconds(4), new KeyValue(rotateCWCC2.angleProperty(), 360)));
-        ra.setCycleCount(Animation.INDEFINITE);
-        ra.play();
-        playfield.setPrefSize(SCENE_WIDTH, SCENE_HEIGHT);
-        prepareGame();
+        new ObjLine(ro);
+        new ObjDisc(ro);
+        playfield.setPrefSize(WIDTH, HEIGHT);
+
         startGame();
-        ro.getChildren().add(rect);
-        ro.getChildren().add(rect1);
-        ro.getChildren().add(rect2);
-        ro.getChildren().add(rect3);
-        ro.getChildren().add(playfield);
-        scene = new Scene(ro, SCENE_WIDTH, SCENE_HEIGHT);
+        scene = new Scene(ro, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         mainStage = new Stage();
         mainStage.setScene(scene);
@@ -87,35 +86,61 @@ public class Gameplay extends JPanel {
         return rect;
     }
 
-    private void prepareGame() {
-        for (int i = 0; i < Ball_COUNT; i++) {
-            addBall();
-        }
-    }
-
     private void startGame() {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                allBalls.forEach(s -> s.applyForce(FORCE_GRAVITY));
-                allBalls.forEach(Ball::move);
-                allBalls.forEach(Ball::checkBounds);
-                allBalls.forEach(Ball::display);
+//                if (ball.location.getY() < 400)
+//                    ball.setVisible(false);
+                ball.applyForce(FORCE_GRAVITY);
+                ball.move();
+                ball.checkBounds();
+                ball.display();
             }
         };
         gameLoop.start();
     }
 
-    private void addBall() {
-        double x = 300;
-        double y = 50;
+    private void setBall() {
+        double x = 280;
+        double y = 750;
         Point2D location = new Point2D(x, y);
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
-        Ball Ball = new Ball(playfield, location, velocity, acceleration, mass, ro);
-        allBalls.add(Ball);
+        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, COLOR.getRandomColor());
     }
+
+    public int getCurScore() {
+        return curScore;
+    }
+
+    public void setCurScore(int sc) {
+        this.curScore = sc;
+    }
+
+    ImageView makeImage(String url, double xPos, double yPos, double height, double width, boolean preserveRatio) throws FileNotFoundException {
+        Image img = new Image(new FileInputStream(url));
+        ImageView viewImg = new ImageView(img);
+        viewImg.setX(xPos);
+        viewImg.setY(yPos);
+        viewImg.setFitHeight(height);
+        viewImg.setFitWidth(width);
+        viewImg.setPreserveRatio(preserveRatio);
+        return viewImg;
+    }
+
+    Text makeText(int size, String str, double xPos, double yPos, double width) {
+        Text newText = new Text();
+        newText.setFont(Font.font("gothic", FontWeight.BOLD, FontPosture.REGULAR, size));
+        newText.setText(str);
+        newText.setX(xPos);
+        newText.setY(yPos);
+        newText.setFill(Color.WHITE);
+        newText.setStrokeWidth(width);
+        return newText;
+    }
+
 
     public Stage getMainStage() {
         return mainStage;

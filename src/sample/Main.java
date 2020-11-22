@@ -3,6 +3,7 @@ package sample;
 import Menus.LoadGameMenu;
 import Menus.MainMenu;
 import Menus.PauseGameMenu;
+import PlayArena.Gameplay;
 import Tokens.Star;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -17,12 +18,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-//            MainMenu mainMenu = new MainMenu();
-//            primaryStage = mainMenu.getMainStage();
+//            Gameplay play = new Gameplay();
+//            primaryStage = play.getMainStage();
 //            primaryStage.show();
-            LoadGameMenu loadGameMenu = new LoadGameMenu();
-            primaryStage = loadGameMenu.getMainStage();
+            MainMenu mainMenu = new MainMenu();
+            primaryStage = mainMenu.getMainStage();
             primaryStage.show();
+//            LoadGameMenu loadGameMenu = new LoadGameMenu();
+//            primaryStage = loadGameMenu.getMainStage();
+//            primaryStage.show();
 //            PauseGameMenu pauseGameMenu = new PauseGameMenu();
 //            primaryStage = pauseGameMenu.getMainStage();
 //            primaryStage.show();

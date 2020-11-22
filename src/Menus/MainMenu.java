@@ -1,10 +1,14 @@
 package Menus;
 
 import javafx.animation.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -137,12 +141,32 @@ public class MainMenu extends JPanel {
         arrow2right.setCycleCount(Integer.MAX_VALUE);
         arrow2right.setAutoReverse(true);
         arrow2right.play();
+
+        VBox vbox = new VBox();
+        vbox.setLayoutX(20);
+        vbox.setLayoutY(20);
+
+
+        Button button1 = new Button("Play");
+        button1.setGraphic(exitImage);
+        button1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("hi");
+            }
+        });
+
+
+
         mainStage = new Stage();
         Group root = new Group(headingC1A1, headingC1A2, headingC1A3, headingC1A4, headingC, headingL, headingC2A1,
                 headingC2A2, headingC2A3, headingC2A4, headingR, headingSwitch, exitImage, loadGame, centerC1A1,
                 centerC1A2, centerC1A3, centerC1A4, centerC2A1, centerC2A2, centerC2A3, centerC2A4, centerC3A1,
                 centerC3A2, centerC3A3, centerC3A4, centerCircle, leftArrow, rightArrow, centerPlayButton);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
+        vbox.getChildren().add(button1);
+        vbox.setSpacing(10);
+        ((Group)mainScene.getRoot()).getChildren().add(vbox);
         mainStage.setScene(mainScene);
     }
 
