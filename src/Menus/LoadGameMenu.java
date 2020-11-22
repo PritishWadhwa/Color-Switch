@@ -1,11 +1,11 @@
 package Menus;
 
+import PlayArena.Gameplay;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,14 +21,15 @@ import java.io.FileNotFoundException;
 
 public class LoadGameMenu {
 
-//    MainMenu mainMenu = new MainMenu();
+    //    MainMenu mainMenu = new MainMenu();
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
-    private final Scene mainScene;
-    private final Stage mainStage;
 
-    public LoadGameMenu() throws FileNotFoundException {
-//        MainMenu mainMenu = new MainMenu();
+    public void start(Stage stage) throws FileNotFoundException {
+        Scene mainScene;
+
+        MainMenu mainMenu = new MainMenu();
+        Gameplay gameplay = new Gameplay();
         Rectangle topRect = makeRectangle(0, 0, 100, 560, Color.rgb(28, 106, 207));
         Text headingText = makeText(50, "LOAD GAMES", 175, 68, 10, Color.WHITE);
         Circle homeCircle = makeCircle(80, 50, 35, Color.WHITE);
@@ -62,19 +63,349 @@ public class LoadGameMenu {
             }
         });
 
-//        homeCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                mainStage.setScene(mainMenu.getMainScene());
-//            }
-//        });
+        homeCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-        mainStage = new Stage();
+            }
+        });
+
+        topHome.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                homeCircle.setFill(Color.LIGHTGRAY);
+            }
+        });
+
+        topHome.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                homeCircle.setFill(Color.WHITE);
+            }
+        });
+
+        topHome.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rounded1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+               rounded1.setStroke(Color.BLUE);
+            }
+        });
+
+        rounded1.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded1.setStroke(Color.RED);
+            }
+        });
+
+        saveGame1Text1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded1.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame1Text1.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded1.setStroke(Color.RED);
+            }
+        });
+
+        saveGame1Text2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded1.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame1Text2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded1.setStroke(Color.RED);
+            }
+        });
+
+        rounded1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame1Text1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame1Text2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rounded2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded2.setStroke(Color.BLUE);
+            }
+        });
+
+        rounded2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded2.setStroke(Color.RED);
+            }
+        });
+
+        saveGame2Text1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded2.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame2Text1.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded2.setStroke(Color.RED);
+            }
+        });
+
+        saveGame2Text2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded2.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame2Text2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded2.setStroke(Color.RED);
+            }
+        });
+
+        rounded2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame2Text1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame2Text2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rounded3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded3.setStroke(Color.BLUE);
+            }
+        });
+
+        rounded3.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded3.setStroke(Color.RED);
+            }
+        });
+
+        saveGame3Text1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded3.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame3Text1.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded3.setStroke(Color.RED);
+            }
+        });
+
+        saveGame3Text2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded3.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame3Text2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded3.setStroke(Color.RED);
+            }
+        });
+
+        rounded3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame3Text1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame3Text2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rounded4.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded4.setStroke(Color.BLUE);
+            }
+        });
+
+        rounded4.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded4.setStroke(Color.RED);
+            }
+        });
+
+        saveGame4Text1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded4.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame4Text1.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded4.setStroke(Color.RED);
+            }
+        });
+
+        saveGame4Text2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded4.setStroke(Color.BLUE);
+            }
+        });
+
+        saveGame4Text2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rounded4.setStroke(Color.RED);
+            }
+        });
+
+        rounded4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame4Text1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        saveGame4Text2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         Group root = new Group(topRect, headingText, homeCircle, topHome, strip, stripText, rounded1, rounded2,
                 rounded3, rounded4, saveGame1Text1, saveGame1Text2, saveGame2Text1, saveGame2Text2,
                 saveGame3Text1, saveGame3Text2, saveGame4Text1, saveGame4Text2);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
-        mainStage.setScene(mainScene);
+        stage.setScene(mainScene);
+        stage.show();
     }
 
     Rectangle makeRoundedRectangle(double posX, double posY, double height, double width, Color shapeColor, Color boundaryColor) {
@@ -132,11 +463,5 @@ public class LoadGameMenu {
         return rect;
     }
 
-    public Scene getMainScene() {
-        return mainScene;
-    }
 
-    public Stage getMainStage() {
-        return mainStage;
-    }
 }

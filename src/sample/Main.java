@@ -7,6 +7,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    public static MainMenu menu;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -19,10 +21,11 @@ public class Main extends Application {
 //            primaryStage = play.getMainStage();
 //            primaryStage.show();
 //            Gameplay play = new Gameplay();
-            LoadGameMenu loadGameMenu = new LoadGameMenu();
-            MainMenu menu = new MainMenu();
-            primaryStage = menu.getMainStage();
-            primaryStage.show();
+            menu = new MainMenu();
+            menu.start(primaryStage);
+            //LoadGameMenu loadGameMenu = new LoadGameMenu();
+            //primaryStage = menu.getMainStage();
+            //primaryStage.show();
 //            LoadGameMenu loadGameMenu = new LoadGameMenu();
 //            primaryStage = loadGameMenu.getMainStage();
 //            primaryStage.show();

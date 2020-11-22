@@ -1,6 +1,7 @@
 package PlayArena;
 
 import Tokens.*;
+import javafx.application.Application;
 import sample.COLOR;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
@@ -25,11 +26,10 @@ import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Gameplay extends JPanel {
+public class Gameplay extends Application {
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
     public static Point2D FORCE_GRAVITY = new Point2D(0, 8);
-    private final Stage mainStage;
     Group ro;
     Pane playfield;
     AnimationTimer gameLoop;
@@ -40,7 +40,8 @@ public class Gameplay extends JPanel {
     private Star star1,star2;
     private ColorSwapper swapper;
     public int f=1;
-    public Gameplay() throws FileNotFoundException {
+    public void start(Stage stage) throws FileNotFoundException {
+        Stage mainStage;
         playfield = new Pane();
         setCurScore(0);
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
@@ -68,8 +69,9 @@ public class Gameplay extends JPanel {
         startGame();
         scene = new Scene(ro, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-        mainStage = new Stage();
-        mainStage.setScene(scene);
+        //mainStage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
     public void prepareStars() throws FileNotFoundException {
         Point2D l1 = new Point2D(260,100);
@@ -161,7 +163,7 @@ public class Gameplay extends JPanel {
         return scene;
     }
 
-    public Stage getMainStage() {
-        return mainStage;
-    }
+//    public Stage getMainStage() {
+//        return mainStage;
+//    }
 }
