@@ -29,6 +29,7 @@ public class MainMenu extends Application {
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
     private int flag = 0;
+
     public void start(Stage stage) throws FileNotFoundException {
         Scene mainScene;
         Stage mainStage;

@@ -5,13 +5,13 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Star {
-    Point2D location;
     public Node view;
+    Point2D location;
+
     public Star(Point2D location) throws FileNotFoundException {
         this.location = location;
         this.view = makeImage("images/star.png", location.getX(), location.getY(), 40, 40, true);

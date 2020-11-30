@@ -10,6 +10,10 @@ import javafx.scene.shape.Circle;
 import sample.COLOR;
 
 public class Ball extends Region {
+    public Point2D location;
+    Pane layer;
+    Node view;
+    Circle circle;
     private Point2D acceleration;
     private double mass;
     private double maxSpeed = 10;
@@ -18,19 +22,16 @@ public class Ball extends Region {
     private double centerX;
     private double centerY;
     private double radius;
-    public Point2D location;
     private Point2D velocity;
-    Pane layer;
     private COLOR cl;
-    Node view;
-    Circle circle;
+
     public Ball(Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass, Group ro, COLOR cl) {
         this.layer = layer;
         this.location = location;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.mass = mass;
-        this.cl=cl;
+        this.cl = cl;
         width = mass;
         height = width;
         centerX = width / 2.0;
@@ -102,8 +103,9 @@ public class Ball extends Region {
     public COLOR getCl() {
         return cl;
     }
-    public void setCl(COLOR cl){
-        this.cl=cl;
+
+    public void setCl(COLOR cl) {
+        this.cl = cl;
         switch (cl) {
             case AQUA:
                 circle.setFill(Color.rgb(141, 18, 255));

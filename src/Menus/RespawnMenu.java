@@ -54,28 +54,28 @@ public class RespawnMenu {
         homeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(140,140,140));
+                homeCircle.setFill(Color.rgb(140, 140, 140));
             }
         });
 
         homeCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(140,140,140));
+                homeCircle.setFill(Color.rgb(140, 140, 140));
             }
         });
 
         homeImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(128,128,128));
+                homeCircle.setFill(Color.rgb(128, 128, 128));
             }
         });
 
         homeCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(128,128,128));
+                homeCircle.setFill(Color.rgb(128, 128, 128));
             }
         });
 
@@ -104,28 +104,28 @@ public class RespawnMenu {
         playImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(100,100,100));
+                centerCircle2.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         centerCircle2.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(100,100,100));
+                centerCircle2.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         playImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(88,88,88));
+                centerCircle2.setFill(Color.rgb(88, 88, 88));
             }
         });
 
         centerCircle2.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(88,88,88));
+                centerCircle2.setFill(Color.rgb(88, 88, 88));
             }
         });
 
@@ -154,7 +154,7 @@ public class RespawnMenu {
         restartImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(100,100,100));
+                centerCircle3.setFill(Color.rgb(100, 100, 100));
             }
         });
 
@@ -168,7 +168,7 @@ public class RespawnMenu {
         restartImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(88,88,88));
+                centerCircle3.setFill(Color.rgb(88, 88, 88));
             }
         });
 
@@ -212,7 +212,7 @@ public class RespawnMenu {
         centerCircle3.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(100,100,100));
+                centerCircle3.setFill(Color.rgb(100, 100, 100));
             }
         });
 
@@ -226,7 +226,7 @@ public class RespawnMenu {
         centerCircle3.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(88,88,88));
+                centerCircle3.setFill(Color.rgb(88, 88, 88));
             }
         });
 
@@ -253,7 +253,7 @@ public class RespawnMenu {
         });
 
 
-        Group root = new Group(homeCircle, homeImg, centerCircle2, playImg, centerCircle3,restartImg, currStars, currStars1);
+        Group root = new Group(homeCircle, homeImg, centerCircle2, playImg, centerCircle3, restartImg, currStars, currStars1);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         stage.setScene(mainScene);
         stage.show();

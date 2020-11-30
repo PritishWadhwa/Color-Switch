@@ -9,8 +9,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class ColorSwapper {
-    Point2D location;
     public Node view;
+    Point2D location;
+
     public ColorSwapper(Point2D location) throws FileNotFoundException {
         this.location = location;
         this.view = makeImage("images/swap.png", location.getX(), location.getY(), 40, 40, true);

@@ -1,10 +1,6 @@
 package sample;
 
-import Menus.LoadGameMenu;
 import Menus.MainMenu;
-import Menus.PauseGameMenu;
-import Menus.RespawnMenu;
-import PlayArena.Gameplay;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

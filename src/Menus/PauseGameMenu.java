@@ -1,23 +1,21 @@
-
-
 package Menus;
 
-        import PlayArena.Gameplay;
-        import javafx.animation.ScaleTransition;
-        import javafx.event.EventHandler;
-        import javafx.scene.Group;
-        import javafx.scene.Node;
-        import javafx.scene.Scene;
-        import javafx.scene.image.Image;
-        import javafx.scene.image.ImageView;
-        import javafx.scene.input.MouseEvent;
-        import javafx.scene.paint.Color;
-        import javafx.scene.shape.Circle;
-        import javafx.stage.Stage;
-        import javafx.util.Duration;
+import PlayArena.Gameplay;
+import javafx.animation.ScaleTransition;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
-        import java.io.FileInputStream;
-        import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class PauseGameMenu {
 
@@ -51,28 +49,28 @@ public class PauseGameMenu {
         homeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(140,140,140));
+                homeCircle.setFill(Color.rgb(140, 140, 140));
             }
         });
 
         homeCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(140,140,140));
+                homeCircle.setFill(Color.rgb(140, 140, 140));
             }
         });
 
         homeImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(128,128,128));
+                homeCircle.setFill(Color.rgb(128, 128, 128));
             }
         });
 
         homeCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                homeCircle.setFill(Color.rgb(128,128,128));
+                homeCircle.setFill(Color.rgb(128, 128, 128));
             }
         });
 
@@ -101,28 +99,28 @@ public class PauseGameMenu {
         playImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(100,100,100));
+                centerCircle2.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         centerCircle2.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(100,100,100));
+                centerCircle2.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         playImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(88,88,88));
+                centerCircle2.setFill(Color.rgb(88, 88, 88));
             }
         });
 
         centerCircle2.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle2.setFill(Color.rgb(88,88,88));
+                centerCircle2.setFill(Color.rgb(88, 88, 88));
             }
         });
 
@@ -151,28 +149,28 @@ public class PauseGameMenu {
         restartImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(100,100,100));
+                centerCircle1.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         centerCircle1.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(100,100,100));
+                centerCircle1.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         restartImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(88,88,88));
+                centerCircle1.setFill(Color.rgb(88, 88, 88));
             }
         });
 
         centerCircle1.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle1.setFill(Color.rgb(88,88,88));
+                centerCircle1.setFill(Color.rgb(88, 88, 88));
             }
         });
 
@@ -202,28 +200,28 @@ public class PauseGameMenu {
         saveImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(100,100,100));
+                centerCircle3.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         centerCircle3.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(100,100,100));
+                centerCircle3.setFill(Color.rgb(100, 100, 100));
             }
         });
 
         saveImg.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(88,88,88));
+                centerCircle3.setFill(Color.rgb(88, 88, 88));
             }
         });
 
         centerCircle3.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                centerCircle3.setFill(Color.rgb(88,88,88));
+                centerCircle3.setFill(Color.rgb(88, 88, 88));
             }
         });
 

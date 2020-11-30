@@ -103,7 +103,7 @@ public class LoadGameMenu {
         rounded1.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-               rounded1.setStroke(Color.BLUE);
+                rounded1.setStroke(Color.BLUE);
             }
         });
 
