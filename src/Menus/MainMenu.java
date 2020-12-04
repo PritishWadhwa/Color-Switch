@@ -142,6 +142,7 @@ public class MainMenu extends Application {
         arrow2right.setCycleCount(Integer.MAX_VALUE);
         arrow2right.setAutoReverse(true);
         arrow2right.play();
+
         mainStage = new Stage();
         exitImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -212,7 +213,7 @@ public class MainMenu extends Application {
                 //  mainStage.setScene(gameplay.getMainScene());
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -237,7 +238,7 @@ public class MainMenu extends Application {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }

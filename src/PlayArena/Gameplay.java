@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -41,10 +42,12 @@ public class Gameplay extends Application {
     private Star star1, star2;
     private ColorSwapper swapper;
 
-    public void start(Stage stage) throws FileNotFoundException {
+    public void start(Stage stage) throws FileNotFoundException, InterruptedException {
         playfield = new Pane();
         PauseGameMenu pauseMenu = new PauseGameMenu();
         setCurScore(0);
+        Rectangle leftRect = makeRectangle(0,0, 850, 100, Color.BLACK);
+        Rectangle rightRect = makeRectangle(460,0, 850, 100, Color.BLACK);
         ImageView pauseButton = makeImage("images/pause.png", 480, 6, 180, 80, true);
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
         Circle pcircle = makeCircle(519, 47, 40, Color.rgb(88, 88, 88));
@@ -116,6 +119,10 @@ public class Gameplay extends Application {
 
         new ObjLine(ro);
         new ObjDisc(ro);
+        new RingObstacle(ro, ball);
+        new InfiniteLineObstacle(ro,ball);
+        ro.getChildren().add(leftRect);
+        ro.getChildren().add(rightRect);
         playfield.setPrefSize(WIDTH, HEIGHT);
 
         startGame();
@@ -137,7 +144,6 @@ public class Gameplay extends Application {
         Point2D l1 = new Point2D(260, 300);
         swapper = new ColorSwapper(l1);
     }
-
 
     private void startGame() {
         gameLoop = new AnimationTimer() {
@@ -234,6 +240,16 @@ public class Gameplay extends Application {
         c.setFill(color);
         c.setRadius(radius);
         return c;
+    }
+
+    Rectangle makeRectangle(double xPos, double yPos, double height, double width, Color color) {
+        Rectangle rect = new Rectangle();
+        rect.setX(xPos);
+        rect.setY(yPos);
+        rect.setHeight(height);
+        rect.setWidth(width);
+        rect.setFill(color);
+        return rect;
     }
 
     public Scene getMainScene() {

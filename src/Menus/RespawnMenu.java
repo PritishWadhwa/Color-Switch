@@ -134,7 +134,7 @@ public class RespawnMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -145,7 +145,7 @@ public class RespawnMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -184,7 +184,7 @@ public class RespawnMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -246,7 +246,7 @@ public class RespawnMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }

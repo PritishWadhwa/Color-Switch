@@ -123,6 +123,13 @@ public class Ball extends Region {
 
     }
 
+    public double getY() {
+        return this.centerY - this.radius;
+    }
+
+    public double getX() {
+        return this.centerX - this.radius;
+    }
 
     public void display() {
         relocate(location.getX() - centerX, location.getY() - centerY);
