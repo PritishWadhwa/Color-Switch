@@ -90,15 +90,15 @@ public class InfiniteLineObstacle {
         root.getChildren().add(rect7);
         root.getChildren().add(rect8);
 
-        if(rect6.getX() <= ball.getX() && ball.getX()<=rect6.getX()+rect6.getWidth() && rect6.getY() == ball.getY()){
-            ball.setVisible(false);
-            System.out.println("touchline");
-        }
-
-        if(rect5.getX() <= ball.getX() && ball.getX()<=rect5.getX()+rect5.getWidth() && rect5.getY() == ball.getY()){
-            ball.setVisible(false);
-            System.out.println("touchline");
-        }
+//        if(rect6.getX() <= ball.getX() && ball.getX()<=rect6.getX()+rect6.getWidth() && rect6.getY() == ball.getY()){
+//            ball.setVisible(false);
+//            System.out.println("touchline");
+//        }
+//
+//        if(rect5.getX() <= ball.getX() && ball.getX()<=rect5.getX()+rect5.getWidth() && rect5.getY() == ball.getY()){
+//            ball.setVisible(false);
+//            System.out.println("touchline");
+//        }
 
 //        final Rotate rotateCW = new Rotate(0, 280, 380);
 //        arc1.getTransforms().add(rotateCW);

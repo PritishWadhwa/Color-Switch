@@ -129,7 +129,7 @@ public class PauseGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -140,7 +140,7 @@ public class PauseGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -179,7 +179,7 @@ public class PauseGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -190,7 +190,7 @@ public class PauseGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }

@@ -213,7 +213,7 @@ public class MainMenu extends Application {
                 //  mainStage.setScene(gameplay.getMainScene());
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -238,7 +238,7 @@ public class MainMenu extends Application {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }

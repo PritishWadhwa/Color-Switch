@@ -147,7 +147,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -158,7 +158,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -169,7 +169,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -222,7 +222,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -233,7 +233,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -244,7 +244,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -297,7 +297,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -308,7 +308,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -319,7 +319,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -372,7 +372,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -383,7 +383,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -394,7 +394,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     gameplay.start(stage);
-                } catch (FileNotFoundException | InterruptedException e) {
+                } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }

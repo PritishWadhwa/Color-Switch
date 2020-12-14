@@ -5,16 +5,20 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class ObjLine extends JPanel {
-    public ObjLine(Group ro) {
+    private Group ob;
 
+    public ObjLine(Pane ro, ArrayList<Shape> nodes) {
         Rectangle rect1 = returnRect(220, 432, 18, 120, 0, 20, 20);
         Rectangle rect2 = returnRect(220, 432, 120, 18, 0, 20, 20);
         Rectangle rect3 = returnRect(118, 432, 18, 120, 0, 20, 20);
@@ -23,19 +27,22 @@ public class ObjLine extends JPanel {
         rect1.setFill(Color.rgb(255, 0, 132));
         rect2.setFill(Color.rgb(141, 18, 255));
         rect3.setFill(Color.rgb(53, 226, 242));
+        ob = new Group(rect, rect1, rect2, rect3);
+        nodes.add(rect);
+        nodes.add(rect1);
+        nodes.add(rect2);
+        nodes.add(rect3);
         final Rotate rotateCWCC2 = new Rotate(360, 229, 441);
-        rect.getTransforms().add(rotateCWCC2);
-        rect1.getTransforms().add(rotateCWCC2);
-        rect2.getTransforms().add(rotateCWCC2);
-        rect3.getTransforms().add(rotateCWCC2);
+        ob.getTransforms().add(rotateCWCC2);
         final Timeline ra = new Timeline();
         ra.getKeyFrames().add(new KeyFrame(Duration.seconds(4), new KeyValue(rotateCWCC2.angleProperty(), 0)));
         ra.setCycleCount(Animation.INDEFINITE);
         ra.play();
-        ro.getChildren().add(rect);
-        ro.getChildren().add(rect1);
-        ro.getChildren().add(rect2);
-        ro.getChildren().add(rect3);
+        ro.getChildren().add(ob);
+    }
+
+    public Group returnGrp() {
+        return this.ob;
     }
 
 

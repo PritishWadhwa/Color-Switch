@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -26,6 +26,7 @@ import sample.COLOR;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class Gameplay extends Application {
     private static final double HEIGHT = 850.0;
@@ -40,20 +41,25 @@ public class Gameplay extends Application {
     private int curScore;
     private Ball ball;
     private Star star1, star2;
+    private int sd;
+    private Circle block;
     private ColorSwapper swapper;
+    private ArrayList<Shape> nodes;
+    private ColorSwapper swapper2;
 
-    public void start(Stage stage) throws FileNotFoundException, InterruptedException {
+    public void start(Stage stage) throws FileNotFoundException {
+        sd = 1;
         playfield = new Pane();
+        nodes = new ArrayList<>();
         PauseGameMenu pauseMenu = new PauseGameMenu();
         setCurScore(0);
-        Rectangle leftRect = makeRectangle(0,0, 850, 100, Color.BLACK);
-        Rectangle rightRect = makeRectangle(460,0, 850, 100, Color.BLACK);
         ImageView pauseButton = makeImage("images/pause.png", 480, 6, 180, 80, true);
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
         Circle pcircle = makeCircle(519, 47, 40, Color.rgb(88, 88, 88));
         scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
-        ro = new Group(playfield, pcircle, hand, scoreDisplay, pauseButton);
+        ro = new Group(playfield, scoreDisplay, pcircle, pauseButton);
         prepareStars();
+
         pcircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -107,8 +113,8 @@ public class Gameplay extends Application {
         ro.getChildren().add(star2.view);
         prepareColorSwapper();
         ro.getChildren().add(swapper.view);
+        ro.getChildren().add(swapper2.view);
         setBall();
-
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
@@ -116,13 +122,11 @@ public class Gameplay extends Application {
                 ball.display();
             }
         };
+//        new ObjLine(playfield, nodes);
+        new RingObstacle(playfield, nodes);
 
-        new ObjLine(ro);
-        new ObjDisc(ro);
-        new RingObstacle(ro, ball);
-        new InfiniteLineObstacle(ro,ball);
-        ro.getChildren().add(leftRect);
-        ro.getChildren().add(rightRect);
+        //root.getChildren().addAll(nodes);
+        //  pane1.getChildren().addAll(star2.view,swapper.view,star1.view, hand );
         playfield.setPrefSize(WIDTH, HEIGHT);
 
         startGame();
@@ -131,6 +135,24 @@ public class Gameplay extends Application {
         //mainStage = new Stage();
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void collide(Shape block) {
+        boolean collisionDetected = false;
+        for (Shape static_bloc : nodes) {
+            if (static_bloc != block) {
+                //static_bloc.setFill(Color.GREEN);
+
+                Shape intersect = Shape.intersect(block, static_bloc);
+                if (intersect.getBoundsInLocal().getWidth() != -1 && !(static_bloc.getFill()).equals(block.getFill())) {
+                    collisionDetected = true;
+                }
+            }
+        }
+
+        if (collisionDetected) {
+            block.setFill(Color.BLUE);
+        }
     }
 
     public void prepareStars() throws FileNotFoundException {
@@ -143,13 +165,16 @@ public class Gameplay extends Application {
     public void prepareColorSwapper() throws FileNotFoundException {
         Point2D l1 = new Point2D(260, 300);
         swapper = new ColorSwapper(l1);
+        Point2D l2 = new Point2D(260, 100);
+        swapper2 = new ColorSwapper(l2);
     }
+
 
     private void startGame() {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-
+                collide(block);
                 if (ball.location.getY() < 120 && f == 3) {
                     f++;
                     star1.view.setVisible(false);
@@ -201,6 +226,7 @@ public class Gameplay extends Application {
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
         ball = new Ball(playfield, location, velocity, acceleration, mass, ro, COLOR.getRandomColor());
+        block = ball.retCircle();
     }
 
     public int getCurScore() {
@@ -240,16 +266,6 @@ public class Gameplay extends Application {
         c.setFill(color);
         c.setRadius(radius);
         return c;
-    }
-
-    Rectangle makeRectangle(double xPos, double yPos, double height, double width, Color color) {
-        Rectangle rect = new Rectangle();
-        rect.setX(xPos);
-        rect.setY(yPos);
-        rect.setHeight(height);
-        rect.setWidth(width);
-        rect.setFill(color);
-        return rect;
     }
 
     public Scene getMainScene() {
