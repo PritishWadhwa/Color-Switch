@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -53,11 +54,13 @@ public class Gameplay extends Application {
         nodes = new ArrayList<>();
         PauseGameMenu pauseMenu = new PauseGameMenu();
         setCurScore(0);
+        Rectangle rectLeft = makeRectangle(0, 0, HEIGHT, 100, Color.BLACK);
+        Rectangle rectRight = makeRectangle(460, 0, HEIGHT, 100, Color.BLACK);
         ImageView pauseButton = makeImage("images/pause.png", 480, 6, 180, 80, true);
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
         Circle pcircle = makeCircle(519, 47, 40, Color.rgb(88, 88, 88));
         scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
-        ro = new Group(playfield, scoreDisplay, pcircle, pauseButton);
+        ro = new Group(playfield);
         prepareStars();
 
         pcircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -123,11 +126,17 @@ public class Gameplay extends Application {
             }
         };
 //        new ObjLine(playfield, nodes);
-        new RingObstacle(playfield, nodes);
-
+//        new RingObstacle(playfield, nodes);
+//        new InfiniteLineObstacle(playfield, nodes);
+        new ObjDisc(playfield, nodes);
         //root.getChildren().addAll(nodes);
         //  pane1.getChildren().addAll(star2.view,swapper.view,star1.view, hand );
         playfield.setPrefSize(WIDTH, HEIGHT);
+        ro.getChildren().add(rectLeft);
+        ro.getChildren().add(rectRight);
+        ro.getChildren().add(scoreDisplay);
+        ro.getChildren().add(pcircle);
+        ro.getChildren().add(pauseButton);
 
         startGame();
         scene = new Scene(ro, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
@@ -266,6 +275,16 @@ public class Gameplay extends Application {
         c.setFill(color);
         c.setRadius(radius);
         return c;
+    }
+
+    Rectangle makeRectangle(double xPos, double yPos, double height, double width, Color color) {
+        Rectangle rect = new Rectangle();
+        rect.setX(xPos);
+        rect.setY(yPos);
+        rect.setHeight(height);
+        rect.setWidth(width);
+        rect.setFill(color);
+        return rect;
     }
 
     public Scene getMainScene() {

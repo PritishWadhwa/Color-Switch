@@ -5,25 +5,31 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class ObjDisc extends JPanel {
-    public ObjDisc(Group ro) {
 
-        Rectangle rect = returnRect(180, 38, 172, 18, 0, 0, 10);
+    private Group group;
+
+    public ObjDisc(Pane pane, ArrayList<Shape> nodes) {
+
+        Rectangle rect = returnRect(185, 38, 172, 18, 0, 0, 10);
+        Rectangle rect1 = returnRect(203, 192, 18, 172, 0, 0, 10);
+        Rectangle rect2 = returnRect(185, 20, 18, 172, 0, 0, 10);
+        Rectangle rect3 = returnRect(357, 20, 172, 18, 0, 0, 10);
         rect.setFill(Color.rgb(53, 226, 242));
-        Rectangle rect1 = returnRect(198, 192, 18, 172, 0, 0, 10);
-        Rectangle rect2 = returnRect(180, 20, 18, 172, 0, 0, 10);
-        Rectangle rect3 = returnRect(352, 20, 172, 18, 0, 0, 10);
         rect1.setFill(Color.rgb(245, 223, 15));
         rect2.setFill(Color.rgb(141, 18, 255));
         rect3.setFill(Color.rgb(255, 0, 132));
-        final Rotate rotateCWCC2 = new Rotate(0, 275, 120);
+        final Rotate rotateCWCC2 = new Rotate(0, 280, 115);
         rect.getTransforms().add(rotateCWCC2);
         rect1.getTransforms().add(rotateCWCC2);
         rect2.getTransforms().add(rotateCWCC2);
@@ -32,10 +38,18 @@ public class ObjDisc extends JPanel {
         ra.getKeyFrames().add(new KeyFrame(Duration.seconds(6), new KeyValue(rotateCWCC2.angleProperty(), 360)));
         ra.setCycleCount(Animation.INDEFINITE);
         ra.play();
-        ro.getChildren().add(rect);
-        ro.getChildren().add(rect2);
-        ro.getChildren().add(rect3);
-        ro.getChildren().add(rect1);
+        group = new Group(rect, rect1, rect2, rect3);
+        nodes.add(rect);
+        nodes.add(rect1);
+        nodes.add(rect2);
+        nodes.add(rect3);
+
+
+        pane.getChildren().add(group);
+//        ro.getChildren().add(rect);
+//        ro.getChildren().add(rect2);
+//        ro.getChildren().add(rect3);
+//        ro.getChildren().add(rect1);
 
     }
 

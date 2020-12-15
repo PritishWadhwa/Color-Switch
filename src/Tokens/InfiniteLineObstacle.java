@@ -2,12 +2,19 @@ package Tokens;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class InfiniteLineObstacle {
-    public InfiniteLineObstacle(Group root, Ball ball) {
+
+    private Group group;
+
+    public InfiniteLineObstacle(Pane pane, ArrayList<Shape> nodes) {
         Rectangle rect1 = makeRectangle(-260, 380, 15, 90, Color.rgb(245, 223, 15));
         Rectangle rect2 = makeRectangle(-170, 380, 15, 90, Color.rgb(141, 18, 255));
         Rectangle rect3 = makeRectangle(-80, 380, 15, 90, Color.rgb(255, 0, 132));
@@ -17,8 +24,22 @@ public class InfiniteLineObstacle {
         Rectangle rect7 = makeRectangle(280, 380, 15, 90, Color.rgb(255, 0, 132));
         Rectangle rect8 = makeRectangle(370, 380, 15, 90, Color.rgb(53, 226, 242));
 
+        group = new Group(rect1, rect2, rect3, rect4, rect5, rect6, rect7, rect8);
+        nodes.add(rect1);
+        nodes.add(rect2);
+        nodes.add(rect3);
+        nodes.add(rect4);
+        nodes.add(rect5);
+        nodes.add(rect6);
+        nodes.add(rect7);
+        nodes.add(rect8);
+
+
+
+
         TranslateTransition rect1animation = new TranslateTransition();
-        rect1animation.setDuration(Duration.millis(2000 ));
+
+        rect1animation.setDuration(Duration.millis(2000));
         rect1animation.setNode(rect1);
         rect1animation.setByX(360);
         rect1animation.setCycleCount(Integer.MAX_VALUE);
@@ -81,38 +102,9 @@ public class InfiniteLineObstacle {
         rect8animation.setAutoReverse(true);
         rect8animation.play();
 
-        root.getChildren().add(rect1);
-        root.getChildren().add(rect2);
-        root.getChildren().add(rect3);
-        root.getChildren().add(rect4);
-        root.getChildren().add(rect5);
-        root.getChildren().add(rect6);
-        root.getChildren().add(rect7);
-        root.getChildren().add(rect8);
+        pane.getChildren().add(group);
 
-//        if(rect6.getX() <= ball.getX() && ball.getX()<=rect6.getX()+rect6.getWidth() && rect6.getY() == ball.getY()){
-//            ball.setVisible(false);
-//            System.out.println("touchline");
-//        }
-//
-//        if(rect5.getX() <= ball.getX() && ball.getX()<=rect5.getX()+rect5.getWidth() && rect5.getY() == ball.getY()){
-//            ball.setVisible(false);
-//            System.out.println("touchline");
-//        }
 
-//        final Rotate rotateCW = new Rotate(0, 280, 380);
-//        arc1.getTransforms().add(rotateCW);
-//        arc2.getTransforms().add(rotateCW);
-//        arc3.getTransforms().add(rotateCW);
-//        arc4.getTransforms().add(rotateCW);
-//        final Timeline rotationAnimationCW = new Timeline();
-//        rotationAnimationCW.getKeyFrames().add(new KeyFrame(Duration.seconds(3), new KeyValue(rotateCW.angleProperty(), 360)));
-//        rotationAnimationCW.setCycleCount(Animation.INDEFINITE);
-//        rotationAnimationCW.play();
-//        root.getChildren().add(arc1);
-//        root.getChildren().add(arc2);
-//        root.getChildren().add(arc3);
-//        root.getChildren().add(arc4);
     }
 
     Rectangle makeRectangle(double xPos, double yPos, double height, double width, Color color) {
