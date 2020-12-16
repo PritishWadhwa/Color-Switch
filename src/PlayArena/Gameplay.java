@@ -2,11 +2,10 @@ package PlayArena;
 
 import Menus.LoadGameMenu;
 import Menus.MainMenu;
+import Menus.RespawnMenu;
+import Menus.SaveGameMenu;
 import Tokens.*;
-import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -18,10 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -34,12 +30,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+
 public class Gameplay extends Application {
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
     public static Point2D FORCE_GRAVITY = new Point2D(0, 8);
     public Text scoreDisplay;
     public int f = 1;
+    RespawnMenu death;
     Group ro;
     Pane playfield;
     AnimationTimer gameLoop;
@@ -58,24 +56,23 @@ public class Gameplay extends Application {
     private Ball ball;
     private int sd;
     private Circle block;
-    private ColorSwapper swapper;
     private ArrayList<Shape> nodes;
-    private ColorSwapper swapper2;
     private ArrayList<Group> obstacles;
     private Group headgroup;
     private Queue<Star> star_list;
     private Queue<ColorSwapper> swapper_list;
     private double times = 0;
+    private int col = 1;
 
     public Gameplay() throws FileNotFoundException {
     }
 
-
     public void start(Stage stage) throws FileNotFoundException {
         Gameplay gameplay = new Gameplay();
         MainMenu mainMenu = new MainMenu();
-        LoadGameMenu loadGameMenu = new LoadGameMenu();
+        SaveGameMenu saveGameMenu = new SaveGameMenu();
         sd = 1;
+        death = new RespawnMenu();
         headgroup = new Group();
         playfield = new Pane();
         star_list = new LinkedList<Star>();
@@ -90,11 +87,11 @@ public class Gameplay extends Application {
         scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
         ro = new Group(playfield);
         //prepareStars();
-        obstacles = new ArrayList<Group>();
 
+        obstacles = new ArrayList<Group>();
         double y = 380;
         Integer[] intArray = {1, 2, 3, 4};
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             if (i % 4 == 0) {
                 List<Integer> intList = Arrays.asList(intArray);
                 Collections.shuffle(intList);
@@ -125,16 +122,13 @@ public class Gameplay extends Application {
             headgroup.getChildren().add(obstacles.get(i));
         }
         //  pane1.getChildren().addAll(star2.view,swapper.view,star1.view, hand );
-
-
         playfield.setPrefSize(WIDTH, HEIGHT);
+        ro.getChildren().add(headgroup);
         ro.getChildren().add(rectLeft);
         ro.getChildren().add(rectRight);
         ro.getChildren().add(scoreDisplay);
-        ro.getChildren().add(headgroup);
         ro.getChildren().add(pcircle);
         ro.getChildren().add(pauseButton);
-
         pcircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -167,7 +161,7 @@ public class Gameplay extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    pause(stage, mainMenu, gameplay, loadGameMenu);
+                    pause(stage, mainMenu, gameplay, saveGameMenu);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -177,7 +171,7 @@ public class Gameplay extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    pause(stage, mainMenu, gameplay, loadGameMenu);
+                    pause(stage, mainMenu, gameplay, saveGameMenu);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -191,8 +185,7 @@ public class Gameplay extends Application {
                 ball.display();
             }
         };
-
-        startGame();
+        startGame(stage);
         scene = new Scene(ro, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
         //mainStage = new Stage();
@@ -213,7 +206,7 @@ public class Gameplay extends Application {
         ro.getChildren().remove(saveImg);
     }
 
-    public void pause(Stage stage, MainMenu mainMenu, Gameplay gameplay, LoadGameMenu loadGameMenu) throws FileNotFoundException {
+    public void pause(Stage stage, MainMenu mainMenu, Gameplay gameplay, SaveGameMenu saveGameMenu) throws FileNotFoundException {
         timeline.pause();
         resizeAnimation(centerCircle1);
         resizeAnimation(centerCircle2);
@@ -301,7 +294,7 @@ public class Gameplay extends Application {
         centerCircle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-               unPause();
+                unPause();
             }
         });
 
@@ -388,7 +381,8 @@ public class Gameplay extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    loadGameMenu.start(stage);
+                    SaveData saveData = new SaveData();
+                    saveGameMenu.start(stage, saveData);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -399,7 +393,8 @@ public class Gameplay extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    loadGameMenu.start(stage);
+                    SaveData saveData = new SaveData();
+                    saveGameMenu.start(stage, saveData);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -421,21 +416,21 @@ public class Gameplay extends Application {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    private void collide(Shape block) {
+    private void collide(Shape block, Stage stage) throws InterruptedException {
         boolean collisionDetected = false;
         for (Shape static_bloc : nodes) {
-            if (static_bloc != block) {
+            if (static_bloc != block && col == 1) {
                 //static_bloc.setFill(Color.GREEN);
                 Shape intersect = Shape.intersect(block, static_bloc);
                 if (static_bloc instanceof Arc) {
                     if (intersect.getBoundsInLocal().getWidth() != -1 && !(static_bloc.getStroke()).equals(block.getFill())) {
-                        if (ball.location.getY() <= ((Arc) static_bloc).getCenterY() + 100 && ball.location.getY() >= ((Arc) static_bloc).getCenterY() - 100) {
+                        if (ball.location.getY() <= ((Arc) static_bloc).getCenterY() + 100 && ball.location.getY() >= ((Arc) static_bloc).getCenterY() - 80) {
                             System.out.println("fh");
                             collisionDetected = false;
                         } else
                             collisionDetected = true;
                     }
-                } else {
+                } else if (col == 1) {
                     if (intersect.getBoundsInLocal().getWidth() != -1 && !(static_bloc.getFill()).equals(block.getFill())) {
                         collisionDetected = true;
                     }
@@ -443,8 +438,59 @@ public class Gameplay extends Application {
             }
         }
 
-        if (collisionDetected) {
-            block.setFill(Color.BLUE);
+        if (collisionDetected && col == 1) {
+            col++;
+            ball.setVisible(false);
+            double a = ball.location.getX();
+            double b = ball.location.getY();
+
+            Arc arc1 = makeArc(a, b, 0, 20, 90, Color.rgb(245, 223, 15), 15);
+            playfield.getChildren().add(arc1);
+            Arc arc2 = makeArc(a, b, 90, 20, 90, Color.rgb(141, 18, 255), 15);
+            playfield.getChildren().add(arc2);
+            Arc arc3 = makeArc(a, b, 180, 20, 90, Color.rgb(255, 0, 132), 15);
+            playfield.getChildren().add(arc3);
+            Arc arc4 = makeArc(a, b, 270, 20, 90, Color.rgb(53, 226, 242), 15);
+            playfield.getChildren().add(arc4);
+
+            TranslateTransition translate = new TranslateTransition();
+            translate.setByX(400);
+            translate.setDuration(Duration.millis(2000));
+            translate.setCycleCount(1);
+            translate.setAutoReverse(true);
+            translate.setNode(arc1);
+            translate.play();
+            TranslateTransition translate1 = new TranslateTransition();
+            translate1.setByX(-400);
+            translate1.setDuration(Duration.millis(2000));
+            translate1.setCycleCount(1);
+            translate1.setAutoReverse(true);
+            translate1.setNode(arc2);
+            translate1.play();
+            TranslateTransition translate2 = new TranslateTransition();
+            translate2.setByY(400);
+            translate2.setDuration(Duration.millis(2000));
+            translate2.setCycleCount(1);
+            translate2.setAutoReverse(true);
+            translate2.setNode(arc3);
+            translate2.play();
+            TranslateTransition translate3 = new TranslateTransition();
+            translate3.setByY(-400);
+            translate3.setDuration(Duration.millis(2000));
+            translate3.setCycleCount(1);
+            translate3.setAutoReverse(true);
+            translate3.setNode(arc4);
+            translate3.play();
+            PauseTransition pause = new PauseTransition(Duration.millis(2000));
+            pause.setOnFinished(et -> {
+                try {
+                    death.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
+            pause.play();
+
         }
     }
 
@@ -461,12 +507,17 @@ public class Gameplay extends Application {
     }
 
 
-    private void startGame() {
+    private void startGame(Stage stage) {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 //System.out.println(star_list.size());
-                collide(block);
+                try {
+                    collide(block, stage);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 if (star_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY()) {
                     star_list.element().view.setVisible(false);
                     setCurScore(getCurScore() + 1);
@@ -523,6 +574,17 @@ public class Gameplay extends Application {
         this.curScore = sc;
     }
 
+    void resizeAnimation(Node node) {
+        ScaleTransition resizePic = new ScaleTransition();
+        resizePic.setDuration(Duration.millis(750));
+        resizePic.setNode(node);
+        resizePic.setByX(.1);
+        resizePic.setByY(.1);
+        resizePic.setCycleCount(Integer.MAX_VALUE);
+        resizePic.setAutoReverse(true);
+        resizePic.play();
+    }
+
     ImageView makeImage(String url, double xPos, double yPos, double height, double width, boolean preserveRatio) throws FileNotFoundException {
         Image img = new Image(new FileInputStream(url));
         ImageView viewImg = new ImageView(img);
@@ -532,6 +594,21 @@ public class Gameplay extends Application {
         viewImg.setFitWidth(width);
         viewImg.setPreserveRatio(preserveRatio);
         return viewImg;
+    }
+
+    Arc makeArc(double xPos, double yPos, double startAngle, double radius, double length, Color color, double width) {
+        Arc arc = new Arc();
+        arc.setCenterX(xPos);
+        arc.setCenterY(yPos);
+        arc.setStartAngle(startAngle);
+        arc.setRadiusX(radius);
+        arc.setRadiusY(radius);
+        arc.setLength(90.0f);
+        arc.setType(ArcType.ROUND);
+        //arc.setStroke(color);
+        // arc.setStrokeWidth(width);
+        arc.setFill(color);
+        return arc;
     }
 
     Text makeText(int size, String str, double xPos, double yPos, double width) {
@@ -562,17 +639,6 @@ public class Gameplay extends Application {
         rect.setWidth(width);
         rect.setFill(color);
         return rect;
-    }
-
-    void resizeAnimation(Node node) {
-        ScaleTransition resizePic = new ScaleTransition();
-        resizePic.setDuration(Duration.millis(750));
-        resizePic.setNode(node);
-        resizePic.setByX(.1);
-        resizePic.setByY(.1);
-        resizePic.setCycleCount(Integer.MAX_VALUE);
-        resizePic.setAutoReverse(true);
-        resizePic.play();
     }
 
     public Scene getMainScene() {

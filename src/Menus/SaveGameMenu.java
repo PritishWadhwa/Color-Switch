@@ -21,23 +21,23 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class LoadGameMenu {
+public class SaveGameMenu {
 
     //    MainMenu mainMenu = new MainMenu();
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
 
-    public void start(Stage stage) throws FileNotFoundException {
+    public void start(Stage stage, SaveData saveData) throws FileNotFoundException {
         Scene mainScene;
 
         MainMenu mainMenu = new MainMenu();
         Gameplay gameplay = new Gameplay();
         Rectangle topRect = makeRectangle(0, 0, 100, 560, Color.rgb(28, 106, 207));
-        Text headingText = makeText(50, "LOAD GAMES", 175, 68, 10, Color.WHITE);
+        Text headingText = makeText(50, "SAVE GAMES", 175, 68, 10, Color.WHITE);
         Circle homeCircle = makeCircle(80, 50, 35, Color.WHITE);
         ImageView topHome = makeImage("images/homeButtonBlack.png", 60, 30, 40, 40, true);
         Rectangle strip = makeRectangle(0, 130, 60, 560, Color.rgb(28, 28, 28));
-        Text stripText = makeText(40, "SAVED GAMES: 4 / 10", 25, 175, 10, Color.WHITE);
+        Text stripText = makeText(40, "SAVED GAMES: 4 / 4", 25, 175, 10, Color.WHITE);
         Rectangle rounded1 = makeRoundedRectangle(20, 230, 97.5, 520, Color.YELLOW, Color.RED);
         Rectangle rounded2 = makeRoundedRectangle(20, 377.5, 97.5, 520, Color.YELLOW, Color.RED);
         Rectangle rounded3 = makeRoundedRectangle(20, 525, 97.5, 520, Color.YELLOW, Color.RED);
@@ -148,10 +148,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("1.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "1.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -160,10 +162,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("1.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "1.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -172,10 +176,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("1.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "1.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -226,10 +232,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("2.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "2.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -238,10 +246,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("2.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "2.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -250,10 +260,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("2.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "2.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -304,10 +316,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("3.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "3.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -316,10 +330,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("3.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "3.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -328,10 +344,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("3.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "3.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -382,10 +400,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("4.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "4.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -394,10 +414,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("4.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "4.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
@@ -406,10 +428,12 @@ public class LoadGameMenu {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    SaveData data = (SaveData) ResourceManager.load("4.save");
-                    gameplay.start(stage);
+                    ResourceManager.save(saveData, "4.save");
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (Exception e) {
-                    System.out.println("Couldn't load save data: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
