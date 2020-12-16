@@ -19,13 +19,13 @@ public class RingObstacle {
 
     private Group group;
 
-    public RingObstacle(Pane pane, ArrayList<Shape> nodes) {
-        Arc arc1 = makeArc(280, 380, 0, 120, 83, Color.rgb(245, 223, 15), 15);
-        Arc arc2 = makeArc(280, 380, 90, 120, 83, Color.rgb(141, 18, 255), 15);
-        Arc arc3 = makeArc(280, 380, 180, 120, 83, Color.rgb(255, 0, 132), 15);
-        Arc arc4 = makeArc(280, 380, 270, 120, 83, Color.rgb(53, 226, 242), 15);
+    public RingObstacle(Pane pane, ArrayList<Shape> nodes,double y) {
+        Arc arc1 = makeArc(280, y, 0, 120, 83, Color.rgb(245, 223, 15), 15);
+        Arc arc2 = makeArc(280, y, 90, 120, 83, Color.rgb(141, 18, 255), 15);
+        Arc arc3 = makeArc(280, y, 180, 120, 83, Color.rgb(255, 0, 132), 15);
+        Arc arc4 = makeArc(280, y, 270, 120, 83, Color.rgb(53, 226, 242), 15);
         group = new Group(arc1, arc2, arc3, arc4);
-        final Rotate rotateCW = new Rotate(0, 280, 380);
+        final Rotate rotateCW = new Rotate(0, 280, y);
         group.getTransforms().add(rotateCW);
 //        arc1.getTransforms().add(rotateCW);
 //        arc2.getTransforms().add(rotateCW);

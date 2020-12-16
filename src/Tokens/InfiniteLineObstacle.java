@@ -14,15 +14,15 @@ public class InfiniteLineObstacle {
 
     private Group group;
 
-    public InfiniteLineObstacle(Pane pane, ArrayList<Shape> nodes) {
-        Rectangle rect1 = makeRectangle(-260, 380, 15, 90, Color.rgb(245, 223, 15));
-        Rectangle rect2 = makeRectangle(-170, 380, 15, 90, Color.rgb(141, 18, 255));
-        Rectangle rect3 = makeRectangle(-80, 380, 15, 90, Color.rgb(255, 0, 132));
-        Rectangle rect4 = makeRectangle(10, 380, 15, 90, Color.rgb(53, 226, 242));
-        Rectangle rect5 = makeRectangle(100, 380, 15, 90, Color.rgb(245, 223, 15));
-        Rectangle rect6 = makeRectangle(190, 380, 15, 90, Color.rgb(141, 18, 255));
-        Rectangle rect7 = makeRectangle(280, 380, 15, 90, Color.rgb(255, 0, 132));
-        Rectangle rect8 = makeRectangle(370, 380, 15, 90, Color.rgb(53, 226, 242));
+    public InfiniteLineObstacle(Pane pane, ArrayList<Shape> nodes,double y) {
+        Rectangle rect1 = makeRectangle(-260, y, 15, 90, Color.rgb(245, 223, 15));
+        Rectangle rect2 = makeRectangle(-170, y, 15, 90, Color.rgb(141, 18, 255));
+        Rectangle rect3 = makeRectangle(-80, y, 15, 90, Color.rgb(255, 0, 132));
+        Rectangle rect4 = makeRectangle(10, y, 15, 90, Color.rgb(53, 226, 242));
+        Rectangle rect5 = makeRectangle(100, y, 15, 90, Color.rgb(245, 223, 15));
+        Rectangle rect6 = makeRectangle(190, y, 15, 90, Color.rgb(141, 18, 255));
+        Rectangle rect7 = makeRectangle(280, y, 15, 90, Color.rgb(255, 0, 132));
+        Rectangle rect8 = makeRectangle(370, y, 15, 90, Color.rgb(53, 226, 242));
 
         group = new Group(rect1, rect2, rect3, rect4, rect5, rect6, rect7, rect8);
         nodes.add(rect1);
@@ -33,12 +33,7 @@ public class InfiniteLineObstacle {
         nodes.add(rect6);
         nodes.add(rect7);
         nodes.add(rect8);
-
-
-
-
         TranslateTransition rect1animation = new TranslateTransition();
-
         rect1animation.setDuration(Duration.millis(2000));
         rect1animation.setNode(rect1);
         rect1animation.setByX(360);
@@ -106,7 +101,9 @@ public class InfiniteLineObstacle {
 
 
     }
-
+    public Group returnGrp() {
+        return this.group;
+    }
     Rectangle makeRectangle(double xPos, double yPos, double height, double width, Color color) {
         Rectangle rect = new Rectangle();
         rect.setX(xPos);

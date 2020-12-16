@@ -1,6 +1,7 @@
 package Tokens;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,11 +11,12 @@ import java.io.FileNotFoundException;
 
 public class ColorSwapper {
     public Node view;
-    Point2D location;
+    public Point2D location;
 
-    public ColorSwapper(Point2D location) throws FileNotFoundException {
+    public ColorSwapper(Point2D location, Group hg) throws FileNotFoundException {
         this.location = location;
         this.view = makeImage("images/swap.png", location.getX(), location.getY(), 40, 40, true);
+        hg.getChildren().add(this.view);
     }
 
     ImageView makeImage(String url, double xPos, double yPos, double height, double width, boolean preserveRatio) throws FileNotFoundException {
