@@ -2,15 +2,16 @@ package PlayArena;
 
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
+import sample.COLOR;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class SaveData implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     public int currScore;
-    public double ballPos;
-//    public Group obsGroup;
-    public ArrayList<Shape> obstacleList;
+    public ArrayList<Integer> obstacleList;
+    int noOfDeaths;
 }
 
 

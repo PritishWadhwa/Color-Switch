@@ -63,6 +63,7 @@ public class Gameplay extends Application {
     ImageView replayImg = makeImage("images/playButton.png", 222, 367, 125, 125, true);
     MainMenu mainMenu;
     Gameplay gameplay;
+    COLOR rcl;
     private int curScore;
     private int sd;
     private int alive = 1;
@@ -186,29 +187,33 @@ public class Gameplay extends Application {
         pcircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                try {
-                    pause(stage, mainMenu, gameplay, saveGameMenu);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                if(alive == 1){
+                    try {
+                        pause(stage, mainMenu, gameplay, saveGameMenu);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }}
             }
         });
         pauseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if(alive == 1){
                 try {
                     pause(stage, mainMenu, gameplay, saveGameMenu);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                }
+                }}
             }
         });
         setBall(0);
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                ball.bounce();
-                ball.display();
+                if (ball != null) {
+                    ball.bounce();
+                    ball.display();
+                }
             }
         };
         startGame(stage);
@@ -231,8 +236,10 @@ public class Gameplay extends Application {
         ro.getChildren().remove(playImg);
         ro.getChildren().remove(saveImg);
         pauseIt = 0;
-        ball.bounce();
-        ball.checkBounds(getCurScore(), pauseIt);
+        if (ball != null) {
+            ball.bounce();
+            ball.checkBounds(getCurScore(), pauseIt);
+        }
 //        timeline.setDelay(Duration.millis(2000));
     }
 
@@ -248,18 +255,25 @@ public class Gameplay extends Application {
         col = 1;
         alive = 1;
         pauseIt = 0;
-        //ball.bounce();
-//        ball.move(pauseIt);
-//        ball.checkBounds(getCurScore(),pauseIt);
-//        ball.setVisible(true);
-        setBall(newball);
-        // pauseIt=0;
-        // ball.bounce();
-        //ball.checkBounds(getCurScore(),pauseIt);
+        double x = 280;
+        double y = 675;
+        if (newball > 0) {
+            if (newball < 500)
+                y = newball + 220;
+            else
+                y = newball - 200;
+        }
+        Point2D location = new Point2D(x, y);
+        Point2D velocity = new Point2D(0, 0);
+        Point2D acceleration = new Point2D(0, 0);
+        double mass = 20;
+        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, rcl);
+        block = ball.retCircle();        // pauseIt=0;
     }
 
     public void die(Stage stage, MainMenu mainMenu, Gameplay gameplay) {
         pauseIt = 2;
+        rcl = ball.getCl();
         retimeline.pause();
         if (noOfDeath < 2)
             resizeAnimation(recenterCircle2);
@@ -427,6 +441,11 @@ public class Gameplay extends Application {
     }
 
     public void pause(Stage stage, MainMenu mainMenu, Gameplay gameplay, SaveGameMenu saveGameMenu) throws FileNotFoundException {
+        pauseIt = 1;
+        double bolpos = ball.location.getY();
+        COLOR cl = ball.getCl();
+        ball.setVisible(false);
+        ball = null;
         timeline.pause();
         resizeAnimation(centerCircle1);
         resizeAnimation(centerCircle2);
@@ -507,6 +526,12 @@ public class Gameplay extends Application {
         playImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Point2D location = new Point2D(280, bolpos);
+                Point2D velocity = new Point2D(0, 0);
+                Point2D acceleration = new Point2D(0, 0);
+                double mass = 20;
+                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl);
+                block = ball.retCircle();
                 unPause();
             }
         });
@@ -514,6 +539,12 @@ public class Gameplay extends Application {
         centerCircle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                Point2D location = new Point2D(280, bolpos);
+                Point2D velocity = new Point2D(0, 0);
+                Point2D acceleration = new Point2D(0, 0);
+                double mass = 20;
+                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl);
+                block = ball.retCircle();
                 unPause();
             }
         });
@@ -602,6 +633,13 @@ public class Gameplay extends Application {
             public void handle(MouseEvent event) {
                 try {
                     SaveData saveData = new SaveData();
+                    saveData.currScore = curScore;
+                    saveData.noOfDeaths = noOfDeath;
+                    saveData.obstacleList = new ArrayList<>();
+                    for (int obs : obslist
+                    ) {
+                        saveData.obstacleList.add(obs);
+                    }
                     saveGameMenu.start(stage, saveData);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -614,6 +652,13 @@ public class Gameplay extends Application {
             public void handle(MouseEvent event) {
                 try {
                     SaveData saveData = new SaveData();
+                    saveData.currScore = curScore;
+                    saveData.noOfDeaths = noOfDeath;
+                    saveData.obstacleList = new ArrayList<>();
+                    for (int obs : obslist
+                    ) {
+                        saveData.obstacleList.add(obs);
+                    }
                     saveGameMenu.start(stage, saveData);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -664,7 +709,7 @@ public class Gameplay extends Application {
 //            }
 //        }
 //        }
-        if ((collisionDetected && col == 1)) {
+        if (ball != null && (collisionDetected && col == 1)) {
             noOfDeath++;
             alive = 0;
             col++;
@@ -675,7 +720,8 @@ public class Gameplay extends Application {
             destroyer.prepareDestroy(a, b, stage, playfield, death);
             PauseTransition pause = new PauseTransition(Duration.millis(2000));
             pause.setOnFinished(et -> {
-                die(stage, mainMenu, gameplay);
+                if (ball != null)
+                    die(stage, mainMenu, gameplay);
             });
             pause.play();
 
@@ -699,7 +745,7 @@ public class Gameplay extends Application {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (ball.location.getY() >= 820 && ff == 1) {
+                if (ball != null && ball.location.getY() >= 820 && ff == 1) {
                     alive = 0;
                     noOfDeath++;
                     ball.setVisible(false);
@@ -713,14 +759,14 @@ public class Gameplay extends Application {
                     });
                     pause.play();
                 }
-                if (getCurScore() % 5 != 0 || getCurScore() == 0) {
+                if (ball != null && getCurScore() % 5 != 0 || getCurScore() == 0) {
                     try {
                         collide(block, stage, mainMenu, gameplay);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                if (ball.isVisible() == true && star_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
+                if (ball != null && ball.isVisible() == true && star_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
                     star_list.element().view.setVisible(false);
                     setCurScore(getCurScore() + 1);
                     Main.setTotalScore(1);
@@ -731,10 +777,10 @@ public class Gameplay extends Application {
                     pause.play();
                     star_list.remove();
                 }
-                if (ball.isVisible() == true && ball.location.getY() < 400) {
+                if (ball != null && ball.isVisible() == true && ball.location.getY() < 400) {
                     headgroup.setTranslateY(headgroup.getTranslateY() + 2);
                 }
-                if (ball.isVisible() == true && swapper_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
+                if (ball != null && ball.isVisible() == true && swapper_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
                     f++;
                     swapper_list.element().view.setVisible(false);
                     PauseTransition pause = new PauseTransition(Duration.millis(0));
@@ -749,7 +795,7 @@ public class Gameplay extends Application {
                     swapper_list.remove();
                     pause.play();
                 }
-                if (alive == 1) {
+                if (ball != null && alive == 1) {
                     ball.applyForce(FORCE_GRAVITY);
                     ball.move(pauseIt);
                     //System.out.println("hf");
