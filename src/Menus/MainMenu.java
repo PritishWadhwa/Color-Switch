@@ -1,6 +1,8 @@
 package Menus;
 
 import PlayArena.Gameplay;
+import PlayArena.ResourceManager;
+import PlayArena.SaveTotalPoints;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -20,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.Main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -179,6 +182,15 @@ public class MainMenu extends Application {
         exitImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                SaveTotalPoints data = new SaveTotalPoints();
+                data.totalScore = Main.getTotalScore();
+                try {
+                    ResourceManager.save(data, "points.save");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 System.exit(0);
             }
         });

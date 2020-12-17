@@ -3,16 +3,22 @@ package sample;
 import Menus.LoadGameMenu;
 import Menus.MainMenu;
 import Menus.RespawnMenu;
-import PlayArena.Gameplay;
+import PlayArena.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private static int totalScore;
+    private static int totalScore = 0;
     public MainMenu menu;
     //    public RespawnMenu respawnMenu;
-    public Main(){
-        totalScore=0;
+    public Main() throws Exception {
+        try {
+            SaveTotalPoints data = (SaveTotalPoints) ResourceManager.load("points.save");
+            totalScore = data.totalScore;
+        }catch (Exception e){
+            totalScore = 0;
+        }
+        System.out.println(totalScore);
         //System.out.print("nck");
 
     }
