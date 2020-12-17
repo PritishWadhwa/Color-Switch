@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
@@ -26,6 +28,7 @@ import javafx.util.Duration;
 import sample.COLOR;
 import sample.Main;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -39,6 +42,7 @@ public class Gameplay1 extends Application {
     public int f = 1;
     protected Pane playfield;
     protected Ball ball;
+    Text currStars, forRevive, forTscore;
     RespawnMenu death;
     Group ro;
     AnimationTimer gameLoop;
@@ -86,12 +90,12 @@ public class Gameplay1 extends Application {
 //    public Gameplay1() throws FileNotFoundException {
 //    }
 
-    public Gameplay1(ArrayList<Integer> obs,int nod,int cs,int ct) throws FileNotFoundException {
-        abcd=cs;
-        noOfDeath=nod;
-        curScore=cs;
-        obslist=obs;
-        colorType=ct;
+    public Gameplay1(ArrayList<Integer> obs, int nod, int cs, int ct) throws FileNotFoundException {
+        abcd = cs;
+        noOfDeath = nod;
+        curScore = cs;
+        obslist = obs;
+        colorType = ct;
     }
 
     //    public void start(Stage stage,ArrayList<Integer> obs,int nod,int cs,int ct) throws FileNotFoundException {
@@ -100,10 +104,11 @@ public class Gameplay1 extends Application {
 //        curScore=cs;
 //        obslist=obs;
 //        colorType=ct;
-        for (int o: obslist
-        ) {
-            System.out.print(o+" ");
-        }
+//        for (int o : obslist
+//        ) {
+//            System.out.print(o + " ");
+//        }
+        Main.addTotalGames();
         gameplay = new Gameplay();
         mainMenu = new MainMenu();
         SaveGameMenu saveGameMenu = new SaveGameMenu();
@@ -151,7 +156,7 @@ public class Gameplay1 extends Application {
                 obstacles.add(o.returnGrp());
             }
             y -= 700;
-            headgroup.getChildren().add(obstacles.get(i-curScore));
+            headgroup.getChildren().add(obstacles.get(i - curScore));
         }
         System.out.println();
         playfield.setPrefSize(WIDTH, HEIGHT);
@@ -193,23 +198,25 @@ public class Gameplay1 extends Application {
         pcircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(alive == 1){
+                if (alive == 1) {
                     try {
                         pause(stage, mainMenu, gameplay, saveGameMenu);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                    }}
+                    }
+                }
             }
         });
         pauseButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(alive == 1){
+                if (alive == 1) {
                     try {
                         pause(stage, mainMenu, gameplay, saveGameMenu);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                    }}
+                    }
+                }
             }
         });
         setBall(0);
@@ -244,7 +251,7 @@ public class Gameplay1 extends Application {
         pauseIt = 0;
         if (ball != null) {
             ball.bounce();
-            ball.checkBounds(getCurScore()-abcd, pauseIt);
+            ball.checkBounds(getCurScore() - abcd, pauseIt);
         }
 //        timeline.setDelay(Duration.millis(2000));
     }
@@ -258,6 +265,9 @@ public class Gameplay1 extends Application {
         ro.getChildren().remove(rehomeImg);
         ro.getChildren().remove(rerestartImg);
         ro.getChildren().remove(replayImg);
+        ro.getChildren().remove(curScore);
+        ro.getChildren().remove(forRevive);
+        ro.getChildren().remove(forTscore);
         col = 1;
         alive = 1;
         pauseIt = 0;
@@ -282,11 +292,11 @@ public class Gameplay1 extends Application {
         rcl = ball.getCl();
         retimeline.pause();
 //        if (noOfDeath < 2)
-            resizeAnimation(recenterCircle2);
+        resizeAnimation(recenterCircle2);
         resizeAnimation(recenterCircle3);
         resizeAnimation(rerestartImg);
 //        if (noOfDeath < 2)
-            resizeAnimation(replayImg);
+        resizeAnimation(replayImg);
 
         rehomeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -373,7 +383,8 @@ public class Gameplay1 extends Application {
         replayImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (noOfDeath < 2) {
+                if (noOfDeath < 2 && Main.getTotalScore() >= 10) {
+                    Main.setTotalScore(-10);
                     destroyer.undoDestroy(ro);
                     undie();
                 }
@@ -383,10 +394,10 @@ public class Gameplay1 extends Application {
         recenterCircle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                try {
-                    gameplay.start(stage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                if (noOfDeath < 2 && Main.getTotalScore() >= 10) {
+                    Main.setTotalScore(-10);
+                    destroyer.undoDestroy(ro);
+                    undie();
                 }
             }
         });
@@ -442,7 +453,14 @@ public class Gameplay1 extends Application {
                 }
             }
         });
-        ro.getChildren().addAll(rerect, rehomeCircle, rehomeImg, recenterCircle2, replayImg, recenterCircle3, rerestartImg);
+        if (noOfDeath < 2 && Main.getTotalScore() >= 2) {
+            currStars = makeText(30, "Resurrect possible using 10 Stars", 50, 212.5, 5);
+        } else {
+            currStars = makeText(30, "No lives remaining", 50, 212.5, 5);
+        }
+        forRevive = makeText(30, "Total Stars =", 50, 242.5, 5);
+        forTscore = makeText(30, Integer.toString(Main.getTotalScore()), 250, 242.5, 5);
+        ro.getChildren().addAll(rerect, currStars, forRevive, forTscore, rehomeCircle, rehomeImg, recenterCircle2, replayImg, recenterCircle3, rerestartImg);
 
     }
 
@@ -638,31 +656,32 @@ public class Gameplay1 extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    if(Color.rgb(245, 223, 15).equals(block.getFill())){
-                        colorType=1;
+                    if (Color.rgb(245, 223, 15).equals(block.getFill())) {
+                        colorType = 1;
                         System.out.println(colorType);
-                    }
-                    else if(Color.rgb(141, 18, 255).equals(block.getFill())){
-                        colorType=2;
-                    }
-                    else if(Color.rgb(255, 0, 132).equals(block.getFill())){
-                        colorType=3;
-                    }
-                    else{
-                        colorType=4;
+                    } else if (Color.rgb(141, 18, 255).equals(block.getFill())) {
+                        colorType = 2;
+                    } else if (Color.rgb(255, 0, 132).equals(block.getFill())) {
+                        colorType = 3;
+                    } else {
+                        colorType = 4;
                     }
                     SaveData saveData = new SaveData();
                     saveData.currScore = curScore;
                     saveData.noOfDeaths = noOfDeath;
-                    saveData.obstacleList = new ArrayList<>();System.out.println(4);
+                    saveData.obstacleList = new ArrayList<>();
+                    LocalDateTime today = LocalDateTime.now();
+                    saveData.date = today.getDayOfMonth();
+                    saveData.month = today.getMonthValue();
+                    saveData.year = today.getYear();
                     for (int obs : obslist
                     ) {
-
-                        System.out.print(obs+" ");
                         saveData.obstacleList.add(obs);
                     }
                     saveGameMenu.start(stage, saveData);
                 } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -672,29 +691,30 @@ public class Gameplay1 extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    if(Color.rgb(245, 223, 15).equals(block.getFill())){
-                        colorType=1;
+                    if (Color.rgb(245, 223, 15).equals(block.getFill())) {
+                        colorType = 1;
                         System.out.println(colorType);
-                    }
-                    else if(Color.rgb(141, 18, 255).equals(block.getFill())){
-                        colorType=2;
-                    }
-                    else if(Color.rgb(255, 0, 132).equals(block.getFill())){
-                        colorType=3;
-                    }
-                    else{
-                        colorType=4;
+                    } else if (Color.rgb(141, 18, 255).equals(block.getFill())) {
+                        colorType = 2;
+                    } else if (Color.rgb(255, 0, 132).equals(block.getFill())) {
+                        colorType = 3;
+                    } else {
+                        colorType = 4;
                     }
                     SaveData saveData = new SaveData();
                     saveData.currScore = curScore;
                     saveData.noOfDeaths = noOfDeath;
                     saveData.obstacleList = new ArrayList<>();
+                    LocalDateTime today = LocalDateTime.now();
+                    saveData.date = today.getDayOfMonth();
+                    saveData.month = today.getMonthValue();
+                    saveData.year = today.getYear();
                     for (int obs : obslist
                     ) {
                         saveData.obstacleList.add(obs);
                     }
                     saveGameMenu.start(stage, saveData);
-                } catch (FileNotFoundException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -833,7 +853,7 @@ public class Gameplay1 extends Application {
                     ball.applyForce(FORCE_GRAVITY);
                     ball.move(pauseIt);
                     //System.out.println("hf");
-                    ball.checkBounds(getCurScore()-abcd, pauseIt);
+                    ball.checkBounds(getCurScore() - abcd, pauseIt);
                     ball.display();
                 }
             }

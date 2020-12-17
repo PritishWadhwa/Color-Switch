@@ -1,23 +1,36 @@
 package sample;
 
-import Menus.LoadGameMenu;
 import Menus.MainMenu;
-import Menus.RespawnMenu;
-import PlayArena.*;
+import PlayArena.ResourceManager;
+import PlayArena.SaveRandomData;
+import PlayArena.SaveTotalPoints;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private static int totalScore = 0;
+    static int logins;
+    static int games;
+    private static int totalScore;
     public MainMenu menu;
+
     //    public RespawnMenu respawnMenu;
     public Main() throws Exception {
         try {
             SaveTotalPoints data = (SaveTotalPoints) ResourceManager.load("points.save");
             totalScore = data.totalScore;
-        }catch (Exception e){
+        } catch (Exception e) {
             totalScore = 0;
         }
+        try{
+            SaveRandomData data = (SaveRandomData) ResourceManager.load("randomData.save");
+//            totalScore = data.totalScore;
+            games = data.totalGames;
+            logins = data.totalLogin;
+        }catch (Exception e){
+            games = 0;
+            logins = 0;
+        }
+        logins++;
         System.out.println(totalScore);
         //System.out.print("nck");
 
@@ -25,6 +38,26 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static int getTotalLogins() {
+        return logins;
+    }
+
+    public static int getTotalGames() {
+        return games;
+    }
+
+    public static void addTotalGames() {
+        games++;
+    }
+
+    public static int getTotalScore() {
+        return totalScore;
+    }
+
+    public static void setTotalScore(int inc) {
+        totalScore += inc;
     }
 
     @Override
@@ -36,12 +69,6 @@ public class Main extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public static int getTotalScore(){
-        return totalScore;
-    }
-    public static void setTotalScore(int inc){
-        totalScore+=inc;
     }
 
 

@@ -2,11 +2,13 @@ package Menus;
 
 import PlayArena.Gameplay;
 import PlayArena.ResourceManager;
+import PlayArena.SaveRandomData;
 import PlayArena.SaveTotalPoints;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,6 +40,9 @@ public class MainMenu extends Application {
         Stage mainStage;
         Gameplay gameplay = new Gameplay();
         LoadGameMenu loadGameMenu = new LoadGameMenu();
+        RandomData randomDataScreen = new RandomData();
+        Instructions instructionsScreen = new Instructions();
+        Devs devsScreen = new Devs();
         Text headingC = makeText(100, "C", 100.0, 100.0, 5.0);
         Text headingL = makeText(100, "L", 250, 100, 5);
         Text headingR = makeText(100, "R", 385, 100, 5);
@@ -70,6 +75,19 @@ public class MainMenu extends Application {
         ImageView centerPlayButton = makeImage("images/playButton.png", 210, 310, 150, 150, true);
 
         Circle centerCircle = makeCircle(280, 380, 95, Color.rgb(88, 88, 88));
+
+        Circle randomDataCircle = makeCircle(60, 730, 30, Color.rgb(88, 88, 88));
+        Text randomData = makeText(50, "R", 44, 747.5, 10);
+        resizeAnimation(randomData);
+        resizeAnimation(randomDataCircle);
+        Circle instructionsCircle = makeCircle(150, 730, 30, Color.rgb(88, 88, 88));
+        Text instructions = makeText(50, "I", 143, 747.5, 10);
+        resizeAnimation(instructions);
+        resizeAnimation(instructionsCircle);
+        Circle devsCircle = makeCircle(410, 730, 30, Color.rgb(88, 88, 88));
+        Text devs = makeText(50, "D", 394, 747.5, 10);
+        resizeAnimation(devsCircle);
+        resizeAnimation(devs);
 
         ScaleTransition resizePic = new ScaleTransition();
         resizePic.setDuration(Duration.millis(750));
@@ -147,6 +165,158 @@ public class MainMenu extends Application {
         arrow2right.play();
 
         mainStage = new Stage();
+
+        instructionsCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                instructionsCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        instructionsCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                instructionsCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        instructions.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                instructionsCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        instructions.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                instructionsCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        instructionsCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    instructionsScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        instructions.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    instructionsScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        devsCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                devsCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        devsCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                devsCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        devs.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                devsCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        devs.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                devsCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        devsCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    devsScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        devs.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    devsScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        randomDataCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                randomDataCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        randomDataCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                randomDataCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        randomData.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                randomDataCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        randomData.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                randomDataCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        randomDataCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    randomDataScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        randomData.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    randomDataScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         exitImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -184,8 +354,21 @@ public class MainMenu extends Application {
             public void handle(MouseEvent event) {
                 SaveTotalPoints data = new SaveTotalPoints();
                 data.totalScore = Main.getTotalScore();
+                System.out.println("exit" + data.totalScore);
                 try {
                     ResourceManager.save(data, "points.save");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                SaveRandomData randomDataText = new SaveRandomData();
+                randomDataText.totalGames = Main.getTotalGames();
+                randomDataText.totalLogin = Main.getTotalLogins();
+                randomDataText.totalScore = Main.getTotalScore();
+                System.out.println(" " + randomDataText.totalGames);
+                try {
+                    ResourceManager.save(randomDataText, "randomData.save");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
@@ -215,6 +398,8 @@ public class MainMenu extends Application {
                 try {
                     loadGameMenu.start(stage);
                 } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -277,7 +462,8 @@ public class MainMenu extends Application {
         Group root = new Group(headingC1A1, headingC1A2, headingC1A3, headingC1A4, headingC, headingL, headingC2A1,
                 headingC2A2, headingC2A3, headingC2A4, headingR, headingSwitch, exitImage, loadGame, centerC1A1,
                 centerC1A2, centerC1A3, centerC1A4, centerC2A1, centerC2A2, centerC2A3, centerC2A4, centerC3A1,
-                centerC3A2, centerC3A3, centerC3A4, centerCircle, leftArrow, rightArrow, centerPlayButton);
+                centerC3A2, centerC3A3, centerC3A4, centerCircle, leftArrow, rightArrow, centerPlayButton,
+                randomDataCircle, randomData, instructionsCircle, instructions, devsCircle, devs);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         stage.setScene(mainScene);
         stage.show();
@@ -328,6 +514,17 @@ public class MainMenu extends Application {
         c.setFill(color);
         c.setRadius(radius);
         return c;
+    }
+
+    void resizeAnimation(Node node) {
+        ScaleTransition resizePic = new ScaleTransition();
+        resizePic.setDuration(Duration.millis(750));
+        resizePic.setNode(node);
+        resizePic.setByX(.1);
+        resizePic.setByY(.1);
+        resizePic.setCycleCount(Integer.MAX_VALUE);
+        resizePic.setAutoReverse(true);
+        resizePic.play();
     }
 
 //    public Scene getMainScene() {

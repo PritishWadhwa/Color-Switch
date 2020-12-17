@@ -24,7 +24,8 @@ public class Ball extends Region {
     private COLOR cl;
     Node view;
     Circle circle;
-    public Ball(Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass, Group ro, COLOR cl) {
+    int lvl;
+    public Ball(Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass, Group ro, COLOR cl,int l) {
         this.layer = layer;
         this.location = location;
         this.velocity = velocity;
@@ -39,6 +40,7 @@ public class Ball extends Region {
         circle = new Circle(radius);
         circle.setCenterX(radius);
         circle.setCenterY(radius);
+        lvl=l;
         switch (cl) {
             case AQUA:
                 circle.setFill(Color.rgb(141, 18, 255));
@@ -62,8 +64,18 @@ public class Ball extends Region {
     }
 
     public void applyForce(Point2D force) {
-        Point2D f = force.multiply(0.07);
-        acceleration = acceleration.add(f);
+        if(lvl==0) {
+            Point2D f = force.multiply(0.07);
+            acceleration = acceleration.add(f);
+        }
+        else if(lvl==1){
+            Point2D f = force.multiply(0.08);
+            acceleration = acceleration.add(f);
+        }
+        else{
+            Point2D f = force.multiply(0.1);
+            acceleration = acceleration.add(f);
+        }
     }
 
     public void move(int pause) {
@@ -146,8 +158,6 @@ public class Ball extends Region {
     public Circle retCircle(){
         return this.circle;
     }
-
-
 
     public void display() {
         relocate(location.getX() - centerX, location.getY() - centerY);

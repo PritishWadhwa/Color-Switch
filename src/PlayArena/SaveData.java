@@ -13,6 +13,9 @@ public class SaveData implements java.io.Serializable {
     public ArrayList<Integer> obstacleList;
     public int noOfDeaths;
     public int color;
+    public int date;
+    public int month;
+    public int year;
 }
 
 

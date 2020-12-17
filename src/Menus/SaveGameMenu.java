@@ -27,7 +27,7 @@ public class SaveGameMenu {
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
 
-    public void start(Stage stage, SaveData saveData) throws FileNotFoundException {
+    public void start(Stage stage, SaveData saveData) throws Exception {
         Scene mainScene;
 
         MainMenu mainMenu = new MainMenu();
@@ -43,13 +43,21 @@ public class SaveGameMenu {
         Rectangle rounded3 = makeRoundedRectangle(20, 525, 97.5, 520, Color.YELLOW, Color.RED);
         Rectangle rounded4 = makeRoundedRectangle(20, 672.5, 97.5, 520, Color.YELLOW, Color.RED);
         Text saveGame1Text1 = makeText(40, "Game 1", 35, 273.75, 10, Color.BLACK);
-        Text saveGame1Text2 = makeText(30, "Date: 21/11/20, Score: 15", 35, 310, 10, Color.GRAY);
+        SaveData date1 = (SaveData) ResourceManager.load("1.save");
+        String dateScore1 = "Date: " + date1.date + "/" + date1.month + "/" + date1.year + ", Score: " + date1.currScore;
+        Text saveGame1Text2 = makeText(30, dateScore1, 35, 310, 10, Color.GRAY);
         Text saveGame2Text1 = makeText(40, "Game 2", 35, 421.25, 10, Color.BLACK);
-        Text saveGame2Text2 = makeText(30, "Date: 21/11/20, Score: 17", 35, 457.5, 10, Color.GRAY);
+        SaveData date2 = (SaveData) ResourceManager.load("1.save");
+        String dateScore2 = "Date: " + date2.date + "/" + date2.month + "/" + date2.year + ", Score: " + date2.currScore;
+        Text saveGame2Text2 = makeText(30, dateScore2, 35, 457.5, 10, Color.GRAY);
         Text saveGame3Text1 = makeText(40, "Game 3", 35, 568.75, 10, Color.BLACK);
-        Text saveGame3Text2 = makeText(30, "Date: 21/11/20, Score: 12", 35, 605, 10, Color.GRAY);
+        SaveData date3 = (SaveData) ResourceManager.load("3.save");
+        String dateScore3 = "Date: " + date3.date + "/" + date3.month + "/" + date3.year + ", Score: " + date3.currScore;
+        Text saveGame3Text2 = makeText(30, dateScore3, 35, 605, 10, Color.GRAY);
         Text saveGame4Text1 = makeText(40, "Game 4", 35, 716.25, 10, Color.BLACK);
-        Text saveGame4Text2 = makeText(30, "Date: 21/11/20, Score: 9", 35, 752.5, 10, Color.GRAY);
+        SaveData date4 = (SaveData) ResourceManager.load("4.save");
+        String dateScore4 = "Date: " + date4.date + "/" + date4.month + "/" + date4.year + ", Score: " + date4.currScore;
+        Text saveGame4Text2 = makeText(30, dateScore4, 35, 752.5, 10, Color.GRAY);
 
         homeCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
