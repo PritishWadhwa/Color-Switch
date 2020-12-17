@@ -90,6 +90,7 @@ public class Gameplay extends Application {
     private ArrayList<Integer> obslist;
     private BurstBall destroyer;
     private double newball;
+    private int GitPrit = 1;
 
     public Gameplay(int l) throws FileNotFoundException {
         level = l;
@@ -850,6 +851,55 @@ public class Gameplay extends Application {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                double y = 380;
+                Integer[] intArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+                if (curScore * GitPrit >= 30) {
+                    GitPrit++;
+                    for (int i = 0; i < 30; i++) {
+                        if (i % 11 == 0) {
+                            List<Integer> intList = Arrays.asList(intArray);
+                            Collections.shuffle(intList);
+                            intList.toArray(intArray);
+                        }
+                        obslist.add(intArray[i % 11]);
+                        if (intArray[i % 11] == 1) {
+                            RingObstacle o = new RingObstacle(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 2) {
+                            InfiniteLineObstacle o = new InfiniteLineObstacle(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 3) {
+                            ObjDisc o = new ObjDisc(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 4) {
+                            ObjLine o = new ObjLine(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 5) {
+                            ObsLine o = new ObsLine(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 6) {
+                            ObsDisc o = new ObsDisc(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 7) {
+                            iRingObstacle o = new iRingObstacle(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 8) {
+                            ObsDisc3 o = new ObsDisc3(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 9) {
+                            ObsDisc1 o = new ObsDisc1(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else if (intArray[i % 11] == 10) {
+                            ObsDisc22 o = new ObsDisc22(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        } else {
+                            ObsDisc21 o = new ObsDisc21(playfield, nodes, y);
+                            obstacles.add(o.returnGrp());
+                        }
+                        y -= 700;
+                        headgroup.getChildren().add(obstacles.get(i));
+                    }
+                }
                 if (ball != null && ball.location.getY() >= 820 && ff == 1) {
                     alive = 0;
                     noOfDeath++;
