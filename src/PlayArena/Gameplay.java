@@ -1,6 +1,5 @@
 package PlayArena;
 
-import Menus.LoadGameMenu;
 import Menus.MainMenu;
 import Menus.RespawnMenu;
 import Menus.SaveGameMenu;
@@ -25,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.COLOR;
+import sample.Main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,15 +35,18 @@ public class Gameplay extends Application {
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
     public static Point2D FORCE_GRAVITY = new Point2D(0, 8);
-    public Text scoreDisplay;
+    public Text scoreDisplay, powerUp;
     public int f = 1;
+    protected Pane playfield;
+    protected Ball ball;
     RespawnMenu death;
     Group ro;
-    Pane playfield;
     AnimationTimer gameLoop;
     Scene scene;
     Timeline timeline = new Timeline();
+    Timeline retimeline = new Timeline();
     Rectangle rect = makeRectangle(0, 0, 850, 560, Color.rgb(41, 41, 41));
+    Rectangle rerect = makeRectangle(0, 0, 850, 560, Color.rgb(41, 41, 41));
     Circle homeCircle = makeCircle(100, 100, 40, Color.rgb(128, 128, 128));
     Circle centerCircle1 = makeCircle(280, 212.5, 70, Color.rgb(88, 88, 88));
     Circle centerCircle2 = makeCircle(280, 425, 70, Color.rgb(88, 88, 88));
@@ -52,9 +55,17 @@ public class Gameplay extends Application {
     ImageView restartImg = makeImage("images/restartButton.png", 169, 122, 250, 250, true);
     ImageView playImg = makeImage("images/playButton.png", 222, 367, 125, 125, true);
     ImageView saveImg = makeImage("images/saveButton.png", 236, 593, 90, 90, true);
+    Circle rehomeCircle = makeCircle(100, 100, 40, Color.rgb(128, 128, 128));
+    Circle recenterCircle2 = makeCircle(280, 425, 70, Color.rgb(88, 88, 88));
+    Circle recenterCircle3 = makeCircle(280, 637.5, 70, Color.rgb(88, 88, 88));
+    ImageView rehomeImg = makeImage("images/homeButton.png", 70, 70, 60, 60, true);
+    ImageView rerestartImg = makeImage("images/restartButton.png", 169, 548, 250, 250, true);
+    ImageView replayImg = makeImage("images/playButton.png", 222, 367, 125, 125, true);
+    MainMenu mainMenu;
+    Gameplay gameplay;
     private int curScore;
-    private Ball ball;
     private int sd;
+    private int alive = 1;
     private Circle block;
     private ArrayList<Shape> nodes;
     private ArrayList<Group> obstacles;
@@ -63,15 +74,22 @@ public class Gameplay extends Application {
     private Queue<ColorSwapper> swapper_list;
     private double times = 0;
     private int col = 1;
+    private int ff = 1;
+    private int pauseIt = 0;
+    private int noOfDeath = 0;
+    private ArrayList<Integer> obslist;
+    private BurstBall destroyer;
+    private double newball;
 
     public Gameplay() throws FileNotFoundException {
     }
 
     public void start(Stage stage) throws FileNotFoundException {
-        Gameplay gameplay = new Gameplay();
-        MainMenu mainMenu = new MainMenu();
+        gameplay = new Gameplay();
+        mainMenu = new MainMenu();
         SaveGameMenu saveGameMenu = new SaveGameMenu();
         sd = 1;
+        destroyer = new BurstBall();
         death = new RespawnMenu();
         headgroup = new Group();
         playfield = new Pane();
@@ -85,18 +103,21 @@ public class Gameplay extends Application {
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
         Circle pcircle = makeCircle(519, 47, 40, Color.rgb(88, 88, 88));
         scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
+        powerUp = makeText(40, "", 1.0, 800.0, 5.0);
         ro = new Group(playfield);
         //prepareStars();
 
         obstacles = new ArrayList<Group>();
+        obslist = new ArrayList<Integer>();
         double y = 380;
         Integer[] intArray = {1, 2, 3, 4};
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             if (i % 4 == 0) {
                 List<Integer> intList = Arrays.asList(intArray);
                 Collections.shuffle(intList);
                 intList.toArray(intArray);
             }
+            obslist.add(intArray[i % 4]);
             if (intArray[i % 4] == 1) {
                 RingObstacle o = new RingObstacle(playfield, nodes, y);
                 prepareStars(y - 10);
@@ -118,15 +139,20 @@ public class Gameplay extends Application {
                 prepareColorSwapper(y - 200);
                 obstacles.add(o.returnGrp());
             }
-            y -= 500;
+            y -= 700;
             headgroup.getChildren().add(obstacles.get(i));
         }
+        for (int i = 0; i < 30; i++) {
+            System.out.print(obslist.get(i) + " ");
+        }
+        System.out.println();
         //  pane1.getChildren().addAll(star2.view,swapper.view,star1.view, hand );
         playfield.setPrefSize(WIDTH, HEIGHT);
         ro.getChildren().add(headgroup);
         ro.getChildren().add(rectLeft);
         ro.getChildren().add(rectRight);
         ro.getChildren().add(scoreDisplay);
+        ro.getChildren().add(powerUp);
         ro.getChildren().add(pcircle);
         ro.getChildren().add(pauseButton);
         pcircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -177,7 +203,7 @@ public class Gameplay extends Application {
                 }
             }
         });
-        setBall();
+        setBall(0);
         EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
@@ -204,6 +230,200 @@ public class Gameplay extends Application {
         ro.getChildren().remove(restartImg);
         ro.getChildren().remove(playImg);
         ro.getChildren().remove(saveImg);
+        pauseIt = 0;
+        ball.bounce();
+        ball.checkBounds(getCurScore(), pauseIt);
+//        timeline.setDelay(Duration.millis(2000));
+    }
+
+    public void undie() {
+        timeline.play();
+        ro.getChildren().remove(rerect);
+        ro.getChildren().remove(rehomeCircle);
+        ro.getChildren().remove(recenterCircle2);
+        ro.getChildren().remove(recenterCircle3);
+        ro.getChildren().remove(rehomeImg);
+        ro.getChildren().remove(rerestartImg);
+        ro.getChildren().remove(replayImg);
+        col = 1;
+        alive = 1;
+        pauseIt = 0;
+        //ball.bounce();
+//        ball.move(pauseIt);
+//        ball.checkBounds(getCurScore(),pauseIt);
+//        ball.setVisible(true);
+        setBall(newball);
+        // pauseIt=0;
+        // ball.bounce();
+        //ball.checkBounds(getCurScore(),pauseIt);
+    }
+
+    public void die(Stage stage, MainMenu mainMenu, Gameplay gameplay) {
+        pauseIt = 2;
+        retimeline.pause();
+        if (noOfDeath < 2)
+            resizeAnimation(recenterCircle2);
+        resizeAnimation(recenterCircle3);
+        resizeAnimation(rerestartImg);
+        if (noOfDeath < 2)
+            resizeAnimation(replayImg);
+
+        rehomeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rehomeCircle.setFill(Color.rgb(140, 140, 140));
+            }
+        });
+
+        rehomeCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rehomeCircle.setFill(Color.rgb(140, 140, 140));
+            }
+        });
+
+        rehomeImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rehomeCircle.setFill(Color.rgb(128, 128, 128));
+            }
+        });
+
+        rehomeCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                rehomeCircle.setFill(Color.rgb(128, 128, 128));
+            }
+        });
+
+        rehomeImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rehomeCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    mainMenu.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        replayImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (noOfDeath < 2)
+                    recenterCircle2.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        recenterCircle2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (noOfDeath < 2)
+                    recenterCircle2.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        replayImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (noOfDeath < 2)
+                    recenterCircle2.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        recenterCircle2.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (noOfDeath < 2)
+                    recenterCircle2.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        replayImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (noOfDeath < 2) {
+                    destroyer.undoDestroy(ro);
+                    undie();
+                }
+            }
+        });
+
+        recenterCircle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        rerestartImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                recenterCircle3.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        rerestartImg.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                recenterCircle3.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+
+        rerestartImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        recenterCircle3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                recenterCircle3.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        recenterCircle3.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                recenterCircle3.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        recenterCircle3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    gameplay.start(stage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ro.getChildren().addAll(rerect, rehomeCircle, rehomeImg, recenterCircle2, replayImg, recenterCircle3, rerestartImg);
+
     }
 
     public void pause(Stage stage, MainMenu mainMenu, Gameplay gameplay, SaveGameMenu saveGameMenu) throws FileNotFoundException {
@@ -416,7 +636,7 @@ public class Gameplay extends Application {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    private void collide(Shape block, Stage stage) throws InterruptedException {
+    private void collide(Shape block, Stage stage, MainMenu mainMenu, Gameplay gameplay) throws InterruptedException {
         boolean collisionDetected = false;
         for (Shape static_bloc : nodes) {
             if (static_bloc != block && col == 1) {
@@ -424,8 +644,7 @@ public class Gameplay extends Application {
                 Shape intersect = Shape.intersect(block, static_bloc);
                 if (static_bloc instanceof Arc) {
                     if (intersect.getBoundsInLocal().getWidth() != -1 && !(static_bloc.getStroke()).equals(block.getFill())) {
-                        if (ball.location.getY() <= ((Arc) static_bloc).getCenterY() + 100 && ball.location.getY() >= ((Arc) static_bloc).getCenterY() - 80) {
-                            System.out.println("fh");
+                        if (ball.location.getY() <= ((Arc) static_bloc).getCenterY() + 100 && ball.location.getY() >= ((Arc) static_bloc).getCenterY() - 100) {
                             collisionDetected = false;
                         } else
                             collisionDetected = true;
@@ -437,57 +656,26 @@ public class Gameplay extends Application {
                 }
             }
         }
-
-        if (collisionDetected && col == 1) {
+//        if(ball.location.getY()>=750){
+//            try {
+//                death.start(stage);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        }
+        if ((collisionDetected && col == 1)) {
+            noOfDeath++;
+            alive = 0;
             col++;
             ball.setVisible(false);
             double a = ball.location.getX();
             double b = ball.location.getY();
-
-            Arc arc1 = makeArc(a, b, 0, 20, 90, Color.rgb(245, 223, 15), 15);
-            playfield.getChildren().add(arc1);
-            Arc arc2 = makeArc(a, b, 90, 20, 90, Color.rgb(141, 18, 255), 15);
-            playfield.getChildren().add(arc2);
-            Arc arc3 = makeArc(a, b, 180, 20, 90, Color.rgb(255, 0, 132), 15);
-            playfield.getChildren().add(arc3);
-            Arc arc4 = makeArc(a, b, 270, 20, 90, Color.rgb(53, 226, 242), 15);
-            playfield.getChildren().add(arc4);
-
-            TranslateTransition translate = new TranslateTransition();
-            translate.setByX(400);
-            translate.setDuration(Duration.millis(2000));
-            translate.setCycleCount(1);
-            translate.setAutoReverse(true);
-            translate.setNode(arc1);
-            translate.play();
-            TranslateTransition translate1 = new TranslateTransition();
-            translate1.setByX(-400);
-            translate1.setDuration(Duration.millis(2000));
-            translate1.setCycleCount(1);
-            translate1.setAutoReverse(true);
-            translate1.setNode(arc2);
-            translate1.play();
-            TranslateTransition translate2 = new TranslateTransition();
-            translate2.setByY(400);
-            translate2.setDuration(Duration.millis(2000));
-            translate2.setCycleCount(1);
-            translate2.setAutoReverse(true);
-            translate2.setNode(arc3);
-            translate2.play();
-            TranslateTransition translate3 = new TranslateTransition();
-            translate3.setByY(-400);
-            translate3.setDuration(Duration.millis(2000));
-            translate3.setCycleCount(1);
-            translate3.setAutoReverse(true);
-            translate3.setNode(arc4);
-            translate3.play();
+            newball = b;
+            destroyer.prepareDestroy(a, b, stage, playfield, death);
             PauseTransition pause = new PauseTransition(Duration.millis(2000));
             pause.setOnFinished(et -> {
-                try {
-                    death.start(stage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                die(stage, mainMenu, gameplay);
             });
             pause.play();
 
@@ -511,16 +699,31 @@ public class Gameplay extends Application {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                //System.out.println(star_list.size());
-                try {
-                    collide(block, stage);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (ball.location.getY() >= 820 && ff == 1) {
+                    alive = 0;
+                    noOfDeath++;
+                    ball.setVisible(false);
+                    ff++;
+                    double a = ball.location.getX();
+                    double b = ball.location.getY();
+                    destroyer.prepareDestroy(a, b, stage, playfield, death);
+                    PauseTransition pause = new PauseTransition(Duration.millis(2000));
+                    pause.setOnFinished(et -> {
+                        die(stage, mainMenu, gameplay);
+                    });
+                    pause.play();
                 }
-
-                if (star_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY()) {
+                if (getCurScore() % 5 != 0 || getCurScore() == 0) {
+                    try {
+                        collide(block, stage, mainMenu, gameplay);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (ball.isVisible() == true && star_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
                     star_list.element().view.setVisible(false);
                     setCurScore(getCurScore() + 1);
+                    Main.setTotalScore(1);
                     PauseTransition pause = new PauseTransition(Duration.millis(0));
                     pause.setOnFinished(et -> {
                         scoreDisplay.setText(Integer.toString(getCurScore()));
@@ -528,10 +731,10 @@ public class Gameplay extends Application {
                     pause.play();
                     star_list.remove();
                 }
-                if (ball.location.getY() < 400) {
+                if (ball.isVisible() == true && ball.location.getY() < 400) {
                     headgroup.setTranslateY(headgroup.getTranslateY() + 2);
                 }
-                if (swapper_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY()) {
+                if (ball.isVisible() == true && swapper_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
                     f++;
                     swapper_list.element().view.setVisible(false);
                     PauseTransition pause = new PauseTransition(Duration.millis(0));
@@ -546,18 +749,27 @@ public class Gameplay extends Application {
                     swapper_list.remove();
                     pause.play();
                 }
-                ball.applyForce(FORCE_GRAVITY);
-                ball.move();
-                ball.checkBounds();
-                ball.display();
+                if (alive == 1) {
+                    ball.applyForce(FORCE_GRAVITY);
+                    ball.move(pauseIt);
+                    //System.out.println("hf");
+                    ball.checkBounds(getCurScore(), pauseIt);
+                    ball.display();
+                }
             }
         };
         gameLoop.start();
     }
 
-    private void setBall() {
+    private void setBall(double k) {
         double x = 280;
         double y = 675;
+        if (k > 0) {
+            if (k < 500)
+                y = k + 220;
+            else
+                y = k - 200;
+        }
         Point2D location = new Point2D(x, y);
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
@@ -644,4 +856,77 @@ public class Gameplay extends Application {
     public Scene getMainScene() {
         return scene;
     }
+}
+
+class BurstBall {
+    Arc arc1, arc2, arc3, arc4;
+
+    public BurstBall() throws FileNotFoundException {
+    }
+
+    public void prepareDestroy(double a, double b, Stage stage, Pane playfield, RespawnMenu death) {
+        arc1 = makeArc(a, b, 0, 20, 90, Color.rgb(245, 223, 15), 15);
+        playfield.getChildren().add(arc1);
+        arc2 = makeArc(a, b, 90, 20, 90, Color.rgb(141, 18, 255), 15);
+        playfield.getChildren().add(arc2);
+        arc3 = makeArc(a, b, 180, 20, 90, Color.rgb(255, 0, 132), 15);
+        playfield.getChildren().add(arc3);
+        arc4 = makeArc(a, b, 270, 20, 90, Color.rgb(53, 226, 242), 15);
+        playfield.getChildren().add(arc4);
+
+        TranslateTransition translate = new TranslateTransition();
+        translate.setByX(400);
+        translate.setDuration(Duration.millis(2000));
+        translate.setCycleCount(1);
+        translate.setAutoReverse(true);
+        translate.setNode(arc1);
+        translate.play();
+        TranslateTransition translate1 = new TranslateTransition();
+        translate1.setByX(-400);
+        translate1.setDuration(Duration.millis(2000));
+        translate1.setCycleCount(1);
+        translate1.setAutoReverse(true);
+        translate1.setNode(arc2);
+        translate1.play();
+        TranslateTransition translate2 = new TranslateTransition();
+        translate2.setByY(400);
+        translate2.setDuration(Duration.millis(2000));
+        translate2.setCycleCount(1);
+        translate2.setAutoReverse(true);
+        translate2.setNode(arc3);
+        translate2.play();
+        TranslateTransition translate3 = new TranslateTransition();
+        translate3.setByY(-400);
+        translate3.setDuration(Duration.millis(2000));
+        translate3.setCycleCount(1);
+        translate3.setAutoReverse(true);
+        translate3.setNode(arc4);
+        translate3.play();
+
+    }
+
+    Arc makeArc(double xPos, double yPos, double startAngle, double radius, double length, Color color, double width) {
+        Arc arc = new Arc();
+        arc.setCenterX(xPos);
+        arc.setCenterY(yPos);
+        arc.setStartAngle(startAngle);
+        arc.setRadiusX(radius);
+        arc.setRadiusY(radius);
+        arc.setLength(90.0f);
+        arc.setType(ArcType.ROUND);
+        //arc.setStroke(color);
+        // arc.setStrokeWidth(width);
+        arc.setFill(color);
+        return arc;
+    }
+
+    public void undoDestroy(Group ro) {
+        arc4.setVisible(false);
+        arc3.setVisible(false);
+        ro.getChildren().remove(arc1);
+        ro.getChildren().remove(arc2);
+        ro.getChildren().remove(arc3);
+        ro.getChildren().remove(arc4);
+    }
+
 }

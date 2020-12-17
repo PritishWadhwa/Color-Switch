@@ -66,13 +66,15 @@ public class Ball extends Region {
         acceleration = acceleration.add(f);
     }
 
-    public void move() {
-        velocity = velocity.add(acceleration);
-        if (velocity.magnitude() > maxSpeed) {
-            velocity = velocity.normalize().multiply(maxSpeed);
+    public void move(int pause) {
+        if(pause==0) {
+            velocity = velocity.add(acceleration);
+            if (velocity.magnitude() > maxSpeed) {
+                velocity = velocity.normalize().multiply(maxSpeed);
+            }
+            location = location.add(velocity);
+            acceleration = new Point2D(0, 0);
         }
-        location = location.add(velocity);
-        acceleration = new Point2D(0, 0);
     }
 
     public void bounce() {
@@ -86,14 +88,35 @@ public class Ball extends Region {
         velocity = new Point2D(velocityX, velocityY);
     }
 
-    public void checkBounds() {
+    public void checkBounds(int cs,int pauseIt) {
         double locationX = location.getX();
         double locationY = location.getY();
         double velocityX = velocity.getX();
         double velocityY = velocity.getY();
-        if (locationY > 675) {
-            locationY = 675;
-            velocityY = 0;
+        if(pauseIt==1){
+            System.out.println("ceokl");
+            velocityY=0;
+        }
+        if(pauseIt==2){
+            System.out.println("heol");
+            velocityY=0;
+            locationY=locationY+200;
+        }
+        if(locationY<10){
+            //locationY=10;
+            velocityY=5;
+        }
+        if (cs==0) {
+            if (locationY > 675) {
+                locationY = 675;
+                velocityY = 0;
+            }
+        }
+        else{
+            if(locationY > 820) {
+                locationY = 820;
+                velocityY = 0;
+            }
         }
         location = new Point2D(locationX, locationY);
         velocity = new Point2D(velocityX, velocityY);
