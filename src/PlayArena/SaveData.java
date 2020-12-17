@@ -11,7 +11,8 @@ public class SaveData implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     public int currScore;
     public ArrayList<Integer> obstacleList;
-    int noOfDeaths;
+    public int noOfDeaths;
+    public int color;
 }
 
 

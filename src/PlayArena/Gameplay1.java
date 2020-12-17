@@ -31,7 +31,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 
-public class Gameplay extends Application {
+public class Gameplay1 extends Application {
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
     public static Point2D FORCE_GRAVITY = new Point2D(0, 8);
@@ -77,21 +77,37 @@ public class Gameplay extends Application {
     private int col = 1;
     private int ff = 1;
     private int pauseIt = 0;
-    private int noOfDeath = 0;
     private int colorType;
+    private int noOfDeath = 0;
     private ArrayList<Integer> obslist;
-    private BurstBall destroyer;
+    private BurstBall1 destroyer;
     private double newball;
 
-    public Gameplay() throws FileNotFoundException {
+//    public Gameplay1() throws FileNotFoundException {
+//    }
+
+    public Gameplay1(ArrayList<Integer> obs,int nod,int cs,int ct) throws FileNotFoundException {
+        noOfDeath=nod;
+        curScore=cs;
+        obslist=obs;
+        colorType=ct;
     }
 
-    public void start(Stage stage) throws FileNotFoundException {
+//    public void start(Stage stage,ArrayList<Integer> obs,int nod,int cs,int ct) throws FileNotFoundException {
+        public void start(Stage stage) throws FileNotFoundException {
+//        noOfDeath=nod;
+//        curScore=cs;
+//        obslist=obs;
+//        colorType=ct;
+            for (int o: obslist
+                 ) {
+                System.out.print(o+" ");
+            }
         gameplay = new Gameplay();
         mainMenu = new MainMenu();
         SaveGameMenu saveGameMenu = new SaveGameMenu();
         sd = 1;
-        destroyer = new BurstBall();
+        destroyer = new BurstBall1();
         death = new RespawnMenu();
         headgroup = new Group();
         playfield = new Pane();
@@ -144,9 +160,9 @@ public class Gameplay extends Application {
             y -= 700;
             headgroup.getChildren().add(obstacles.get(i));
         }
-        for (int i = 0; i < 30; i++) {
-            System.out.print(obslist.get(i) + " ");
-        }
+//        for (int i = 0; i < 30; i++) {
+//            System.out.print(obslist.get(i) + " ");
+//        }
         System.out.println();
         //  pane1.getChildren().addAll(star2.view,swapper.view,star1.view, hand );
         playfield.setPrefSize(WIDTH, HEIGHT);
@@ -649,8 +665,7 @@ public class Gameplay extends Application {
                     SaveData saveData = new SaveData();
                     saveData.currScore = curScore;
                     saveData.noOfDeaths = noOfDeath;
-                    saveData.obstacleList = new ArrayList<>();
-                    saveData.color = colorType;System.out.println(4);
+                    saveData.obstacleList = new ArrayList<>();System.out.println(4);
                     for (int obs : obslist
                     ) {
 
@@ -671,7 +686,6 @@ public class Gameplay extends Application {
                     if(Color.rgb(245, 223, 15).equals(block.getFill())){
                         colorType=1;
                         System.out.println(colorType);
-
                     }
                     else if(Color.rgb(141, 18, 255).equals(block.getFill())){
                         colorType=2;
@@ -686,7 +700,6 @@ public class Gameplay extends Application {
                     saveData.currScore = curScore;
                     saveData.noOfDeaths = noOfDeath;
                     saveData.obstacleList = new ArrayList<>();
-                    saveData.color = colorType;
                     for (int obs : obslist
                     ) {
                         saveData.obstacleList.add(obs);
@@ -936,10 +949,10 @@ public class Gameplay extends Application {
     }
 }
 
-class BurstBall {
+class BurstBall1 {
     Arc arc1, arc2, arc3, arc4;
 
-    public BurstBall() throws FileNotFoundException {
+    public BurstBall1() throws FileNotFoundException {
     }
 
     public void prepareDestroy(double a, double b, Stage stage, Pane playfield, RespawnMenu death) {

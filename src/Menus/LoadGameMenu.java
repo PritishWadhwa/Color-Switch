@@ -1,6 +1,7 @@
 package Menus;
 
 import PlayArena.Gameplay;
+import PlayArena.Gameplay1;
 import PlayArena.ResourceManager;
 import PlayArena.SaveData;
 import javafx.event.EventHandler;
@@ -31,7 +32,8 @@ public class LoadGameMenu {
         Scene mainScene;
 
         MainMenu mainMenu = new MainMenu();
-        Gameplay gameplay = new Gameplay();
+//        Gameplay1 gameplay = new Gameplay1();
+//        Gameplay1 gameplay;
         Rectangle topRect = makeRectangle(0, 0, 100, 560, Color.rgb(28, 106, 207));
         Text headingText = makeText(50, "LOAD GAMES", 175, 68, 10, Color.WHITE);
         Circle homeCircle = makeCircle(80, 50, 35, Color.WHITE);
@@ -149,6 +151,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("1.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -161,6 +164,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("1.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -173,6 +177,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("1.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -227,6 +232,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("2.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -239,6 +245,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("2.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -251,6 +258,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("2.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -305,6 +313,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("3.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -317,6 +326,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("3.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -329,6 +339,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("3.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -383,6 +394,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("4.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -395,6 +407,7 @@ public class LoadGameMenu {
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("4.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
@@ -402,11 +415,13 @@ public class LoadGameMenu {
             }
         });
 
+
         saveGame4Text2.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 try {
                     SaveData data = (SaveData) ResourceManager.load("4.save");
+                    Gameplay1 gameplay = new Gameplay1(data.obstacleList, data.noOfDeaths, data.currScore, data.color);
                     gameplay.start(stage);
                 } catch (Exception e) {
                     System.out.println("Couldn't load save data: " + e.getMessage());
