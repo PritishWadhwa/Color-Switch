@@ -276,11 +276,11 @@ public class Gameplay extends Application {
         pauseIt = 2;
         rcl = ball.getCl();
         retimeline.pause();
-        if (noOfDeath < 2)
+//        if (noOfDeath < 2)
             resizeAnimation(recenterCircle2);
         resizeAnimation(recenterCircle3);
         resizeAnimation(rerestartImg);
-        if (noOfDeath < 2)
+//        if (noOfDeath < 2)
             resizeAnimation(replayImg);
 
         rehomeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -844,9 +844,9 @@ public class Gameplay extends Application {
         double y = 675;
         if (k > 0) {
             if (k < 500)
-                y = k + 220;
+                y = k + 300;
             else
-                y = k - 200;
+                y = k - 300;
         }
         Point2D location = new Point2D(x, y);
         Point2D velocity = new Point2D(0, 0);

@@ -37,19 +37,19 @@ public class RespawnMenu {
         Text currStars = makeText(30, "YOU HAVE 50 STARS", 50, 212.5, 5);
         Text currStars1 = makeText(30, "YOU CAN USE 10 TO REVIVE", 50, 242.5, 5);
         Circle homeCircle = makeCircle(100, 100, 40, Color.rgb(128, 128, 128));
-//        Circle centerCircle1 = makeCircle(280, 212.5, 70, Color.rgb(88, 88, 88));
+        Circle centerCircle1 = makeCircle(280, 212.5, 70, Color.rgb(88, 88, 88));
         Circle centerCircle2 = makeCircle(280, 425, 70, Color.rgb(88, 88, 88));
         Circle centerCircle3 = makeCircle(280, 637.5, 70, Color.rgb(88, 88, 88));
         ImageView homeImg = makeImage("images/homeButton.png", 70, 70, 60, 60, true);
         ImageView restartImg = makeImage("images/restartButton.png", 169, 548, 250, 250, true);
         ImageView playImg = makeImage("images/playButton.png", 222, 367, 125, 125, true);
-//        ImageView saveImg = makeImage("images/saveButton.png", 236, 593, 90, 90, true);
-//        resizeAnimation(centerCircle1);
+        ImageView saveImg = makeImage("images/saveButton.png", 236, 593, 90, 90, true);
+        resizeAnimation(centerCircle1);
         resizeAnimation(centerCircle2);
         resizeAnimation(centerCircle3);
         resizeAnimation(restartImg);
         resizeAnimation(playImg);
-//        resizeAnimation(saveImg);
+        resizeAnimation(saveImg);
 
         homeImg.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
