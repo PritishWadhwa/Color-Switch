@@ -1,6 +1,9 @@
 package Tokens;
 
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -17,11 +20,11 @@ public class ObsDisc1 extends JPanel {
 
     private Group group;
 
-    public ObsDisc1(Pane pane, ArrayList<Shape> nodes,double y) {
+    public ObsDisc1(Pane pane, ArrayList<Shape> nodes, double y) {
 
-        Rectangle rect = returnRect(185, y-86, 172, 18, 0, 0, 10);
+        Rectangle rect = returnRect(185, y - 86, 172, 18, 0, 0, 10);
         rect.setFill(setCl(COLOR.getRandomColor()));
-        final Rotate rotateCWCC2 = new Rotate(0, 280, y-9);
+        final Rotate rotateCWCC2 = new Rotate(0, 280, y - 9);
         rect.getTransforms().add(rotateCWCC2);
         final Timeline ra = new Timeline();
         ra.getKeyFrames().add(new KeyFrame(Duration.seconds(6), new KeyValue(rotateCWCC2.angleProperty(), -360)));
@@ -36,7 +39,8 @@ public class ObsDisc1 extends JPanel {
 //        ro.getChildren().add(rect1);
 
     }
-    public Color setCl(COLOR cl){
+
+    public Color setCl(COLOR cl) {
         switch (cl) {
             case AQUA:
                 return Color.rgb(141, 18, 255);
@@ -49,6 +53,7 @@ public class ObsDisc1 extends JPanel {
         }
         return Color.rgb(255, 0, 132);
     }
+
     public Group returnGrp() {
         return this.group;
     }

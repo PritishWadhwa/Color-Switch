@@ -31,7 +31,7 @@ public class SaveGameMenu {
         Scene mainScene;
 
         MainMenu mainMenu = new MainMenu();
-        Gameplay gameplay = new Gameplay();
+        Gameplay gameplay = new Gameplay(0);
         Rectangle topRect = makeRectangle(0, 0, 100, 560, Color.rgb(28, 106, 207));
         Text headingText = makeText(50, "SAVE GAMES", 175, 68, 10, Color.WHITE);
         Circle homeCircle = makeCircle(80, 50, 35, Color.WHITE);
@@ -47,7 +47,7 @@ public class SaveGameMenu {
         String dateScore1 = "Date: " + date1.date + "/" + date1.month + "/" + date1.year + ", Score: " + date1.currScore;
         Text saveGame1Text2 = makeText(30, dateScore1, 35, 310, 10, Color.GRAY);
         Text saveGame2Text1 = makeText(40, "Game 2", 35, 421.25, 10, Color.BLACK);
-        SaveData date2 = (SaveData) ResourceManager.load("1.save");
+        SaveData date2 = (SaveData) ResourceManager.load("2.save");
         String dateScore2 = "Date: " + date2.date + "/" + date2.month + "/" + date2.year + ", Score: " + date2.currScore;
         Text saveGame2Text2 = makeText(30, dateScore2, 35, 457.5, 10, Color.GRAY);
         Text saveGame3Text1 = makeText(40, "Game 3", 35, 568.75, 10, Color.BLACK);

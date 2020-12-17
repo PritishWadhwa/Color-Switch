@@ -31,7 +31,7 @@ public class RespawnMenu {
     public void start(Stage stage) throws FileNotFoundException {
         Scene mainScene;
 //        Stage mainStage;
-        Gameplay gameplay = new Gameplay();
+        Gameplay gameplay = new Gameplay(0);
         MainMenu mainMenu = new MainMenu();
         LoadGameMenu loadGameMenu = new LoadGameMenu();
         Text currStars = makeText(30, "YOU HAVE 50 STARS", 50, 212.5, 5);

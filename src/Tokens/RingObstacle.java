@@ -19,7 +19,7 @@ public class RingObstacle {
 
     private Group group;
 
-    public RingObstacle(Pane pane, ArrayList<Shape> nodes,double y) {
+    public RingObstacle(Pane pane, ArrayList<Shape> nodes, double y) {
         Arc arc1 = makeArc(280, y, 0, 120, 83, Color.rgb(245, 223, 15), 15);
         Arc arc2 = makeArc(280, y, 90, 120, 83, Color.rgb(141, 18, 255), 15);
         Arc arc3 = makeArc(280, y, 180, 120, 83, Color.rgb(255, 0, 132), 15);

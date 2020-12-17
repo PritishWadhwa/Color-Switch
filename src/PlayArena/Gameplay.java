@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
@@ -25,6 +27,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.COLOR;
 import sample.Main;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
@@ -35,6 +39,7 @@ public class Gameplay extends Application {
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
     public static Point2D FORCE_GRAVITY = new Point2D(0, 8);
+    public static int level;
     public Text scoreDisplay, powerUp;
     public int f = 1;
     protected Pane playfield;
@@ -61,7 +66,8 @@ public class Gameplay extends Application {
     ImageView rehomeImg = makeImage("images/homeButton.png", 70, 70, 60, 60, true);
     ImageView rerestartImg = makeImage("images/restartButton.png", 169, 548, 250, 250, true);
     ImageView replayImg = makeImage("images/playButton.png", 222, 367, 125, 125, true);
-
+    String musicFile = "images/tap.mp3";
+    String musicFil = "images/die.mp3";
     MainMenu mainMenu;
     Gameplay gameplay;
     COLOR rcl;
@@ -85,12 +91,14 @@ public class Gameplay extends Application {
     private BurstBall destroyer;
     private double newball;
 
-    public Gameplay() throws FileNotFoundException {
+    public Gameplay(int l) throws FileNotFoundException {
+        level = l;
+        System.out.println(level);
     }
 
     public void start(Stage stage) throws FileNotFoundException {
         Main.addTotalGames();
-        gameplay = new Gameplay();
+        gameplay = new Gameplay(level);
         mainMenu = new MainMenu();
         SaveGameMenu saveGameMenu = new SaveGameMenu();
         sd = 1;
@@ -106,6 +114,7 @@ public class Gameplay extends Application {
         Rectangle rectRight = makeRectangle(460, 0, HEIGHT, 100, Color.BLACK);
         ImageView pauseButton = makeImage("images/pause.png", 480, 6, 180, 80, true);
         ImageView hand = makeImage("images/hand.png", 256, 685, 100, 100, true);
+
         Circle pcircle = makeCircle(519, 47, 40, Color.rgb(88, 88, 88));
         scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
         powerUp = makeText(40, "", 1.0, 800.0, 5.0);
@@ -115,31 +124,66 @@ public class Gameplay extends Application {
         obstacles = new ArrayList<Group>();
         obslist = new ArrayList<Integer>();
         double y = 380;
-        Integer[] intArray = {1, 2, 3, 4};
+        Integer[] intArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         for (int i = 0; i < 30; i++) {
-            if (i % 4 == 0) {
+            if (i % 11 == 0) {
                 List<Integer> intList = Arrays.asList(intArray);
                 Collections.shuffle(intList);
                 intList.toArray(intArray);
             }
-            obslist.add(intArray[i % 4]);
-            if (intArray[i % 4] == 1) {
+            obslist.add(intArray[i % 11]);
+            if (intArray[i % 11] == 1) {
                 RingObstacle o = new RingObstacle(playfield, nodes, y);
                 prepareStars(y - 10);
                 prepareColorSwapper(y - 200);
                 obstacles.add(o.returnGrp());
-            } else if (intArray[i % 4] == 2) {
+            } else if (intArray[i % 11] == 2) {
                 InfiniteLineObstacle o = new InfiniteLineObstacle(playfield, nodes, y);
                 prepareStars(y - 50);
                 prepareColorSwapper(y - 150);
                 obstacles.add(o.returnGrp());
-            } else if (intArray[i % 4] == 3) {
+            } else if (intArray[i % 11] == 3) {
                 ObjDisc o = new ObjDisc(playfield, nodes, y);
                 prepareStars(y - 10);
                 prepareColorSwapper(y - 200);
                 obstacles.add(o.returnGrp());
-            } else {
+            } else if (intArray[i % 11] == 4) {
                 ObjLine o = new ObjLine(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (intArray[i % 11] == 5) {
+                ObsLine o = new ObsLine(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (intArray[i % 11] == 6) {
+                ObsDisc o = new ObsDisc(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (intArray[i % 11] == 7) {
+                iRingObstacle o = new iRingObstacle(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (intArray[i % 11] == 8) {
+                ObsDisc3 o = new ObsDisc3(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (intArray[i % 11] == 9) {
+                ObsDisc1 o = new ObsDisc1(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (intArray[i % 11] == 10) {
+                ObsDisc22 o = new ObsDisc22(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else {
+                ObsDisc21 o = new ObsDisc21(playfield, nodes, y);
                 prepareStars(y - 10);
                 prepareColorSwapper(y - 200);
                 obstacles.add(o.returnGrp());
@@ -147,6 +191,7 @@ public class Gameplay extends Application {
             y -= 700;
             headgroup.getChildren().add(obstacles.get(i));
         }
+        headgroup.getChildren().add(hand);
         for (int i = 0; i < 30; i++) {
             System.out.print(obslist.get(i) + " ");
         }
@@ -217,6 +262,9 @@ public class Gameplay extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if (ball != null) {
+                    Media sound = new Media(new File(musicFile).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.play();
                     ball.bounce();
                     ball.display();
                 }
@@ -276,7 +324,7 @@ public class Gameplay extends Application {
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
-        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, rcl);
+        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, rcl, level);
         block = ball.retCircle();        // pauseIt=0;
     }
 
@@ -548,7 +596,7 @@ public class Gameplay extends Application {
                 Point2D velocity = new Point2D(0, 0);
                 Point2D acceleration = new Point2D(0, 0);
                 double mass = 20;
-                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl);
+                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl, level);
                 block = ball.retCircle();
                 unPause();
             }
@@ -561,7 +609,7 @@ public class Gameplay extends Application {
                 Point2D velocity = new Point2D(0, 0);
                 Point2D acceleration = new Point2D(0, 0);
                 double mass = 20;
-                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl);
+                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl, level);
                 block = ball.retCircle();
                 unPause();
             }
@@ -773,8 +821,12 @@ public class Gameplay extends Application {
             destroyer.prepareDestroy(a, b, stage, playfield, death);
             PauseTransition pause = new PauseTransition(Duration.millis(2000));
             pause.setOnFinished(et -> {
-                if (ball != null)
+                if (ball != null) {
+                    Media sound = new Media(new File(musicFil).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.play();
                     die(stage, mainMenu, gameplay);
+                }
             });
             pause.play();
 
@@ -808,7 +860,12 @@ public class Gameplay extends Application {
                     destroyer.prepareDestroy(a, b, stage, playfield, death);
                     PauseTransition pause = new PauseTransition(Duration.millis(2000));
                     pause.setOnFinished(et -> {
-                        die(stage, mainMenu, gameplay);
+                        if (ball != null) {
+                            Media sound = new Media(new File(musicFil).toURI().toString());
+                            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                            mediaPlayer.play();
+                            die(stage, mainMenu, gameplay);
+                        }
                     });
                     pause.play();
                 }
@@ -818,7 +875,14 @@ public class Gameplay extends Application {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    PauseTransition pause = new PauseTransition(Duration.millis(0));
+                    pause.setOnFinished(et -> {
+                        powerUp.setText("Boost Available every 5th point");
+                    });
+                    pause.play();
                 }
+
                 if (ball != null && ball.isVisible() == true && star_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
                     star_list.element().view.setVisible(false);
                     setCurScore(getCurScore() + 1);
@@ -873,7 +937,7 @@ public class Gameplay extends Application {
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
-        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, COLOR.getRandomColor());
+        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, COLOR.getRandomColor(), level);
         block = ball.retCircle();
     }
 

@@ -1,6 +1,9 @@
 package Tokens;
 
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -15,11 +18,11 @@ import java.util.ArrayList;
 public class ObjLine extends JPanel {
     private Group ob;
 
-    public ObjLine(Pane ro, ArrayList<Shape> nodes,double y) {
+    public ObjLine(Pane ro, ArrayList<Shape> nodes, double y) {
         Rectangle rect1 = returnRect(220, y, 18, 120, 0, 20, 20);
         Rectangle rect2 = returnRect(220, y, 120, 18, 0, 20, 20);
-        Rectangle rect3 = returnRect(118,y, 18, 120, 0, 20, 20);
-        Rectangle rect = returnRect(220, y-102, 120, 18, 0, 20, 20);
+        Rectangle rect3 = returnRect(118, y, 18, 120, 0, 20, 20);
+        Rectangle rect = returnRect(220, y - 102, 120, 18, 0, 20, 20);
         rect.setFill(Color.rgb(245, 223, 15));
         rect1.setFill(Color.rgb(255, 0, 132));
         rect2.setFill(Color.rgb(141, 18, 255));
@@ -29,7 +32,7 @@ public class ObjLine extends JPanel {
         nodes.add(rect1);
         nodes.add(rect2);
         nodes.add(rect3);
-        final Rotate rotateCWCC2 = new Rotate(360, 229, y+9);
+        final Rotate rotateCWCC2 = new Rotate(360, 229, y + 9);
         ob.getTransforms().add(rotateCWCC2);
         final Timeline ra = new Timeline();
         ra.getKeyFrames().add(new KeyFrame(Duration.seconds(4), new KeyValue(rotateCWCC2.angleProperty(), 0)));

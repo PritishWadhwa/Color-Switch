@@ -31,7 +31,10 @@ import sample.Main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class Gameplay1 extends Application {
@@ -65,6 +68,9 @@ public class Gameplay1 extends Application {
     ImageView rehomeImg = makeImage("images/homeButton.png", 70, 70, 60, 60, true);
     ImageView rerestartImg = makeImage("images/restartButton.png", 169, 548, 250, 250, true);
     ImageView replayImg = makeImage("images/playButton.png", 222, 367, 125, 125, true);
+    String musicFile = "images/tap.mp3";
+    String musicFil = "images/die.mp3";
+
     MainMenu mainMenu;
     Gameplay gameplay;
     COLOR rcl;
@@ -109,7 +115,7 @@ public class Gameplay1 extends Application {
 //            System.out.print(o + " ");
 //        }
         Main.addTotalGames();
-        gameplay = new Gameplay();
+        gameplay = new Gameplay(0);
         mainMenu = new MainMenu();
         SaveGameMenu saveGameMenu = new SaveGameMenu();
         sd = 1;
@@ -149,8 +155,43 @@ public class Gameplay1 extends Application {
                 prepareStars(y - 10);
                 prepareColorSwapper(y - 200);
                 obstacles.add(o.returnGrp());
-            } else {
+            } else if (obslist.get(i) == 4) {
                 ObjLine o = new ObjLine(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (obslist.get(i) == 5) {
+                ObsDisc o = new ObsDisc(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (obslist.get(i) == 6) {
+                ObsLine o = new ObsLine(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (obslist.get(i) == 7) {
+                iRingObstacle o = new iRingObstacle(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (obslist.get(i) == 8) {
+                ObsDisc3 o = new ObsDisc3(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (obslist.get(i) == 9) {
+                ObsDisc1 o = new ObsDisc1(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else if (obslist.get(i) == 10) {
+                ObsDisc22 o = new ObsDisc22(playfield, nodes, y);
+                prepareStars(y - 10);
+                prepareColorSwapper(y - 200);
+                obstacles.add(o.returnGrp());
+            } else {
+                ObsDisc21 o = new ObsDisc21(playfield, nodes, y);
                 prepareStars(y - 10);
                 prepareColorSwapper(y - 200);
                 obstacles.add(o.returnGrp());
@@ -224,6 +265,9 @@ public class Gameplay1 extends Application {
             @Override
             public void handle(MouseEvent e) {
                 if (ball != null) {
+                    Media sound = new Media(new File(musicFile).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.play();
                     ball.bounce();
                     ball.display();
                 }
@@ -250,6 +294,9 @@ public class Gameplay1 extends Application {
         ro.getChildren().remove(saveImg);
         pauseIt = 0;
         if (ball != null) {
+            Media sound = new Media(new File(musicFile).toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
             ball.bounce();
             ball.checkBounds(getCurScore() - abcd, pauseIt);
         }
@@ -283,7 +330,7 @@ public class Gameplay1 extends Application {
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
-        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, rcl);
+        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, rcl, 0);
         block = ball.retCircle();        // pauseIt=0;
     }
 
@@ -554,7 +601,7 @@ public class Gameplay1 extends Application {
                 Point2D velocity = new Point2D(0, 0);
                 Point2D acceleration = new Point2D(0, 0);
                 double mass = 20;
-                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl);
+                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl, 0);
                 block = ball.retCircle();
                 unPause();
             }
@@ -567,7 +614,7 @@ public class Gameplay1 extends Application {
                 Point2D velocity = new Point2D(0, 0);
                 Point2D acceleration = new Point2D(0, 0);
                 double mass = 20;
-                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl);
+                ball = new Ball(playfield, location, velocity, acceleration, mass, ro, cl, 0);
                 block = ball.retCircle();
                 unPause();
             }
@@ -774,8 +821,12 @@ public class Gameplay1 extends Application {
             destroyer.prepareDestroy(a, b, stage, playfield, death);
             PauseTransition pause = new PauseTransition(Duration.millis(2000));
             pause.setOnFinished(et -> {
-                if (ball != null)
+                if (ball != null) {
+                    Media sound = new Media(new File(musicFil).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                    mediaPlayer.play();
                     die(stage, mainMenu, gameplay);
+                }
             });
             pause.play();
 
@@ -809,7 +860,12 @@ public class Gameplay1 extends Application {
                     destroyer.prepareDestroy(a, b, stage, playfield, death);
                     PauseTransition pause = new PauseTransition(Duration.millis(2000));
                     pause.setOnFinished(et -> {
-                        die(stage, mainMenu, gameplay);
+                        if (ball != null) {
+                            Media sound = new Media(new File(musicFil).toURI().toString());
+                            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                            mediaPlayer.play();
+                            die(stage, mainMenu, gameplay);
+                        }
                     });
                     pause.play();
                 }
@@ -819,6 +875,12 @@ public class Gameplay1 extends Application {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    PauseTransition pause = new PauseTransition(Duration.millis(0));
+                    pause.setOnFinished(et -> {
+                        powerUp.setText("Boost Available every 5th point");
+                    });
+                    pause.play();
                 }
                 if (ball != null && ball.isVisible() == true && star_list.element().location.getY() + headgroup.getTranslateY() >= ball.location.getY() - 20) {
                     star_list.element().view.setVisible(false);
@@ -874,7 +936,7 @@ public class Gameplay1 extends Application {
         Point2D velocity = new Point2D(0, 0);
         Point2D acceleration = new Point2D(0, 0);
         double mass = 20;
-        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, COLOR.getRandomColor());
+        ball = new Ball(playfield, location, velocity, acceleration, mass, ro, COLOR.getRandomColor(), 0);
         block = ball.retCircle();
     }
 

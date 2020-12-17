@@ -29,7 +29,8 @@ public class Star {
         viewImg.setPreserveRatio(preserveRatio);
         return viewImg;
     }
-    public double getpos(){
+
+    public double getpos() {
         return this.view.getBoundsInLocal().getDepth();
     }
 

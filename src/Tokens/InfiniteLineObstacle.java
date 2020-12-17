@@ -14,7 +14,7 @@ public class InfiniteLineObstacle {
 
     private Group group;
 
-    public InfiniteLineObstacle(Pane pane, ArrayList<Shape> nodes,double y) {
+    public InfiniteLineObstacle(Pane pane, ArrayList<Shape> nodes, double y) {
         Rectangle rect1 = makeRectangle(-260, y, 15, 90, Color.rgb(245, 223, 15));
         Rectangle rect2 = makeRectangle(-170, y, 15, 90, Color.rgb(141, 18, 255));
         Rectangle rect3 = makeRectangle(-80, y, 15, 90, Color.rgb(255, 0, 132));
@@ -101,9 +101,11 @@ public class InfiniteLineObstacle {
 
 
     }
+
     public Group returnGrp() {
         return this.group;
     }
+
     Rectangle makeRectangle(double xPos, double yPos, double height, double width, Color color) {
         Rectangle rect = new Rectangle();
         rect.setX(xPos);

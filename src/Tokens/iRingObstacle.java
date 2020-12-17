@@ -19,7 +19,7 @@ public class iRingObstacle {
 
     private Group group;
 
-    public iRingObstacle(Pane pane, ArrayList<Shape> nodes,double y) {
+    public iRingObstacle(Pane pane, ArrayList<Shape> nodes, double y) {
         Arc arc1 = makeArc(280, y, 0, 100, 83, Color.rgb(245, 223, 15), 15);
         Arc arc2 = makeArc(280, y, 90, 100, 83, Color.rgb(141, 18, 255), 15);
         Arc arc3 = makeArc(280, y, 180, 100, 83, Color.rgb(255, 0, 132), 15);

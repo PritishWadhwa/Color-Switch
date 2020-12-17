@@ -1,6 +1,9 @@
 package Tokens;
 
-import javafx.animation.*;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -16,17 +19,17 @@ public class ObjDisc extends JPanel {
 
     private Group group;
 
-    public ObjDisc(Pane pane, ArrayList<Shape> nodes,double y) {
+    public ObjDisc(Pane pane, ArrayList<Shape> nodes, double y) {
 
-        Rectangle rect = returnRect(185, y-86, 172, 18, 0, 0, 10);
-        Rectangle rect1 = returnRect(203, y+68, 18, 172, 0, 0, 10);
-        Rectangle rect2 = returnRect(185, y-104, 18, 172, 0, 0, 10);
-        Rectangle rect3 = returnRect(357, y-104, 172, 18, 0, 0, 10);
+        Rectangle rect = returnRect(185, y - 86, 172, 18, 0, 0, 10);
+        Rectangle rect1 = returnRect(203, y + 68, 18, 172, 0, 0, 10);
+        Rectangle rect2 = returnRect(185, y - 104, 18, 172, 0, 0, 10);
+        Rectangle rect3 = returnRect(357, y - 104, 172, 18, 0, 0, 10);
         rect.setFill(Color.rgb(53, 226, 242));
         rect1.setFill(Color.rgb(245, 223, 15));
         rect2.setFill(Color.rgb(141, 18, 255));
         rect3.setFill(Color.rgb(255, 0, 132));
-        final Rotate rotateCWCC2 = new Rotate(0, 280, y-9);
+        final Rotate rotateCWCC2 = new Rotate(0, 280, y - 9);
         rect.getTransforms().add(rotateCWCC2);
         rect1.getTransforms().add(rotateCWCC2);
         rect2.getTransforms().add(rotateCWCC2);
@@ -49,6 +52,7 @@ public class ObjDisc extends JPanel {
 //        ro.getChildren().add(rect1);
 
     }
+
     public Group returnGrp() {
         return this.group;
     }

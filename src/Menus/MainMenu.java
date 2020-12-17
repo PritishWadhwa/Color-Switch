@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -26,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Main;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -33,12 +36,18 @@ public class MainMenu extends Application {
 
     private static final double HEIGHT = 850.0;
     private static final double WIDTH = 560.0;
+    static SettingScreen settingScreen;
     private int flag = 0;
+    private int level;
 
     public void start(Stage stage) throws FileNotFoundException {
+        String musicFile = "images/intro.mp3";     // For example
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
         Scene mainScene;
         Stage mainStage;
-        Gameplay gameplay = new Gameplay();
+        settingScreen = new SettingScreen();
         LoadGameMenu loadGameMenu = new LoadGameMenu();
         RandomData randomDataScreen = new RandomData();
         Instructions instructionsScreen = new Instructions();
@@ -88,6 +97,10 @@ public class MainMenu extends Application {
         Text devs = makeText(50, "D", 394, 747.5, 10);
         resizeAnimation(devsCircle);
         resizeAnimation(devs);
+        Circle settingCircle = makeCircle(500, 730, 30, Color.rgb(88, 88, 88));
+        Text setting = makeText(50, "S", 485, 747.5, 10);
+        resizeAnimation(settingCircle);
+        resizeAnimation(setting);
 
         ScaleTransition resizePic = new ScaleTransition();
         resizePic.setDuration(Duration.millis(750));
@@ -165,6 +178,57 @@ public class MainMenu extends Application {
         arrow2right.play();
 
         mainStage = new Stage();
+
+        settingCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                settingCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        settingCircle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                settingCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        setting.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                settingCircle.setFill(Color.rgb(100, 100, 100));
+            }
+        });
+
+        setting.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                settingCircle.setFill(Color.rgb(88, 88, 88));
+            }
+        });
+
+        settingCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    settingScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        setting.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    settingScreen.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         instructionsCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -409,6 +473,7 @@ public class MainMenu extends Application {
             public void handle(MouseEvent event) {
                 //  mainStage.setScene(gameplay.getMainScene());
                 try {
+                    Gameplay gameplay = new Gameplay(level);
                     gameplay.start(stage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -434,6 +499,7 @@ public class MainMenu extends Application {
             @Override
             public void handle(MouseEvent event) {
                 try {
+                    Gameplay gameplay = new Gameplay(level);
                     gameplay.start(stage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -463,7 +529,7 @@ public class MainMenu extends Application {
                 headingC2A2, headingC2A3, headingC2A4, headingR, headingSwitch, exitImage, loadGame, centerC1A1,
                 centerC1A2, centerC1A3, centerC1A4, centerC2A1, centerC2A2, centerC2A3, centerC2A4, centerC3A1,
                 centerC3A2, centerC3A3, centerC3A4, centerCircle, leftArrow, rightArrow, centerPlayButton,
-                randomDataCircle, randomData, instructionsCircle, instructions, devsCircle, devs);
+                randomDataCircle, randomData, instructionsCircle, instructions, devsCircle, devs, settingCircle, setting);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         stage.setScene(mainScene);
         stage.show();

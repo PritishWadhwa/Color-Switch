@@ -1,8 +1,5 @@
 package Menus;
 
-import PlayArena.ResourceManager;
-import PlayArena.SaveData;
-import PlayArena.SaveRandomData;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -31,10 +28,10 @@ public class RandomData extends Application {
     public void start(Stage stage) throws Exception {
         Scene mainScene;
         MainMenu mainMenu = new MainMenu();
-        Rectangle headingRect = makeRectangle(0, 0,130, 560, Color.YELLOWGREEN);
-        Rectangle fact1 = makeRectangle(30, 160,125, 500, Color.DARKCYAN);
-        Rectangle fact2 = makeRectangle(30, 315,125, 500, Color.DARKCYAN);
-        Rectangle fact3 = makeRectangle(30, 480,125, 500, Color.DARKCYAN);
+        Rectangle headingRect = makeRectangle(0, 0, 130, 560, Color.YELLOWGREEN);
+        Rectangle fact1 = makeRectangle(30, 160, 125, 500, Color.DARKCYAN);
+        Rectangle fact2 = makeRectangle(30, 315, 125, 500, Color.DARKCYAN);
+        Rectangle fact3 = makeRectangle(30, 480, 125, 500, Color.DARKCYAN);
         Circle homeCircle = makeCircle(280, 700, 50, Color.WHITE);
         ImageView topHome = makeImage("images/homeButtonBlack.png", 250, 670, 60, 60, true);
         String f1 = "Total Stars: " + Main.getTotalScore();

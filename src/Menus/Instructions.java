@@ -1,8 +1,5 @@
 package Menus;
 
-import PlayArena.ResourceManager;
-import PlayArena.SaveData;
-import PlayArena.SaveRandomData;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -18,7 +15,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sample.Main;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,22 +27,22 @@ public class Instructions extends Application {
     public void start(Stage stage) throws Exception {
         Scene mainScene;
         MainMenu mainMenu = new MainMenu();
-        Rectangle headingRect = makeRectangle(0, 0,130, 560, Color.YELLOWGREEN);
+        Rectangle headingRect = makeRectangle(0, 0, 130, 560, Color.YELLOWGREEN);
 
-        Rectangle instRect = makeRectangle(30, 160,445, 500, Color.DARKCYAN);
+        Rectangle instRect = makeRectangle(30, 160, 445, 500, Color.DARKCYAN);
         Circle homeCircle = makeCircle(280, 700, 50, Color.WHITE);
         ImageView topHome = makeImage("images/homeButtonBlack.png", 250, 670, 60, 60, true);
         Text headingText1 = makeText(70, "INSTRUCTIONS", 20, 80, 15);
         Text headingText2 = makeText(20, "(FOR NOOBS)", 400, 110, 10);
-        Text l1 = makeText(30,"1.) Tap anywhere to jump", 50, 200, 12);
-        Text l2 = makeText(30,"2.) Pass the obstacle when its", 50, 250, 12);
-        Text l2_1 = makeText(30,"      color matches your ball", 50, 280, 12);
-        Text l3 = makeText(30,"3.) If colors don't match, you die", 50, 330, 12);
-        Text l4 = makeText(30,"4.) You can revive using 10 points", 50, 380, 12);
-        Text l5 = makeText(30,"5.) You can revive only once", 50, 430, 12);
-        Text l6 = makeText(30,"6.) You can also save games, and", 50, 480, 12);
-        Text l6_1 = makeText(30,"      reload them later", 50, 510, 12);
-        Text l7 = makeText(40,"      Happy Gaming :)", 50, 570, 12);
+        Text l1 = makeText(30, "1.) Tap anywhere to jump", 50, 200, 12);
+        Text l2 = makeText(30, "2.) Pass the obstacle when its", 50, 250, 12);
+        Text l2_1 = makeText(30, "      color matches your ball", 50, 280, 12);
+        Text l3 = makeText(30, "3.) If colors don't match, you die", 50, 330, 12);
+        Text l4 = makeText(30, "4.) You can revive using 10 points", 50, 380, 12);
+        Text l5 = makeText(30, "5.) You can revive only once", 50, 430, 12);
+        Text l6 = makeText(30, "6.) You can also save games, and", 50, 480, 12);
+        Text l6_1 = makeText(30, "      reload them later", 50, 510, 12);
+        Text l7 = makeText(40, "      Happy Gaming :)", 50, 570, 12);
         homeCircle.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -99,7 +95,7 @@ public class Instructions extends Application {
         });
 
 
-        Group root = new Group(headingRect, headingText1, headingText2, instRect, l1,l2,l2_1,l3,l4,l5,l6,l6_1,l7, homeCircle, topHome);
+        Group root = new Group(headingRect, headingText1, headingText2, instRect, l1, l2, l2_1, l3, l4, l5, l6, l6_1, l7, homeCircle, topHome);
         mainScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(41, 41, 41));
         stage.setScene(mainScene);
         stage.show();

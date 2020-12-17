@@ -21,12 +21,12 @@ public class Main extends Application {
         } catch (Exception e) {
             totalScore = 0;
         }
-        try{
+        try {
             SaveRandomData data = (SaveRandomData) ResourceManager.load("randomData.save");
 //            totalScore = data.totalScore;
             games = data.totalGames;
             logins = data.totalLogin;
-        }catch (Exception e){
+        } catch (Exception e) {
             games = 0;
             logins = 0;
         }

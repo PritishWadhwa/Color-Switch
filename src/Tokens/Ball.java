@@ -10,6 +10,11 @@ import javafx.scene.shape.Circle;
 import sample.COLOR;
 
 public class Ball extends Region {
+    public Point2D location;
+    Pane layer;
+    Node view;
+    Circle circle;
+    int lvl;
     private Point2D acceleration;
     private double mass;
     private double maxSpeed = 10;
@@ -18,20 +23,16 @@ public class Ball extends Region {
     private double centerX;
     private double centerY;
     private double radius;
-    public Point2D location;
     private Point2D velocity;
-    Pane layer;
     private COLOR cl;
-    Node view;
-    Circle circle;
-    int lvl;
-    public Ball(Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass, Group ro, COLOR cl,int l) {
+
+    public Ball(Pane layer, Point2D location, Point2D velocity, Point2D acceleration, double mass, Group ro, COLOR cl, int l) {
         this.layer = layer;
         this.location = location;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.mass = mass;
-        this.cl=cl;
+        this.cl = cl;
         width = mass;
         height = width;
         centerX = width / 2.0;
@@ -40,7 +41,7 @@ public class Ball extends Region {
         circle = new Circle(radius);
         circle.setCenterX(radius);
         circle.setCenterY(radius);
-        lvl=l;
+        lvl = l;
         switch (cl) {
             case AQUA:
                 circle.setFill(Color.rgb(141, 18, 255));
@@ -64,22 +65,20 @@ public class Ball extends Region {
     }
 
     public void applyForce(Point2D force) {
-        if(lvl==0) {
+        if (lvl == 0) {
             Point2D f = force.multiply(0.07);
             acceleration = acceleration.add(f);
-        }
-        else if(lvl==1){
+        } else if (lvl == 1) {
             Point2D f = force.multiply(0.08);
             acceleration = acceleration.add(f);
-        }
-        else{
+        } else {
             Point2D f = force.multiply(0.1);
             acceleration = acceleration.add(f);
         }
     }
 
     public void move(int pause) {
-        if(pause==0) {
+        if (pause == 0) {
             velocity = velocity.add(acceleration);
             if (velocity.magnitude() > maxSpeed) {
                 velocity = velocity.normalize().multiply(maxSpeed);
@@ -100,32 +99,31 @@ public class Ball extends Region {
         velocity = new Point2D(velocityX, velocityY);
     }
 
-    public void checkBounds(int cs,int pauseIt) {
+    public void checkBounds(int cs, int pauseIt) {
         double locationX = location.getX();
         double locationY = location.getY();
         double velocityX = velocity.getX();
         double velocityY = velocity.getY();
-        if(pauseIt==1){
+        if (pauseIt == 1) {
             System.out.println("ceokl");
-            velocityY=0;
+            velocityY = 0;
         }
-        if(pauseIt==2){
+        if (pauseIt == 2) {
             System.out.println("heol");
-            velocityY=0;
-            locationY=locationY+200;
+            velocityY = 0;
+            locationY = locationY + 200;
         }
-        if(locationY<10){
+        if (locationY < 10) {
             //locationY=10;
-            velocityY=5;
+            velocityY = 5;
         }
-        if (cs==0) {
+        if (cs == 0) {
             if (locationY > 675) {
                 locationY = 675;
                 velocityY = 0;
             }
-        }
-        else{
-            if(locationY > 820) {
+        } else {
+            if (locationY > 820) {
                 locationY = 820;
                 velocityY = 0;
             }
@@ -137,8 +135,9 @@ public class Ball extends Region {
     public COLOR getCl() {
         return cl;
     }
-    public void setCl(COLOR cl){
-        this.cl=cl;
+
+    public void setCl(COLOR cl) {
+        this.cl = cl;
         switch (cl) {
             case AQUA:
                 circle.setFill(Color.rgb(141, 18, 255));
@@ -155,7 +154,8 @@ public class Ball extends Region {
         }
 
     }
-    public Circle retCircle(){
+
+    public Circle retCircle() {
         return this.circle;
     }
 

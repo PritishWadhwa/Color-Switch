@@ -38,7 +38,7 @@ public class LoadGameMenu {
         Circle homeCircle = makeCircle(80, 50, 35, Color.WHITE);
         ImageView topHome = makeImage("images/homeButtonBlack.png", 60, 30, 40, 40, true);
         Rectangle strip = makeRectangle(0, 130, 60, 560, Color.rgb(28, 28, 28));
-        Text stripText = makeText(40, "SAVED GAMES: 4 / 10", 25, 175, 10, Color.WHITE);
+        Text stripText = makeText(40, "SAVED GAMES: 4 / 4", 25, 175, 10, Color.WHITE);
         Rectangle rounded1 = makeRoundedRectangle(20, 230, 97.5, 520, Color.YELLOW, Color.RED);
         Rectangle rounded2 = makeRoundedRectangle(20, 377.5, 97.5, 520, Color.YELLOW, Color.RED);
         Rectangle rounded3 = makeRoundedRectangle(20, 525, 97.5, 520, Color.YELLOW, Color.RED);
@@ -48,7 +48,7 @@ public class LoadGameMenu {
         String dateScore1 = "Date: " + date1.date + "/" + date1.month + "/" + date1.year + ", Score: " + date1.currScore;
         Text saveGame1Text2 = makeText(30, dateScore1, 35, 310, 10, Color.GRAY);
         Text saveGame2Text1 = makeText(40, "Game 2", 35, 421.25, 10, Color.BLACK);
-        SaveData date2 = (SaveData) ResourceManager.load("1.save");
+        SaveData date2 = (SaveData) ResourceManager.load("2.save");
         String dateScore2 = "Date: " + date2.date + "/" + date2.month + "/" + date2.year + ", Score: " + date2.currScore;
         Text saveGame2Text2 = makeText(30, dateScore2, 35, 457.5, 10, Color.GRAY);
         Text saveGame3Text1 = makeText(40, "Game 3", 35, 568.75, 10, Color.BLACK);
