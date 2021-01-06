@@ -23,7 +23,6 @@ public class Main extends Application {
         }
         try {
             SaveRandomData data = (SaveRandomData) ResourceManager.load("randomData.save");
-//            totalScore = data.totalScore;
             games = data.totalGames;
             logins = data.totalLogin;
         } catch (Exception e) {
@@ -32,7 +31,6 @@ public class Main extends Application {
         }
         logins++;
         System.out.println(totalScore);
-        //System.out.print("nck");
 
     }
 

@@ -27,10 +27,6 @@ public class RingObstacle {
         group = new Group(arc1, arc2, arc3, arc4);
         final Rotate rotateCW = new Rotate(0, 280, y);
         group.getTransforms().add(rotateCW);
-//        arc1.getTransforms().add(rotateCW);
-//        arc2.getTransforms().add(rotateCW);
-//        arc3.getTransforms().add(rotateCW);
-//        arc4.getTransforms().add(rotateCW);
         nodes.add(arc1);
         nodes.add(arc2);
         nodes.add(arc3);

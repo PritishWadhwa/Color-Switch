@@ -36,10 +36,6 @@ public class ObsDisc22 extends JPanel {
         nodes.add(rect);
         nodes.add(rect2);
         pane.getChildren().add(group);
-//        ro.getChildren().add(rect);
-//        ro.getChildren().add(rect2);
-//        ro.getChildren().add(rect3);
-//        ro.getChildren().add(rect1);
 
     }
 

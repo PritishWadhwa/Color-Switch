@@ -107,14 +107,7 @@ public class Gameplay1 extends Application {
 
     //    public void start(Stage stage,ArrayList<Integer> obs,int nod,int cs,int ct) throws FileNotFoundException {
     public void start(Stage stage) throws FileNotFoundException {
-//        noOfDeath=nod;
-//        curScore=cs;
-//        obslist=obs;
-//        colorType=ct;
-//        for (int o : obslist
-//        ) {
-//            System.out.print(o + " ");
-//        }
+
         Main.addTotalGames();
         gameplay = new Gameplay(0);
         mainMenu = new MainMenu();
@@ -200,7 +193,6 @@ public class Gameplay1 extends Application {
             y -= 700;
             headgroup.getChildren().add(obstacles.get(i - curScore));
         }
-        System.out.println();
         playfield.setPrefSize(WIDTH, HEIGHT);
         ro.getChildren().add(headgroup);
         ro.getChildren().add(rectLeft);
@@ -706,7 +698,6 @@ public class Gameplay1 extends Application {
                 try {
                     if (Color.rgb(245, 223, 15).equals(block.getFill())) {
                         colorType = 1;
-                        System.out.println(colorType);
                     } else if (Color.rgb(141, 18, 255).equals(block.getFill())) {
                         colorType = 2;
                     } else if (Color.rgb(255, 0, 132).equals(block.getFill())) {
@@ -741,7 +732,6 @@ public class Gameplay1 extends Application {
                 try {
                     if (Color.rgb(245, 223, 15).equals(block.getFill())) {
                         colorType = 1;
-                        System.out.println(colorType);
                     } else if (Color.rgb(141, 18, 255).equals(block.getFill())) {
                         colorType = 2;
                     } else if (Color.rgb(255, 0, 132).equals(block.getFill())) {
@@ -803,14 +793,6 @@ public class Gameplay1 extends Application {
                 }
             }
         }
-//        if(ball.location.getY()>=750){
-//            try {
-//                death.start(stage);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        }
         if (ball != null && (collisionDetected && col == 1)) {
             noOfDeath++;
             alive = 0;

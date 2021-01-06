@@ -94,7 +94,6 @@ public class Gameplay extends Application {
 
     public Gameplay(int l) throws FileNotFoundException {
         level = l;
-        System.out.println(level);
     }
 
     public void start(Stage stage) throws FileNotFoundException {
@@ -120,7 +119,6 @@ public class Gameplay extends Application {
         scoreDisplay = makeText(80, Integer.toString(getCurScore()), 1.0, 80.0, 5.0);
         powerUp = makeText(40, "", 1.0, 800.0, 5.0);
         ro = new Group(playfield);
-        //prepareStars();
 
         obstacles = new ArrayList<Group>();
         obslist = new ArrayList<Integer>();
@@ -193,10 +191,6 @@ public class Gameplay extends Application {
             headgroup.getChildren().add(obstacles.get(i));
         }
         headgroup.getChildren().add(hand);
-        for (int i = 0; i < 30; i++) {
-            System.out.print(obslist.get(i) + " ");
-        }
-        System.out.println();
         //  pane1.getChildren().addAll(star2.view,swapper.view,star1.view, hand );
         playfield.setPrefSize(WIDTH, HEIGHT);
         ro.getChildren().add(headgroup);
@@ -701,7 +695,6 @@ public class Gameplay extends Application {
                 try {
                     if (Color.rgb(245, 223, 15).equals(block.getFill())) {
                         colorType = 1;
-                        System.out.println(colorType);
                     } else if (Color.rgb(141, 18, 255).equals(block.getFill())) {
                         colorType = 2;
                     } else if (Color.rgb(255, 0, 132).equals(block.getFill())) {
@@ -737,7 +730,6 @@ public class Gameplay extends Application {
                 try {
                     if (Color.rgb(245, 223, 15).equals(block.getFill())) {
                         colorType = 1;
-                        System.out.println(colorType);
 
                     } else if (Color.rgb(141, 18, 255).equals(block.getFill())) {
                         colorType = 2;

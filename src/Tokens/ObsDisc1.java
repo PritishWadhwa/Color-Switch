@@ -33,10 +33,6 @@ public class ObsDisc1 extends JPanel {
         nodes.add(rect);
         group = new Group(rect);
         pane.getChildren().add(group);
-//        ro.getChildren().add(rect);
-//        ro.getChildren().add(rect2);
-//        ro.getChildren().add(rect3);
-//        ro.getChildren().add(rect1);
 
     }
 
